@@ -1,0 +1,101 @@
+export_library
+{
+    sdl_point :: struct
+    {
+        x: c_int;
+        y: c_int;
+    }
+
+    sdl_fpoint :: struct
+    {
+        x: f32;
+        y: f32;
+    }
+
+    sdl_rect :: struct
+    {
+        x: c_int;
+        y: c_int;
+        w: c_int;
+        h: c_int;
+    }
+
+    sdl_frect :: struct
+    {
+        x: f32;
+        y: f32;
+        w: f32;
+        h: f32;
+    }
+
+    sdl_rect_to_frect                        :: fn (rect: sdl_rect&, frect: sdl_frect&);
+    sdl_point_in_rect                        :: fn (p: sdl_point&, r: sdl_rect&) -> bool;
+    sdl_rect_empty                           :: fn (r: sdl_rect&) -> bool;
+    sdl_rects_equal                          :: fn (a: sdl_rect&, b: sdl_rect&) -> bool;
+    sdl_has_rect_intersection                :: fn (A: sdl_rect&, B: sdl_rect&) -> bool = extern "SDL_HasRectIntersection";
+    sdl_get_rect_intersection                :: fn (A: sdl_rect&, B: sdl_rect&, result: sdl_rect&) -> bool = extern "SDL_GetRectIntersection";
+    sdl_get_rect_union                       :: fn (A: sdl_rect&, B: sdl_rect&, result: sdl_rect&) -> bool = extern "SDL_GetRectUnion";
+    sdl_get_rect_enclosing_points            :: fn (points: sdl_point&, count: s32, clip: sdl_rect&, result: sdl_rect&) -> bool = extern "SDL_GetRectEnclosingPoints";
+    sdl_get_rect_and_line_intersection       :: fn (rect: sdl_rect&, X1: s32&, Y1: s32&, X2: s32&, Y2: s32&) -> bool = extern "SDL_GetRectAndLineIntersection";
+    sdl_point_in_rect_float                  :: fn (p: sdl_fpoint&, r: sdl_frect&) -> bool;
+    sdl_rect_empty_float                     :: fn (r: sdl_frect&) -> bool;
+    sdl_rects_equal_epsilon                  :: fn (a: sdl_frect&, b: sdl_frect&, epsilon: f32) -> bool;
+    sdl_rects_equal_float                    :: fn (a: sdl_frect&, b: sdl_frect&) -> bool;
+    sdl_has_rect_intersection_float          :: fn (A: sdl_frect&, B: sdl_frect&) -> bool = extern "SDL_HasRectIntersectionFloat";
+    sdl_get_rect_intersection_float          :: fn (A: sdl_frect&, B: sdl_frect&, result: sdl_frect&) -> bool = extern "SDL_GetRectIntersectionFloat";
+    sdl_get_rect_union_float                 :: fn (A: sdl_frect&, B: sdl_frect&, result: sdl_frect&) -> bool = extern "SDL_GetRectUnionFloat";
+    sdl_get_rect_enclosing_points_float      :: fn (points: sdl_fpoint&, count: s32, clip: sdl_frect&, result: sdl_frect&) -> bool = extern "SDL_GetRectEnclosingPointsFloat";
+    sdl_get_rect_and_line_intersection_float :: fn (rect: sdl_frect&, X1: f32&, Y1: f32&, X2: f32&, Y2: f32&) -> bool = extern "SDL_GetRectAndLineIntersectionFloat";
+}
+
+import
+{
+    "sdl3/sdl_stdinc";
+}
+
+sdl_rect_to_frect :: fn (rect: sdl_rect&, frect: sdl_frect&)
+{
+    frect.x = rect.x as f32;
+    frect.y = rect.y as f32;
+    frect.w = rect.w as f32;
+    frect.h = rect.h as f32;
+}
+
+sdl_point_in_rect :: fn (p: sdl_point&, r: sdl_rect&) -> bool
+{
+    return (p != NULL && r != NULL && (p.x >= r.x) && (p.x < (r.x + r.w)) && (p.y >= r.y) && (p.y < (r.y + r.h)));
+}
+
+sdl_rect_empty :: fn (r: sdl_rect&) -> bool
+{
+    return ((r == NULL) || (r.w <= 0) || (r.h <= 0));
+}
+
+sdl_rects_equal :: fn (a: sdl_rect&, b: sdl_rect&) -> bool
+{
+    return (a != NULL && b != NULL && (a.x == b.x) && (a.y == b.y) && (a.w == b.w) && (a.h == b.h));
+}
+
+sdl_point_in_rect_float :: fn (p: sdl_fpoint&, r: sdl_frect&) -> bool
+{
+    return (p != NULL && r != NULL && (p.x >= r.x) && (p.x <= (r.x + r.w)) && (p.y >= r.y) && (p.y <= (r.y + r.h)));
+}
+
+sdl_rect_empty_float :: fn (r: sdl_frect&) -> bool
+{
+    return ((r == NULL) || (r.w < 0.0f) || (r.h < 0.0f));
+}
+
+sdl_rects_equal_epsilon :: fn (a: sdl_frect&, b: sdl_frect&, epsilon: f32) -> bool
+{
+    return (a != NULL && b != NULL && ((a == b) ||
+            ((sdl_fabsf(a.x - b.x) <= epsilon) &&
+            (sdl_fabsf(a.y - b.y) <= epsilon) &&
+            (sdl_fabsf(a.w - b.w) <= epsilon) &&
+            (sdl_fabsf(a.h - b.h) <= epsilon))));
+}
+
+sdl_rects_equal_float :: fn (a: sdl_frect&, b: sdl_frect&) -> bool
+{
+    return sdl_rects_equal_epsilon(a, b, SDL_FLT_EPSILON);
+}

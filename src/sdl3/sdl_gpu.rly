@@ -1,0 +1,856 @@
+export_library
+{
+    sdl_gpu_supports_shader_formats                 :: fn (format_flags: sdl_gpu_shader_format, name: c_char&) -> bool                              = extern "SDL_GPUSupportsShaderFormats";
+    sdl_gpu_supports_properties                     :: fn (props: sdl_properties_id) -> bool                                                        = extern "SDL_GPUSupportsProperties";
+    sdl_create_gpu_device                           :: fn (format_flags: sdl_gpu_shader_format, debug_mode: bool, name: c_char&) -> sdl_gpu_device& = extern "SDL_CreateGPUDevice";
+    sdl_create_gpu_device_with_properties           :: fn (props: sdl_properties_id) -> sdl_gpu_device&                                             = extern "SDL_CreateGPUDeviceWithProperties";
+
+    sdl_destroy_gpu_device                          :: fn (device: sdl_gpu_device&)                         = extern "SDL_DestroyGPUDevice";
+    sdl_get_num_gpu_drivers                         :: fn () -> c_int                                       = extern "SDL_GetNumGPUDrivers";
+    sdl_get_gpu_driver                              :: fn (index: c_int) -> c_char&                         = extern "SDL_GetGPUDriver";
+    sdl_get_gpu_device_driver                       :: fn (device: sdl_gpu_device&) -> c_char&              = extern "SDL_GetGPUDeviceDriver";
+    sdl_get_gpu_shader_formats                      :: fn (device: sdl_gpu_device) -> sdl_gpu_shader_format = extern "SDL_GetGPUShaderFormats";
+    sdl_create_gpu_compute_pipeline                 :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_compute_pipeline_create_info&) -> sdl_gpu_compute_pipeline& = extern "SDL_CreateGPUComputePipeline";
+    sdl_create_gpu_graphics_pipeline                :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_graphics_pipeline_create_info&) -> sdl_gpu_graphics_pipeline& = extern "SDL_CreateGPUGraphicsPipeline";
+    sdl_create_gpu_sampler                          :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_sampler_create_info&) -> sdl_gpu_sampler& = extern "SDL_CreateGPUSampler";
+    sdl_create_gpu_shader                           :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_shader_create_info&) -> sdl_gpu_shader& = extern "SDL_CreateGPUShader";
+    sdl_create_gpu_texture                          :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_texture_create_info&) -> sdl_gpu_texture& = extern "SDL_CreateGPUTexture";
+    sdl_create_gpu_buffer                           :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_buffer_create_info&) -> sdl_gpu_buffer& = extern "SDL_CreateGPUBuffer";
+    sdl_create_gpu_transfer_buffer                  :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_transfer_buffer_create_info&) -> sdl_gpu_transfer_buffer& = extern "SDL_CreateGPUTransferBuffer";
+    sdl_set_gpu_buffer_name                         :: fn (device: sdl_gpu_device&, buffer: sdl_gpu_buffer&, text: c_char&) = extern "SDL_SetGPUBufferName";
+    sdl_set_gpu_texture_name                        :: fn (device: sdl_gpu_device&, texture: sdl_gpu_texture&, text: c_char&) = extern "SDL_SetGPUTextureName";
+    sdl_insert_gpu_debug_label                      :: fn (command_buffer: sdl_gpu_command_buffer&, text: c_char&) = extern "SDL_InsertGPUDebugLabel";
+    sdl_push_gpu_debug_group                        :: fn (command_buffer: sdl_gpu_command_buffer&, name: c_char&) = extern "SDL_PushGPUDebugGroup";
+    sdl_pop_gpu_debug_group                         :: fn (command_buffer: sdl_gpu_command_buffer&) = extern "SDL_PopGPUDebugGroup";
+    sdl_release_gpu_texture                         :: fn (device: sdl_gpu_device&, texture: sdl_gpu_texture&) = extern "SDL_ReleaseGPUTexture";
+    sdl_release_gpu_sampler                         :: fn (device: sdl_gpu_device&, sampler: sdl_gpu_sampler&) = extern "SDL_ReleaseGPUSampler";
+    sdl_release_gpu_buffer                          :: fn (device: sdl_gpu_device&, buffer: sdl_gpu_buffer&) = extern "SDL_ReleaseGPUBuffer";
+    sdl_release_gpu_transfer_buffer                 :: fn (device: sdl_gpu_device&, transfer_buffer: sdl_gpu_transfer_buffer&) = extern "SDL_ReleaseGPUTransferBuffer";
+    sdl_release_gpu_compute_pipeline                :: fn (device: sdl_gpu_device&, compute_pipeline: sdl_gpu_compute_pipeline&) = extern "SDL_ReleaseGPUComputePipeline";
+    sdl_release_gpu_shader                          :: fn (device: sdl_gpu_device&, shader: sdl_gpu_shader&) = extern "SDL_ReleaseGPUShader";
+    sdl_release_gpu_graphics_pipeline               :: fn (device: sdl_gpu_device&, graphics_pipeline: sdl_gpu_graphics_pipeline&) = extern "SDL_ReleaseGPUGraphicsPipeline";
+    sdl_acquire_gpu_command_buffer                  :: fn (device: sdl_gpu_device&) -> sdl_gpu_command_buffer& = extern "SDL_AcquireGPUCommandBuffer";
+    sdl_push_gpu_vertex_uniform_data                :: fn (command_buffer: sdl_gpu_command_buffer&, slot_index: u32, data: void&, length: u32) = extern "SDL_PushGPUVertexUniformData";
+    sdl_push_gpu_fragment_uniform_data              :: fn (command_buffer: sdl_gpu_command_buffer&, slot_index: u32, data: void&, length: u32) = extern "SDL_PushGPUFragmentUniformData";
+    sdl_push_gpu_compute_uniform_data               :: fn (command_buffer: sdl_gpu_command_buffer&, slot_index: u32, data: void&, length: u32) = extern "SDL_PushGPUComputeUniformData";
+    sdl_begin_gpu_render_pass                       :: fn (command_buffer: sdl_gpu_command_buffer&, color_target_infos: sdl_gpu_color_target_info&, num_color_targets: u32, depth_stencil_target_info: sdl_gpu_depth_stencil_target_info&) -> sdl_gpu_render_pass& = extern "SDL_BeginGPURenderPass";
+    sdl_bind_gpu_graphics_pipeline                  :: fn (render_pass: sdl_gpu_render_pass&, graphics_pipeline: sdl_gpu_graphics_pipeline&) = extern "SDL_BindGPUGraphicsPipeline";
+    sdl_set_gpu_viewport                            :: fn (render_pass: sdl_gpu_render_pass&, viewport: sdl_gpu_viewport&) = extern "SDL_SetGPUViewport";
+    sdl_set_gpu_scissor                             :: fn (render_pass: sdl_gpu_render_pass&, scissor: sdl_rect&) = extern "SDL_SetGPUScissor";
+    sdl_set_gpu_blend_constants                     :: fn (render_pass: sdl_gpu_render_pass&, blend_constants: sdl_fcolor) = extern "SDL_SetGPUBlendConstants";
+    sdl_set_gpu_stencil_reference                   :: fn (render_pass: sdl_gpu_render_pass&, reference: u8) = extern "SDL_SetGPUStencilReference";
+    sdl_bind_gpu_vertex_buffers                     :: fn (render_pass: sdl_gpu_render_pass&, first_slot: u32, bindings: sdl_gpu_buffer_binding&, num_bindings: u32) = extern "SDL_BindGPUVertexBuffers";
+    sdl_bind_gpu_index_buffer                       :: fn (render_pass: sdl_gpu_render_pass&, binding: sdl_gpu_buffer_binding&, index_element_size: sdl_gpu_index_element_size) = extern "SDL_BindGPUIndexBuffer";
+    sdl_bind_gpu_vertex_samplers                    :: fn (render_pass: sdl_gpu_render_pass&, first_slot: u32, texture_sampler_bindings: sdl_gpu_texture_sampler_binding&, num_bindings: u32) = extern "SDL_BindGPUVertexSamplers";
+    sdl_bind_gpu_vertex_storage_textures            :: fn (render_pass: sdl_gpu_render_pass&, first_slot: u32, storage_textures: sdl_gpu_texture&, num_bindings: u32) = extern "SDL_BindGPUVertexStorageTextures";
+    sdl_bind_gpu_vertex_storage_buffers             :: fn (render_pass: sdl_gpu_render_pass&, first_slot: u32, storage_buffers: sdl_gpu_buffer&, num_bindings: u32) = extern "SDL_BindGPUVertexStorageBuffers";
+    sdl_bind_gpu_fragment_samplers                  :: fn (render_pass: sdl_gpu_render_pass&, first_slot: u32, texture_sampler_bindings: sdl_gpu_texture_sampler_binding&, num_bindings: u32) = extern "SDL_BindGPUFragmentSamplers";
+    sdl_bind_gpu_fragment_storage_textures          :: fn (render_pass: sdl_gpu_render_pass&, first_slot: u32, storage_textures: sdl_gpu_texture&, num_bindings: u32) = extern "SDL_BindGPUFragmentStorageTextures";
+    sdl_bind_gpu_fragment_storage_buffers           :: fn (render_pass: sdl_gpu_render_pass&, first_slot: u32, storage_buffers: sdl_gpu_buffer&, num_bindings: u32) = extern "SDL_BindGPUFragmentStorageBuffers";
+    sdl_draw_gpu_indexed_primitives                 :: fn (render_pass: sdl_gpu_render_pass&, num_indices: u32, num_instances: u32, first_index: u32, vertex_offset: s32, first_instance: u32) = extern "SDL_DrawGPUIndexedPrimitives";
+    sdl_draw_gpu_primitives                         :: fn (render_pass: sdl_gpu_render_pass&, num_vertices: u32, num_instances: u32, first_vertex: u32, first_instance: u32) = extern "SDL_DrawGPUPrimitives";
+    sdl_draw_gpu_primitives_indirect                :: fn (render_pass: sdl_gpu_render_pass&, buffer: sdl_gpu_buffer&, offset: u32, draw_count: u32) = extern "SDL_DrawGPUPrimitivesIndirect";
+    sdl_draw_gpu_indexed_primitives_indirect        :: fn (render_pass: sdl_gpu_render_pass&, buffer: sdl_gpu_buffer&, offset: u32, draw_count: u32) = extern "SDL_DrawGPUIndexedPrimitivesIndirect";
+    sdl_end_gpu_render_pass                         :: fn (render_pass: sdl_gpu_render_pass&) = extern "SDL_EndGPURenderPass";
+    sdl_begin_gpu_compute_pass                      :: fn (command_buffer: sdl_gpu_command_buffer&, storage_texture_bindings: sdl_gpu_storage_texture_write_only_binding&, num_storage_texture_bindings: u32, storage_buffer_bindings: sdl_gpu_storage_buffer_write_only_binding&, num_storage_buffer_bindings: u32) -> sdl_gpu_compute_pass& = extern "SDL_BeginGPUComputePass";
+    sdl_bind_gpu_compute_pipeline                   :: fn (compute_pass: sdl_gpu_compute_pass&, compute_pipeline: sdl_gpu_compute_pipeline&) = extern "SDL_BindGPUComputePipeline";
+    sdl_bind_gpu_compute_samplers                   :: fn (compute_pass: sdl_gpu_compute_pass&, first_slot: u32, texture_sampler_bindings: sdl_gpu_texture_sampler_binding&, num_bindings: u32) = extern "SDL_BindGPUComputeSamplers";
+    sdl_bind_gpu_compute_storage_textures           :: fn (compute_pass: sdl_gpu_compute_pass&, first_slot: u32, storage_textures: sdl_gpu_texture&, num_bindings: u32) = extern "SDL_BindGPUComputeStorageTextures";
+    sdl_bind_gpu_compute_storage_buffers            :: fn (compute_pass: sdl_gpu_compute_pass&, first_slot: u32, storage_buffers: sdl_gpu_buffer&, num_bindings: u32) = extern "SDL_BindGPUComputeStorageBuffers";
+    sdl_dispatch_gpu_compute                        :: fn (compute_pass: sdl_gpu_compute_pass&, group_count_x: u32, group_count_y: u32, group_count_z: u32) = extern "SDL_DispatchGPUCompute";
+    sdl_dispatch_gpu_compute_indirect               :: fn (compute_pass: sdl_gpu_compute_pass&, buffer: sdl_gpu_buffer&, offset: u32) = extern "SDL_DispatchGPUComputeIndirect";
+    sdl_end_gpu_compute_pass                        :: fn (compute_pass: sdl_gpu_compute_pass&) = extern "SDL_EndGPUComputePass";
+    sdl_map_gpu_transfer_buffer                     :: fn (device: sdl_gpu_device&, transfer_buffer: sdl_gpu_transfer_buffer&, cycle: bool) = extern "SDL_MapGPUTransferBuffer";
+    sdl_unmap_gpu_transfer_buffer                   :: fn (device: sdl_gpu_device&, transfer_buffer: sdl_gpu_transfer_buffer&) = extern "SDL_UnmapGPUTransferBuffer";
+    sdl_begin_gpu_copy_pass                         :: fn (command_buffer: sdl_gpu_command_buffer&) -> sdl_gpu_copy_pass& = extern "SDL_BeginGPUCopyPass";
+    sdl_upload_to_gpu_texture                       :: fn (copy_pass: sdl_gpu_copy_pass&, source: sdl_gpu_texture_transfer_info&, destination: sdl_gpu_texture_region&, cycle: bool) = extern "SDL_UploadToGPUTexture";
+    sdl_upload_to_gpu_buffer                        :: fn (copy_pass: sdl_gpu_copy_pass&, source: sdl_gpu_transfer_buffer_location&, destination: sdl_gpu_buffer_region&, cycle: bool) = extern "SDL_UploadToGPUBuffer";
+    sdl_copy_gpu_texture_to_texture                 :: fn (copy_pass: sdl_gpu_copy_pass&, source: sdl_gpu_texture_location&, destination: sdl_gpu_texture_location&, w: u32, h: u32, d: u32, cycle: bool) = extern "SDL_CopyGPUTextureToTexture";
+    sdl_copy_gpu_buffer_to_buffer                   :: fn (copy_pass: sdl_gpu_copy_pass&, source: sdl_gpu_buffer_location&, destination: sdl_gpu_buffer_location&, size: u32, cycle: bool) = extern "SDL_CopyGPUBufferToBuffer";
+    sdl_download_from_gpu_texture                   :: fn (copy_pass: sdl_gpu_copy_pass&, source: sdl_gpu_texture_region&, destination: sdl_gpu_texture_transfer_info&) = extern "SDL_DownloadFromGPUTexture";
+    sdl_download_from_gpu_buffer                    :: fn (copy_pass: sdl_gpu_copy_pass&, source: sdl_gpu_buffer_region&, destination: sdl_gpu_transfer_buffer_location&) = extern "SDL_DownloadFromGPUBuffer";
+    sdl_end_gpu_copy_pass                           :: fn (copy_pass: sdl_gpu_copy_pass&) = extern "SDL_EndGPUCopyPass";
+    sdl_generate_mipmaps_for_gpu_texture            :: fn (command_buffer: sdl_gpu_command_buffer&, texture: sdl_gpu_texture&) = extern "SDL_GenerateMipmapsForGPUTexture";
+    sdl_blit_gpu_texture                            :: fn (command_buffer: sdl_gpu_command_buffer&, info: sdl_gpu_blit_info&) = extern "SDL_BlitGPUTexture";
+    sdl_window_supports_gpu_swapchain_composition   :: fn (device: sdl_gpu_device&, window: sdl_window&, swapchain_composition: sdl_gpu_swapchain_composition) -> bool = extern "SDL_WindowSupportsGPUSwapchainComposition";
+    sdl_window_supports_gpu_present_mode            :: fn (device: sdl_gpu_device&, window: sdl_window&, present_mode: sdl_gpu_present_mode) -> bool = extern "SDL_WindowSupportsGPUPresentMode";
+    sdl_claim_window_for_gpu_device                 :: fn (device: sdl_gpu_device&, window: sdl_window&) -> bool = extern "SDL_ClaimWindowForGPUDevice";
+    sdl_release_window_from_gpu_device              :: fn (device: sdl_gpu_device&, window: sdl_window&) = extern "SDL_ReleaseWindowFromGPUDevice";
+    sdl_set_gpu_swapchain_parameters                :: fn (device: sdl_gpu_device&, window: sdl_window&, swapchain_composition: sdl_gpu_swapchain_composition, present_mode: sdl_gpu_present_mode) = extern "SDL_SetGPUSwapchainParameters";
+
+    sdl_get_gpu_swapchain_texture_format            :: fn (device: sdl_gpu_device&, window: sdl_window&) -> sdl_gpu_texture_format = extern "SDL_GetGPUSwapchainTextureFormat";
+    sdl_acquire_gpu_swapchain_texture               :: fn (command_buffer: sdl_gpu_command_buffer&, window: sdl_window&, w: u32&, h: u32&) -> sdl_gpu_texture& = extern "SDL_AcquireGPUSwapchainTexture";
+    sdl_submit_gpu_command_buffer                   :: fn (command_buffer: sdl_gpu_command_buffer&) = extern "SDL_SubmitGPUCommandBuffer";
+    sdl_submit_gpu_command_buffer_and_acquire_fence :: fn (command_buffer: sdl_gpu_command_buffer&) -> sdl_gpu_fence& = extern "SDL_SubmitGPUCommandBufferAndAcquireFence";
+    sdl_wait_for_gpu_idle                           :: fn (device: sdl_gpu_device&) = extern "SDL_WaitForGPUIdle";
+    sdl_wait_for_gpu_fences                         :: fn (device: sdl_gpu_device&, wait_all: bool, fences: sdl_gpu_fence&, num_fences: u32) = extern "SDL_WaitForGPUFences";
+    sdl_query_gpu_fence                             :: fn (device: sdl_gpu_device&, fence: sdl_gpu_fence&) -> bool = extern "SDL_QueryGPUFence";
+    sdl_release_gpu_fence                           :: fn (device: sdl_gpu_device&, fence: sdl_gpu_fence&) = extern "SDL_ReleaseGPUFence";
+    sdl_gpu_texture_format_texel_block_size         :: fn (format: sdl_gpu_texture_format) -> u32 = extern "SDL_GPUTextureFormatTexelBlockSize";
+    sdl_gpu_texture_supports_format                 :: fn (device: sdl_gpu_device&, format: sdl_gpu_texture_format, type: sdl_gpu_texture_type, usage: sdl_gpu_texture_usage_flags) -> bool = extern "SDL_GPUTextureSupportsFormat";
+    sdl_gpu_texture_supports_sample_count           :: fn (device: sdl_gpu_device&, format: sdl_gpu_texture_format, sample_count: sdl_gpu_sample_count) -> bool = extern "SDL_GPUTextureSupportsSampleCount";
+    sdl_gdk_suspend_gpu                             :: fn (device: sdl_gpu_device&) = extern "SDL_GDKSuspendGPU";
+    sdl_gdk_resume_gpu                              :: fn (device: sdl_gpu_device&) = extern "SDL_GDKResumeGPU";
+
+    sdl_gpu_device            :: type_opaque;
+    sdl_gpu_buffer            :: type_opaque;
+    sdl_gpu_transfer_buffer   :: type_opaque;
+    sdl_gpu_texture           :: type_opaque;
+    sdl_gpu_sampler           :: type_opaque;
+    sdl_gpu_shader            :: type_opaque;
+    sdl_gpu_compute_pipeline  :: type_opaque;
+    sdl_gpu_graphics_pipeline :: type_opaque;
+    sdl_gpu_command_buffer    :: type_opaque;
+    sdl_gpu_render_pass       :: type_opaque;
+    sdl_gpu_compute_pass      :: type_opaque;
+    sdl_gpu_copy_pass         :: type_opaque;
+    sdl_gpu_fence             :: type_opaque;
+    
+    sdl_gpu_primitive_type :: enum c_int
+    {
+        SDL_GPU_PRIMITIVE_TYPE_TRIANGLE_LIST;  // A series of separate triangles.
+        SDL_GPU_PRIMITIVE_TYPE_TRIANGLE_STRIP; // A series of connected triangles.
+        SDL_GPU_PRIMITIVE_TYPE_LINE_LIST;      // A series of separate lines.
+        SDL_GPU_PRIMITIVE_TYPE_LINE_STRIP;     // A series of connected lines.
+        SDL_GPU_PRIMITIVE_TYPE_POINT_LIST;     // A series of separate points. 
+    }
+
+    sdl_gpu_load_op :: enum c_int
+    {
+        SDL_GPU_LOAD_OP_LOAD;      // The previous contents of the texture will be preserved.
+        SDL_GPU_LOAD_OP_CLEAR;     // The contents of the texture will be cleared to a color.
+        SDL_GPU_LOAD_OP_DONT_CARE; // The previous contents of the texture need not be preserved. The contents will be undefined.
+    } 
+
+    sdl_gpu_store_op :: enum c_int
+    {
+        SDL_GPU_STORE_OP_STORE;             // The contents generated during the render pass will be written to memory.
+        SDL_GPU_STORE_OP_DONT_CARE;         // The contents generated during the render pass are not needed and may be discarded. The contents will be undefined.
+        SDL_GPU_STORE_OP_RESOLVE;           // The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture may then be discarded and will be undefined.
+        SDL_GPU_STORE_OP_RESOLVE_AND_STORE; // The multisample contents generated during the render pass will be resolved to a non-multisample texture. The contents in the multisample texture will be written to memory.
+    }
+
+    sdl_gpu_index_element_size :: enum c_int
+    {
+        SDL_GPU_INDEX_ELEMENT_SIZE_16_BIT; // The index elements are 16-bit.
+        SDL_GPU_INDEX_ELEMENT_SIZE_32_BIT; // The index elements are 32-bit.
+    }
+
+    sdl_gpu_texture_format :: enum c_int
+    {
+        SDL_GPU_TEXTURE_FORMAT_INVALID;
+
+        // Unsigned Normalized Float Color Formats
+        SDL_GPU_TEXTURE_FORMAT_A8_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_R8_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_R8G8_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_R8G8B8A8_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_R16_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_R16G16_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_R16G16B16A16_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_R10G10B10A2_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_B5G6R5_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_B5G5R5A1_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_B4G4R4A4_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_B8G8R8A8_UNORM;
+        // Compressed Unsigned Normalized Float Color Formats
+        SDL_GPU_TEXTURE_FORMAT_BC1_RGBA_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_BC2_RGBA_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_BC3_RGBA_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_BC4_R_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_BC5_RG_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_BC7_RGBA_UNORM;
+        // Compressed Signed Float Color Formats 
+        SDL_GPU_TEXTURE_FORMAT_BC6H_RGB_FLOAT;
+        // Compressed Unsigned Float Color Formats
+        SDL_GPU_TEXTURE_FORMAT_BC6H_RGB_UFLOAT;
+        // Signed Normalized Float Color Formats
+        SDL_GPU_TEXTURE_FORMAT_R8_SNORM;
+        SDL_GPU_TEXTURE_FORMAT_R8G8_SNORM;
+        SDL_GPU_TEXTURE_FORMAT_R8G8B8A8_SNORM;
+        SDL_GPU_TEXTURE_FORMAT_R16_SNORM;
+        SDL_GPU_TEXTURE_FORMAT_R16G16_SNORM;
+        SDL_GPU_TEXTURE_FORMAT_R16G16B16A16_SNORM;
+        // Signed Float Color Formats
+        SDL_GPU_TEXTURE_FORMAT_R16_FLOAT;
+        SDL_GPU_TEXTURE_FORMAT_R16G16_FLOAT;
+        SDL_GPU_TEXTURE_FORMAT_R16G16B16A16_FLOAT;
+        SDL_GPU_TEXTURE_FORMAT_R32_FLOAT;
+        SDL_GPU_TEXTURE_FORMAT_R32G32_FLOAT;
+        SDL_GPU_TEXTURE_FORMAT_R32G32B32A32_FLOAT;
+        // Unsigned Float Color Formats
+        SDL_GPU_TEXTURE_FORMAT_R11G11B10_UFLOAT;
+        // Unsigned Integer Color Formats
+        SDL_GPU_TEXTURE_FORMAT_R8_UINT;
+        SDL_GPU_TEXTURE_FORMAT_R8G8_UINT;
+        SDL_GPU_TEXTURE_FORMAT_R8G8B8A8_UINT;
+        SDL_GPU_TEXTURE_FORMAT_R16_UINT;
+        SDL_GPU_TEXTURE_FORMAT_R16G16_UINT;
+        SDL_GPU_TEXTURE_FORMAT_R16G16B16A16_UINT;
+        // Signed Integer Color Formats
+        SDL_GPU_TEXTURE_FORMAT_R8_INT;
+        SDL_GPU_TEXTURE_FORMAT_R8G8_INT;
+        SDL_GPU_TEXTURE_FORMAT_R8G8B8A8_INT;
+        SDL_GPU_TEXTURE_FORMAT_R16_INT;
+        SDL_GPU_TEXTURE_FORMAT_R16G16_INT;
+        SDL_GPU_TEXTURE_FORMAT_R16G16B16A16_INT;
+        // SRGB Unsigned Normalized Color Formats
+        SDL_GPU_TEXTURE_FORMAT_R8G8B8A8_UNORM_SRGB;
+        SDL_GPU_TEXTURE_FORMAT_B8G8R8A8_UNORM_SRGB;
+        // Compressed SRGB Unsigned Normalized Color Formats
+        SDL_GPU_TEXTURE_FORMAT_BC1_RGBA_UNORM_SRGB;
+        SDL_GPU_TEXTURE_FORMAT_BC2_RGBA_UNORM_SRGB;
+        SDL_GPU_TEXTURE_FORMAT_BC3_RGBA_UNORM_SRGB;
+        SDL_GPU_TEXTURE_FORMAT_BC7_RGBA_UNORM_SRGB;
+        // Depth Formats
+        SDL_GPU_TEXTURE_FORMAT_D16_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_D24_UNORM;
+        SDL_GPU_TEXTURE_FORMAT_D32_FLOAT;
+        SDL_GPU_TEXTURE_FORMAT_D24_UNORM_S8_UINT;
+        SDL_GPU_TEXTURE_FORMAT_D32_FLOAT_S8_UINT;
+    } 
+
+    sdl_gpu_texture_usage_flags                 :: type_alias = u32;
+    SDL_GPU_TEXTURE_USAGE_SAMPLER               :: define sdl_gpu_texture_usage_flags = 1 << 0; // Texture supports sampling.
+    SDL_GPU_TEXTURE_USAGE_COLOR_TARGET          :: define sdl_gpu_texture_usage_flags = 1 << 1; // Texture is a color render target.
+    SDL_GPU_TEXTURE_USAGE_DEPTH_STENCIL_TARGET  :: define sdl_gpu_texture_usage_flags = 1 << 2; // Texture is a depth stencil target.
+    SDL_GPU_TEXTURE_USAGE_GRAPHICS_STORAGE_READ :: define sdl_gpu_texture_usage_flags = 1 << 3; // Texture supports storage reads in graphics stages.
+    SDL_GPU_TEXTURE_USAGE_COMPUTE_STORAGE_READ  :: define sdl_gpu_texture_usage_flags = 1 << 4; // Texture supports storage reads in the compute stage.
+    SDL_GPU_TEXTURE_USAGE_COMPUTE_STORAGE_WRITE :: define sdl_gpu_texture_usage_flags = 1 << 5; // Texture supports storage writes in the compute stage.
+
+    sdl_gpu_texture_type :: enum c_int
+    {
+        SDL_GPU_TEXTURE_TYPE_2D;         // The texture is a 2-dimensional image.
+        SDL_GPU_TEXTURE_TYPE_2D_ARRAY;   // The texture is a 2-dimensional array image.
+        SDL_GPU_TEXTURE_TYPE_3D;         // The texture is a 3-dimensional image.
+        SDL_GPU_TEXTURE_TYPE_CUBE;       // The texture is a cube image.
+        SDL_GPU_TEXTURE_TYPE_CUBE_ARRAY; // The texture is a cube array image.
+    }
+
+    sdl_gpu_sample_count :: enum c_int
+    {
+        SDL_GPU_SAMPLECOUNT_1;  // No multisampling.
+        SDL_GPU_SAMPLECOUNT_2;  // MSAA 2x
+        SDL_GPU_SAMPLECOUNT_4;  // MSAA 4x 
+        SDL_GPU_SAMPLECOUNT_8;  // MSAA 8x
+    }
+
+    sdl_gpu_cube_map_face :: enum c_int
+    {
+        SDL_GPU_CUBE_MAP_FACE_POSITIVE_X;
+        SDL_GPU_CUBE_MAP_FACE_NEGATIVE_X;
+        SDL_GPU_CUBE_MAP_FACE_POSITIVE_Y;
+        SDL_GPU_CUBE_MAP_FACE_NEGATIVE_Y;
+        SDL_GPU_CUBE_MAP_FACE_POSITIVE_Z;
+        SDL_GPU_CUBE_MAP_FACE_NEGATIVE_Z;
+    }
+
+    sdl_gpu_buffer_usage_flags                 :: type_alias = u32;
+    SDL_GPU_BUFFER_USAGE_VERTEX                :: define sdl_gpu_buffer_usage_flags = 1 << 0; // Buffer is a vertex buffer.
+    SDL_GPU_BUFFER_USAGE_INDEX                 :: define sdl_gpu_buffer_usage_flags = 1 << 1; // Buffer is an index buffer.
+    SDL_GPU_BUFFER_USAGE_INDIRECT              :: define sdl_gpu_buffer_usage_flags = 1 << 2; // Buffer is an indirect buffer.
+    SDL_GPU_BUFFER_USAGE_GRAPHICS_STORAGE_READ :: define sdl_gpu_buffer_usage_flags = 1 << 3; // Buffer supports storage reads in graphics stages.
+    SDL_GPU_BUFFER_USAGE_COMPUTE_STORAGE_READ  :: define sdl_gpu_buffer_usage_flags = 1 << 4; // Buffer supports storage reads in the compute stage.
+    SDL_GPU_BUFFER_USAGE_COMPUTE_STORAGE_WRITE :: define sdl_gpu_buffer_usage_flags = 1 << 5; // Buffer supports storage writes in the compute stage.
+
+    sdl_gpu_transfer_buffer_usage :: enum c_int
+    {
+        SDL_GPU_TRANSFER_BUFFER_USAGE_UPLOAD;
+        SDL_GPU_TRANSFER_BUFFER_USAGE_DOWNLOAD;
+    } 
+
+    sdl_gpu_shader_stage :: enum c_int
+    {
+        SDL_GPU_SHADER_STAGE_VERTEX;
+        SDL_GPU_SHADER_STAGE_FRAGMENT;
+    } 
+
+    sdl_gpu_shader_format          :: type_alias = u32;
+    SDL_GPU_SHADER_FORMAT_INVALID  :: define sdl_gpu_shader_format = 0;
+    SDL_GPU_SHADER_FORMAT_PRIVATE  :: define sdl_gpu_shader_format = 1 << 0; // Shaders for NDA'd platforms.
+    SDL_GPU_SHADER_FORMAT_SPIRV    :: define sdl_gpu_shader_format = 1 << 1; // SPIR-V shaders for Vulkan.
+    SDL_GPU_SHADER_FORMAT_DXBC     :: define sdl_gpu_shader_format = 1 << 2; // DXBC SM5_0 shaders for D3D11.
+    SDL_GPU_SHADER_FORMAT_DXIL     :: define sdl_gpu_shader_format = 1 << 3; // DXIL shaders for D3D12.
+    SDL_GPU_SHADER_FORMAT_MSL      :: define sdl_gpu_shader_format = 1 << 4; // MSL shaders for Metal.
+    SDL_GPU_SHADER_FORMAT_METALLIB :: define sdl_gpu_shader_format = 1 << 5; // Precompiled metallib shaders for Metal.
+
+    sdl_gpu_vertex_element_format :: enum c_int
+    {
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_INVALID;
+
+        // 32-bit Signed Integers
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_INT;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_INT2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_INT3;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_INT4;
+
+        // 32-bit Unsigned Integers
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UINT;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UINT2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UINT3;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UINT4;
+
+        // 32-bit Floats
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_FLOAT;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_FLOAT2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_FLOAT3;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_FLOAT4;
+
+        // 8-bit Signed Integers
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_BYTE2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_BYTE4;
+
+        // 8-bit Unsigned Integers
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UBYTE2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UBYTE4;
+
+        // 8-bit Signed Normalized
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_BYTE2_NORM;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_BYTE4_NORM;
+
+        // 8-bit Unsigned Normalized
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UBYTE2_NORM;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_UBYTE4_NORM;
+
+        // 16-bit Signed Integers
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_SHORT2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_SHORT4;
+
+        // 16-bit Unsigned Integers
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_USHORT2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_USHORT4;
+
+        // 16-bit Signed Normalized
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_SHORT2_NORM;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_SHORT4_NORM;
+
+        // 16-bit Unsigned Normalized
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_USHORT2_NORM;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_USHORT4_NORM;
+
+        // 16-bit Floats
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_HALF2;
+        SDL_GPU_VERTEX_ELEMENT_FORMAT_HALF4;
+    } 
+
+    sdl_gpu_vertex_input_rate :: enum c_int
+    {
+        SDL_GPU_VERTEX_INPUT_RATE_VERTEX;   // Attribute addressing is a function of the vertex index.
+        SDL_GPU_VERTEX_INPUT_RATE_INSTANCE; // Attribute addressing is a function of the instance index.
+    }
+
+    sdl_gpu_fill_mode :: enum c_int
+    {
+        SDL_GPU_FILL_MODE_FILL;  // Polygons will be rendered via rasterization.
+        SDL_GPU_FILL_MODE_LINE;  // Polygon edges will be drawn as line segments.
+    }
+
+    sdl_gpu_cull_mode :: enum c_int
+    {
+        SDL_GPU_CULL_MODE_NONE;   // No triangles are culled.
+        SDL_GPU_CULL_MODE_FRONT;  // Front-facing triangles are culled.
+        SDL_GPU_CULL_MODE_BACK;   // Back-facing triangles are culled.
+    }
+
+    sdl_gpu_front_face :: enum c_int
+    {
+        SDL_GPU_FRONT_FACE_COUNTER_CLOCKWISE;  // A triangle with counter-clockwise vertex winding will be considered front-facing.
+        SDL_GPU_FRONT_FACE_CLOCKWISE;          // A triangle with clockwise vertex winding will be considered front-facing.
+    }
+
+    sdl_gpu_compare_op :: enum c_int
+    {
+        SDL_GPU_COMPARE_OP_INVALID;
+        SDL_GPU_COMPARE_OP_NEVER;             // The comparison always evaluates false.
+        SDL_GPU_COMPARE_OP_LESS;              // The comparison evaluates reference < test.
+        SDL_GPU_COMPARE_OP_EQUAL;             // The comparison evaluates reference == test.
+        SDL_GPU_COMPARE_OP_LESS_OR_EQUAL;     // The comparison evaluates reference <= test.
+        SDL_GPU_COMPARE_OP_GREATER;           // The comparison evaluates reference > test.
+        SDL_GPU_COMPARE_OP_NOT_EQUAL;         // The comparison evaluates reference != test.
+        SDL_GPU_COMPARE_OP_GREATER_OR_EQUAL;  // The comparison evalutes reference >= test.
+        SDL_GPU_COMPARE_OP_ALWAYS;            // The comparison always evaluates true.
+    } 
+    
+    sdl_gpu_stencil_op :: enum c_int
+    {
+        SDL_GPU_STENCIL_OP_INVALID;
+        SDL_GPU_STENCIL_OP_KEEP;                 // Keeps the current value.
+        SDL_GPU_STENCIL_OP_ZERO;                 // Sets the value to 0.
+        SDL_GPU_STENCIL_OP_REPLACE;              // Sets the value to reference.
+        SDL_GPU_STENCIL_OP_INCREMENT_AND_CLAMP;  // Increments the current value and clamps to the maximum value.
+        SDL_GPU_STENCIL_OP_DECREMENT_AND_CLAMP;  // Decrements the current value and clamps to 0.
+        SDL_GPU_STENCIL_OP_INVERT;               // Bitwise-inverts the current value.
+        SDL_GPU_STENCIL_OP_INCREMENT_AND_WRAP;   // Increments the current value and wraps back to 0.
+        SDL_GPU_STENCIL_OP_DECREMENT_AND_WRAP;   // Decrements the current value and wraps to the maximum value.
+    } 
+
+    sdl_gpu_blend_op :: enum c_int
+    {
+        SDL_GPU_BLEND_OP_INVALID;
+        SDL_GPU_BLEND_OP_ADD;               // (source * source_factor) + (destination * destination_factor)
+        SDL_GPU_BLEND_OP_SUBTRACT;          // (source * source_factor) - (destination * destination_factor)
+        SDL_GPU_BLEND_OP_REVERSE_SUBTRACT;  // (destination * destination_factor) - (source * source_factor) 
+        SDL_GPU_BLEND_OP_MIN;               // min(source; destination)
+        SDL_GPU_BLEND_OP_MAX;               // max(source; destination) 
+    }
+
+    sdl_gpu_blend_factor :: enum c_int
+    {
+        SDL_GPU_BLEND_FACTOR_INVALID;
+        SDL_GPU_BLEND_FACTOR_ZERO;                      // 0
+        SDL_GPU_BLEND_FACTOR_ONE;                       // 1
+        SDL_GPU_BLEND_FACTOR_SRC_COLOR;                 // source color 
+        SDL_GPU_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;       // 1 - source color 
+        SDL_GPU_BLEND_FACTOR_DST_COLOR;                 // destination color 
+        SDL_GPU_BLEND_FACTOR_ONE_MINUS_DST_COLOR;       // 1 - destination color 
+        SDL_GPU_BLEND_FACTOR_SRC_ALPHA;                 // source alpha
+        SDL_GPU_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;       // 1 - source alpha
+        SDL_GPU_BLEND_FACTOR_DST_ALPHA;                 // destination alpha
+        SDL_GPU_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;       // 1 - destination alpha
+        SDL_GPU_BLEND_FACTOR_CONSTANT_COLOR;            // blend constant
+        SDL_GPU_BLEND_FACTOR_ONE_MINUS_CONSTANT_COLOR;  // 1 - blend constant
+        SDL_GPU_BLEND_FACTOR_SRC_ALPHA_SATURATE;        // min(source alpha; 1 - destination alpha)
+    } 
+
+    sdl_gpu_color_component_flags :: type_alias = u8;
+    SDL_GPU_COLOR_COMPONENT_R     :: define sdl_gpu_color_component_flags = 1 << 0; // the red component
+    SDL_GPU_COLOR_COMPONENT_G     :: define sdl_gpu_color_component_flags = 1 << 1; // the green component
+    SDL_GPU_COLOR_COMPONENT_B     :: define sdl_gpu_color_component_flags = 1 << 2; // the blue component
+    SDL_GPU_COLOR_COMPONENT_A     :: define sdl_gpu_color_component_flags = 1 << 3; // the alpha component
+
+    sdl_gpu_filter :: enum c_int
+    {
+        SDL_GPU_FILTER_NEAREST;  // Point filtering.
+        SDL_GPU_FILTER_LINEAR;   // Linear filtering. 
+    } 
+
+    sdl_gpu_sampler_mipmap_mode :: enum c_int
+    {
+        SDL_GPU_SAMPLER_MIPMAP_MODE_NEAREST;  // Point filtering.
+        SDL_GPU_SAMPLER_MIPMAP_MODE_LINEAR;   // Linear filtering.
+    } 
+
+    sdl_gpu_sampler_address_mode :: enum c_int
+    {
+        SDL_GPU_SAMPLER_ADDRESS_MODE_REPEAT;           // Specifies that the coordinates will wrap around.
+        SDL_GPU_SAMPLER_ADDRESS_MODE_MIRRORED_REPEAT;  // Specifies that the coordinates will wrap around mirrored.
+        SDL_GPU_SAMPLER_ADDRESS_MODE_CLAMP_TO_EDGE;    // Specifies that the coordinates will clamp to the 0-1 range.
+    } 
+
+    sdl_gpu_present_mode :: enum c_int
+    {
+        SDL_GPU_PRESENT_MODE_VSYNC;
+        SDL_GPU_PRESENT_MODE_IMMEDIATE;
+        SDL_GPU_PRESENT_MODE_MAILBOX;
+    } 
+
+    sdl_gpu_swapchain_composition :: enum c_int
+    {
+        SDL_GPU_SWAPCHAIN_COMPOSITION_SDR;
+        SDL_GPU_SWAPCHAIN_COMPOSITION_SDR_LINEAR;
+        SDL_GPU_SWAPCHAIN_COMPOSITION_HDR_EXTENDED_LINEAR;
+        SDL_GPU_SWAPCHAIN_COMPOSITION_HDR10_ST2048;
+    } 
+
+    sdl_gpu_viewport :: struct
+    {
+        x         : f32;  // The left offset of the viewport.
+        y         : f32;  // The top offset of the viewport.
+        w         : f32;  // The width of the viewport.
+        h         : f32;  // The height of the viewport.
+        min_depth : f32;  // The minimum depth of the viewport.
+        max_depth : f32;  // The maximum depth of the viewport.
+    } 
+
+    sdl_gpu_texture_transfer_info :: struct
+    {
+        transfer_buffer : sdl_gpu_transfer_buffer&;  // The transfer buffer used in the transfer operation.
+        offset          : u32;                     // The starting byte of the image data in the transfer buffer.
+        pixels_per_row  : u32;                     // The number of pixels from one row to the next.
+        rows_per_layer  : u32;                     // The number of rows from one layer/depth-slice to the next.
+    } 
+
+    sdl_gpu_transfer_buffer_location :: struct
+    {
+        transfer_buffer : sdl_gpu_transfer_buffer&;  // The transfer buffer used in the transfer operation.
+        offset          : u32;                     // The starting byte of the buffer data in the transfer buffer.
+    } 
+
+    sdl_gpu_texture_location :: struct
+    {
+        texture   : sdl_gpu_texture&; // The texture used in the copy operation.
+        mip_level : u32;             // The mip level index of the location.
+        layer     : u32;             // The layer index of the location.
+        x         : u32;             // The left offset of the location.
+        y         : u32;             // The top offset of the location.
+        z         : u32;             // The front offset of the location.
+    }
+
+    sdl_gpu_texture_region :: struct
+    {
+        texture   : sdl_gpu_texture&; // The texture used in the copy operation.
+        mip_level : u32;             // The mip level index to transfer.
+        layer     : u32;             // The layer index to transfer.
+        x         : u32;             // The left offset of the region.
+        y         : u32;             // The top offset of the region.
+        z         : u32;             // The front offset of the region.
+        w         : u32;             // The width of the region.
+        h         : u32;             // The height of the region.
+        d         : u32;             // The depth of the region.
+    } 
+
+    sdl_gpu_blit_region :: struct
+    {
+        texture              : sdl_gpu_texture&; // The texture.
+        mip_level            : u32;             // The mip level index of the region.
+        layer_or_depth_plane : u32;             // The layer index or depth plane of the region. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures.
+        x                    : u32;             // The left offset of the region.
+        y                    : u32;             // The top offset of the region.
+        w                    : u32;             // The width of the region.
+        h                    : u32;             // The height of the region.
+    }
+
+    sdl_gpu_buffer_location :: struct
+    {
+        buffer : sdl_gpu_buffer&; // The buffer.
+        offset : u32;            // The starting byte within the buffer.
+    }
+
+    sdl_gpu_buffer_region :: struct
+    {
+        buffer : sdl_gpu_buffer&; // The buffer.
+        offset : u32;            // The starting byte within the buffer.
+        size   : u32;            // The size in bytes of the region.
+    } 
+
+    sdl_gpu_indirect_draw_command :: struct
+    {
+        num_vertices   : u32; // The number of vertices to draw.
+        num_instances  : u32; // The number of instances to draw.
+        first_vertex   : u32; // The index of the first vertex to draw.
+        first_instance : u32; // The ID of the first instance to draw.
+    } 
+
+    sdl_gpu_indexed_indirect_draw_command :: struct
+    {
+        num_indices    : u32; // The number of indices to draw per instance.
+        num_instances  : u32; // The number of instances to draw.
+        first_index    : u32; // The base index within the index buffer.
+        vertex_offset  : s32; // The value added to the vertex index before indexing into the vertex buffer.
+        first_instance : u32; // The ID of the first instance to draw.
+    }
+
+    sdl_gpu_indirect_dispatch_command :: struct
+    {
+        groupcount_x: u32;  // The number of local workgroups to dispatch in the X dimension.
+        groupcount_y: u32;  // The number of local workgroups to dispatch in the Y dimension.
+        groupcount_z: u32;  // The number of local workgroups to dispatch in the Z dimension.
+    } 
+
+    sdl_gpu_sampler_create_info :: struct
+    {
+        min_filter        : sdl_gpu_filter;             // The minification filter to apply to lookups.
+        mag_filter        : sdl_gpu_filter;             // The magnification filter to apply to lookups.
+        mipmap_mode       : sdl_gpu_sampler_mipmap_mode;  // The mipmap filter to apply to lookups.
+        address_mode_u    : sdl_gpu_sampler_address_mode; // The addressing mode for U coordinates outside [0, 1).
+        address_mode_v    : sdl_gpu_sampler_address_mode; // The addressing mode for V coordinates outside [0, 1).
+        address_mode_w    : sdl_gpu_sampler_address_mode; // The addressing mode for W coordinates outside [0, 1).
+        mip_lod_bias      : f32;                       // The bias to be added to mipmap LOD calculation.
+        max_anisotropy    : f32;                       // The anisotropy value clamp used by the sampler. If enable_anisotropy is false, this is ignored.
+        compare_op        : sdl_gpu_compare_op;          // The comparison operator to apply to fetched data before filtering.
+        min_lod           : f32;                       // Clamps the minimum of the computed LOD value.
+        max_lod           : f32;                       // Clamps the maximum of the computed LOD value.
+        enable_anisotropy : bool;                      // true to enable anisotropic filtering.
+        enable_compare    : bool;                      // true to enable comparison against a reference value during lookups.
+        padding1          : u8;
+        padding2          : u8;
+
+        props             : sdl_properties_id;          // A properties ID for extensions. Should be 0 if no extensions are needed.
+    }
+
+    sdl_gpu_vertex_buffer_description :: struct
+    {
+        slot               : u32;                    // The binding slot of the vertex buffer.
+        pitch              : u32;                    // The byte pitch between consecutive elements of the vertex buffer.
+        input_rate         : sdl_gpu_vertex_input_rate; // Whether attribute addressing is a function of the vertex index or instance index.
+        instance_step_rate : u32;                    // The number of instances to draw using the same per-instance data before advancing in the instance buffer by one element. Ignored unless input_rate is SDL_GPU_VERTEXINPUTRATE_INSTANCE
+    }
+
+    sdl_gpu_vertex_attribute :: struct
+    {
+        location    : u32;                        // The shader input location index.
+        buffer_slot : u32;                        // The binding slot of the associated vertex buffer.
+        format      : sdl_gpu_vertex_element_format; // The size and type of the attribute data.
+        offset      : u32;                        // The byte offset of this attribute relative to the start of the vertex element.
+    } 
+
+    sdl_gpu_vertex_input_state :: struct
+    {
+        vertex_buffer_descriptions : sdl_gpu_vertex_buffer_description&; // A pointer to an array of vertex buffer descriptions.
+        num_vertex_buffers         : u32;                             // The number of vertex buffer descriptions in the above array.
+        vertex_attributes          : sdl_gpu_vertex_attribute&;         // A pointer to an array of vertex attribute descriptions.
+        num_vertex_attributes      : u32;                             // The number of vertex attribute descriptions in the above array.
+    } 
+
+    sdl_gpu_stencil_op_state :: struct
+    {
+        fail_op       : sdl_gpu_stencil_op;  // The action performed on samples that fail the stencil test.
+        pass_op       : sdl_gpu_stencil_op;  // The action performed on samples that pass the depth and stencil tests.
+        depth_fail_op : sdl_gpu_stencil_op;  // The action performed on samples that pass the stencil test and fail the depth test.
+        compare_op    : sdl_gpu_compare_op;  // The comparison operator used in the stencil test.
+    } 
+
+    sdl_gpu_color_target_blend_state :: struct
+    {
+        src_color_blendfactor   : sdl_gpu_blend_factor;         // The value to be multiplied by the source RGB value.
+        dst_color_blendfactor   : sdl_gpu_blend_factor;         // The value to be multiplied by the destination RGB value.
+        color_blend_op          : sdl_gpu_blend_op;             // The blend operation for the RGB components.
+        src_alpha_blendfactor   : sdl_gpu_blend_factor;         // The value to be multiplied by the source alpha.
+        dst_alpha_blendfactor   : sdl_gpu_blend_factor;         // The value to be multiplied by the destination alpha.
+        alpha_blend_op          : sdl_gpu_blend_op;             // The blend operation for the alpha component.
+        color_write_mask        : sdl_gpu_color_component_flags; // A bitmask specifying which of the RGBA components are enabled for writing. Writes to all channels if enable_color_write_mask is false.
+        enable_blend            : bool;                       // Whether blending is enabled for the color target.
+        enable_color_write_mask : bool;                       // Whether the color write mask is enabled.
+        padding2                : u8;
+        padding3                : u8;
+    }
+
+    sdl_gpu_shader_create_info :: struct
+    {
+        code_size            : usize;               // The size in bytes of the code pointed to.
+        code                 : u8&;                 // A pointer to shader code.
+        entrypoint           : c_char&;             // A pointer to a null-terminated UTF-8 string specifying the entry point function name for the shader.
+        format               : sdl_gpu_shader_format; // The format of the shader code.
+        stage                : sdl_gpu_shader_stage;  // The stage the shader program corresponds to.
+        num_samplers         : u32;                 // The number of samplers defined in the shader.
+        num_storage_textures : u32;                 // The number of storage textures defined in the shader.
+        num_storage_buffers  : u32;                 // The number of storage buffers defined in the shader.
+        num_uniform_buffers  : u32;                 // The number of uniform buffers defined in the shader. 
+
+        props                : sdl_properties_id;    // A properties ID for extensions. Should be 0 if no extensions are needed.
+    }
+
+    sdl_gpu_texture_create_info :: struct
+    {
+        type                 : sdl_gpu_texture_type;       // The base dimensionality of the texture.
+        format               : sdl_gpu_texture_format;     // The pixel format of the texture.
+        usage                : sdl_gpu_texture_usage_flags; // How the texture is intended to be used by the client.
+        width                : u32;                      // The width of the texture.
+        height               : u32;                      // The height of the texture.
+        layer_count_or_depth : u32;                      // The layer count or depth of the texture. This value is treated as a layer count on 2D array textures, and as a depth value on 3D textures.
+        num_levels           : u32;                      // The number of mip levels in the texture.
+        sample_count         : sdl_gpu_sample_count;       // The number of samples per texel. Only applies if the texture is used as a render target.
+
+        props                : sdl_properties_id;         // A properties ID for extensions. Should be 0 if no extensions are needed.
+    }
+
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_R_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.r\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_G_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.g\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_B_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.b\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_A_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.a\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_DEPTH_FLOAT   :: define string = "SDL.gpu.createtexture.d3d12.clear.depth\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_STENCIL_UINT8 :: define string = "SDL.gpu.createtexture.d3d12.clear.stencil\0";
+
+    sdl_gpu_buffer_create_info :: struct
+    {
+        usage : sdl_gpu_buffer_usage_flags; // How the buffer is intended to be used by the client.
+        size  : u32;                     // The size in bytes of the buffer.
+
+        props : sdl_properties_id;        // A properties ID for extensions. Should be 0 if no extensions are needed.
+    } 
+
+    sdl_gpu_transfer_buffer_create_info :: struct
+    {
+        usage : sdl_gpu_transfer_buffer_usage; // How the transfer buffer is intended to be used by the client.
+        size  : u32;                        // The size in bytes of the transfer buffer.
+
+        props : sdl_properties_id;           // A properties ID for extensions. Should be 0 if no extensions are needed.
+    } 
+
+    sdl_gpu_rasterizer_state :: struct
+    {
+        fill_mode                  : sdl_gpu_fill_mode;  // Whether polygons will be filled in or drawn as lines.
+        cull_mode                  : sdl_gpu_cull_mode;  // The facing direction in which triangles will be culled.
+        front_face                 : sdl_gpu_front_face; // The vertex winding that will cause a triangle to be determined as front-facing.
+        depth_bias_constant_factor : f32;              // A scalar factor controlling the depth value added to each fragment.
+        depth_bias_clamp           : f32;              // The maximum depth bias of a fragment.
+        depth_bias_slope_factor    : f32;              // A scalar factor applied to a fragment's slope in depth calculations.
+        enable_depth_bias          : bool;             // true to bias fragment depth values.
+        padding1                   : u8;
+        padding2                   : u8;
+        padding3                   : u8;
+    }
+
+    sdl_gpu_multisample_state :: struct
+    {
+        sample_count : sdl_gpu_sample_count;  // The number of samples to be used in rasterization.
+        sample_mask  : u32;                 // Determines which samples get updated in the render targets. Treated as 0xFFFFFFFF if enable_mask is false.
+        enable_mask  : bool;                // Enables sample masking.
+        padding1     : u8;
+        padding2     : u8;
+        padding3     : u8;
+    }
+
+    sdl_gpu_depth_stencil_state :: struct
+    {
+        compare_op          : sdl_gpu_compare_op;      // The comparison operator used for depth testing.
+        back_stencil_state  : sdl_gpu_stencil_op_state; // The stencil op state for back-facing triangles.
+        front_stencil_state : sdl_gpu_stencil_op_state; // The stencil op state for front-facing triangles.
+        compare_mask        : u8;                    // Selects the bits of the stencil values participating in the stencil test.
+        write_mask          : u8;                    // Selects the bits of the stencil values updated by the stencil test.
+        enable_depth_test   : bool;                  // true enables the depth test. 
+        enable_depth_write  : bool;                  // true enables depth writes. Depth writes are always disabled when enable_depth_test is false.
+        enable_stencil_test : bool;                  // true enables the stencil test.
+        padding1            : u8;
+        padding2            : u8;
+        padding3            : u8;
+    }
+
+    sdl_gpu_color_target_description :: struct
+    {
+        format      : sdl_gpu_texture_format;          // The pixel format of the texture to be used as a color target.
+        blend_state : sdl_gpu_color_target_blend_state;  // The blend state to be used for the color target.
+    }
+
+    sdl_gpu_graphics_pipeline_target_info :: struct
+    {
+        color_target_descriptions : sdl_gpu_color_target_description&;  // A pointer to an array of color target descriptions.
+        num_color_targets         : u32;                             // The number of color target descriptions in the above array.
+        depth_stencil_format      : sdl_gpu_texture_format;            // The pixel format of the depth-stencil target. Ignored if has_depth_stencil_target is false.
+        has_depth_stencil_target  : bool;                            // true specifies that the pipeline uses a depth-stencil target.
+        padding1                  : u8;
+        padding2                  : u8;
+        padding3                  : u8;
+    }
+
+    sdl_gpu_graphics_pipeline_create_info :: struct
+    {
+        vertex_shader       : sdl_gpu_shader&;                     // The vertex shader used by the graphics pipeline.
+        fragment_shader     : sdl_gpu_shader&;                     // The fragment shader used by the graphics pipeline.
+        vertex_input_state  : sdl_gpu_vertex_input_state;            // The vertex layout of the graphics pipeline.
+        primitive_type      : sdl_gpu_primitive_type;               // The primitive topology of the graphics pipeline.
+        rasterizer_state    : sdl_gpu_rasterizer_state;             // The rasterizer state of the graphics pipeline.
+        multisample_state   : sdl_gpu_multisample_state;            // The multisample state of the graphics pipeline.
+        depth_stencil_state : sdl_gpu_depth_stencil_state;           // The depth-stencil state of the graphics pipeline.
+        target_info         : sdl_gpu_graphics_pipeline_target_info;  // Formats and blend modes for the render targets of the graphics pipeline.
+
+        props               : sdl_properties_id;                   // A properties ID for extensions. Should be 0 if no extensions are needed.
+    }
+
+    sdl_gpu_compute_pipeline_create_info :: struct
+    {
+        code_size                      : usize;               // The size in bytes of the compute shader code pointed to.
+        code                           : u8&;                 // A pointer to compute shader code.
+        entrypoint                     : c_char&;             // A pointer to a null-terminated UTF-8 string specifying the entry point function name for the shader.
+        format                         : sdl_gpu_shader_format; // The format of the compute shader code.
+        num_samplers                   : u32;                 // The number of samplers defined in the shader.
+        num_readonly_storage_textures  : u32;                 // The number of readonly storage textures defined in the shader.
+        num_readonly_storage_buffers   : u32;                 // The number of readonly storage buffers defined in the shader.
+        num_writeonly_storage_textures : u32;                 // The number of writeonly storage textures defined in the shader.
+        num_writeonly_storage_buffers  : u32;                 // The number of writeonly storage buffers defined in the shader.
+        num_uniform_buffers            : u32;                 // The number of uniform buffers defined in the shader.
+        threadcount_x                  : u32;                 // The number of threads in the X dimension. This should match the value in the shader.
+        threadcount_y                  : u32;                 // The number of threads in the Y dimension. This should match the value in the shader.
+        threadcount_z                  : u32;                 // The number of threads in the Z dimension. This should match the value in the shader.
+
+        props                          : sdl_properties_id;    // A properties ID for extensions. Should be 0 if no extensions are needed.
+    }
+
+    sdl_gpu_color_target_info :: struct
+    {
+        texture               : sdl_gpu_texture&;  // The texture that will be used as a color target by a render pass.
+        mip_level             : u32;              // The mip level to use as a color target.
+        layer_or_depth_plane  : u32;              // The layer index or depth plane to use as a color target. This value is treated as a layer index on 2D array and cube textures, and as a depth plane on 3D textures.
+        clear_color           : sdl_fcolor;       // The color to clear the color target to at the start of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used. 
+        load_op               : sdl_gpu_load_op;    // What is done with the contents of the color target at the beginning of the render pass.
+        store_op              : sdl_gpu_store_op;   // What is done with the results of the render pass.
+        resolve_texture       : sdl_gpu_texture&;  // The texture that will receive the results of a multisample resolve operation. Ignored if a RESOLVE* store_op is not used.
+        resolve_mip_level     : u32;              // The mip level of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used.
+        resolve_layer         : u32;              // The layer index of the resolve texture to use for the resolve operation. Ignored if a RESOLVE* store_op is not used.
+        cycle                 : bool;             // true cycles the texture if the texture is bound and load_op is not LOAD.
+        cycle_resolve_texture : bool;             // true cycles the resolve texture if the resolve texture is bound. Ignored if a RESOLVE* store_op is not used.
+        padding1              : u8;
+        padding2              : u8;
+    } 
+
+    sdl_gpu_depth_stencil_target_info :: struct
+    {
+        texture          : sdl_gpu_texture&; // The texture that will be used as the depth stencil target by the render pass.
+        clear_depth      : f32;             // The value to clear the depth component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
+        load_op          : sdl_gpu_load_op;   // What is done with the depth contents at the beginning of the render pass.
+        store_op         : sdl_gpu_store_op;  // What is done with the depth results of the render pass. 
+        stencil_load_op  : sdl_gpu_load_op;   // What is done with the stencil contents at the beginning of the render pass. 
+        stencil_store_op : sdl_gpu_store_op;  // What is done with the stencil results of the render pass.
+        cycle            : bool;            // true cycles the texture if the texture is bound and any load ops are not LOAD
+        clear_stencil    : u8;              // The value to clear the stencil component to at the beginning of the render pass. Ignored if SDL_GPU_LOADOP_CLEAR is not used.
+        padding1         : u8;
+        padding2         : u8;
+    }
+
+    sdl_gpu_blit_info :: struct
+    {
+        source      : sdl_gpu_blit_region;  // The source region for the blit.
+        destination : sdl_gpu_blit_region;  // The destination region for the blit. 
+        load_op     : sdl_gpu_load_op;      // What is done with the contents of the destination before the blit.
+        clear_color : sdl_fcolor;         // The color to clear the destination region to before the blit. Ignored if load_op is not SDL_GPU_LOADOP_CLEAR.
+        flip_mode   : sdl_flip_mode;       // The flip mode for the source region.
+        filter      : sdl_gpu_filter;      // The filter mode used when blitting.
+        cycle       : bool;               // true cycles the destination texture if it is already bound. 
+        padding1    : u8;
+        padding2    : u8;
+        padding3    : u8;
+    }
+
+    sdl_gpu_buffer_binding :: struct
+    {
+        buffer : sdl_gpu_buffer&; // The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_VERTEX for SDL_BindGPUVertexBuffers, or SDL_GPU_BUFFERUSAGE_INDEX for SDL_BindGPUIndexBuffers.
+        offset : u32;            // The starting byte of the data to bind in the buffer.
+    } 
+
+    sdl_gpu_texture_sampler_binding :: struct
+    {
+        texture : sdl_gpu_texture&;  // The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_SAMPLER.
+        sampler : sdl_gpu_sampler&;  // The sampler to bind.
+    }
+
+    sdl_gpu_storage_buffer_write_only_binding :: struct
+    {
+        buffer   : sdl_gpu_buffer&; // The buffer to bind. Must have been created with SDL_GPU_BUFFERUSAGE_COMPUTE_STORAGE_WRITE.
+        cycle    : bool;           // true cycles the buffer if it is already bound.
+        padding1 : u8;
+        padding2 : u8;
+        padding3 : u8;
+    }
+
+    sdl_gpu_storage_texture_write_only_binding :: struct
+    {
+        texture   : sdl_gpu_texture&; // The texture to bind. Must have been created with SDL_GPU_TEXTUREUSAGE_COMPUTE_STORAGE_WRITE.
+        mip_level : u32;             // The mip level index to bind.
+        layer     : u32;             // The layer index to bind.
+        cycle     : bool;            // true cycles the texture if it is already bound.
+        padding1  : u8;
+        padding2  : u8;
+        padding3  : u8;
+    }
+
+    SDL_PROP_GPU_DEVICE_CREATE_DEBUG_MODE_BOOL            :: define string = "SDL.gpu.device.create.debugmode\0";
+    SDL_PROP_GPU_DEVICE_CREATE_PREFER_LOW_POWER_BOOL      :: define string = "SDL.gpu.device.create.preferlowpower\0";
+    SDL_PROP_GPU_DEVICE_CREATE_NAME_STRING                :: define string = "SDL.gpu.device.create.name\0";
+    SDL_PROP_GPU_DEVICE_CREATE_SHADERS_PRIVATE_BOOL       :: define string = "SDL.gpu.device.create.shaders.private\0";
+    SDL_PROP_GPU_DEVICE_CREATE_SHADERS_SPIRV_BOOL         :: define string = "SDL.gpu.device.create.shaders.spirv\0";
+    SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXBC_BOOL          :: define string = "SDL.gpu.device.create.shaders.dxbc\0";
+    SDL_PROP_GPU_DEVICE_CREATE_SHADERS_DXIL_BOOL          :: define string = "SDL.gpu.device.create.shaders.dxil\0";
+    SDL_PROP_GPU_DEVICE_CREATE_SHADERS_MSL_BOOL           :: define string = "SDL.gpu.device.create.shaders.msl\0";
+    SDL_PROP_GPU_DEVICE_CREATE_SHADERS_METALLIB_BOOL      :: define string = "SDL.gpu.device.create.shaders.metallib\0";
+    SDL_PROP_GPU_DEVICE_CREATE_D3D12_SEMANTIC_NAME_STRING :: define string = "SDL.gpu.device.create.d3d12.semantic\0";
+
+}
+
+import
+{
+    "sdl3/sdl_properties";
+    "sdl3/sdl_rect";
+    "sdl3/sdl_pixels";
+    "sdl3/sdl_video";
+    "sdl3/sdl_surface";
+}

@@ -1,0 +1,65 @@
+export_library
+{
+    sdl_has_keyboard                     :: fn () -> bool                                                                         = extern "SDL_HasKeyboard";
+    sdl_get_keyboards                    :: fn (count: c_int&) -> sdl_keyboard_id&                                                = extern "SDL_GetKeyboards";
+    sdl_get_keyboard_name_for_id         :: fn (instance_id: sdl_keyboard_id) -> c_char&                                          = extern "SDL_GetKeyboardNameForID";
+    sdl_get_keyboard_focus               :: fn () -> sdl_window&                                                                  = extern "SDL_GetKeyboardFocus";
+    sdl_get_keyboard_state               :: fn (numkeys: c_int&) -> bool&                                                         = extern "SDL_GetKeyboardState";
+    sdl_reset_keyboard                   :: fn ()                                                                                 = extern "SDL_ResetKeyboard";
+    sdl_get_mod_state                    :: fn () -> sdl_keymod                                                                   = extern "SDL_GetModState";
+    sdl_set_mod_state                    :: fn (modstate: sdl_keymod)                                                             = extern "SDL_SetModState";
+    sdl_get_key_from_scancode            :: fn (scancode: sdl_scancode, modstate: sdl_keymod, key_event: bool) -> sdl_keycode     = extern "SDL_GetKeyFromScancode";
+    sdl_get_scancode_from_key            :: fn (key: sdl_keycode, modstate: sdl_keymod&) -> sdl_scancode                          = extern "SDL_GetScancodeFromKey";
+    sdl_set_scancode_name                :: fn (scancode: sdl_scancode, name: c_char&) -> bool                                    = extern "SDL_SetScancodeName";
+    sdl_get_scancode_name                :: fn (scancode: sdl_scancode) -> c_char&                                                = extern "SDL_GetScancodeName";
+    sdl_get_scancode_from_name           :: fn (name: c_char&) -> sdl_scancode                                                    = extern "SDL_GetScancodeFromName";
+    sdl_get_key_name                     :: fn (key: sdl_keycode) -> c_char&                                                      = extern "SDL_GetKeyName";
+    sdl_get_key_from_name                :: fn (name: c_char&) -> sdl_keycode                                                     = extern "SDL_GetKeyFromName";
+    sdl_start_text_input                 :: fn (window: sdl_window&) -> bool                                                      = extern "SDL_StartTextInput";
+    sdl_start_text_input_with_properties :: fn (window: sdl_window&, props: sdl_properties_id) -> bool                            = extern "SDL_StartTextInputWithProperties";
+    sdl_text_input_active                :: fn (window: sdl_window&) -> bool                                                      = extern "SDL_TextInputActive";
+    sdl_stop_text_input                  :: fn (window: sdl_window&) -> bool                                                      = extern "SDL_StopTextInput";
+    sdl_clear_composition                :: fn (window: sdl_window&) -> bool                                                      = extern "SDL_ClearComposition";
+    sdl_set_text_input_area              :: fn (window: sdl_window&, rect: sdl_rect&, cursor: c_int) -> bool                      = extern "SDL_SetTextInputArea";
+    sdl_get_text_input_area              :: fn (window: sdl_window&, rect: sdl_rect&, cursor: c_int&) -> bool                     = extern "SDL_GetTextInputArea";
+    sdl_has_screen_keyboard_support      :: fn () -> bool                                                                         = extern "SDL_HasScreenKeyboardSupport";
+    sdl_screen_keyboard_shown            :: fn (window: sdl_window&) -> bool                                                      = extern "SDL_ScreenKeyboardShown";
+
+    sdl_keyboard_id :: type_alias = u32;
+
+    sdl_text_input_type :: enum c_int
+    {
+        SDL_TEXT_INPUT_TYPE_TEXT;                      
+        SDL_TEXT_INPUT_TYPE_TEXT_NAME;                 
+        SDL_TEXT_INPUT_TYPE_TEXT_EMAIL;                
+        SDL_TEXT_INPUT_TYPE_TEXT_USERNAME;             
+        SDL_TEXT_INPUT_TYPE_TEXT_PASSWORD_HIDDEN;      
+        SDL_TEXT_INPUT_TYPE_TEXT_PASSWORD_VISIBLE;     
+        SDL_TEXT_INPUT_TYPE_NUMBER;                   
+        SDL_TEXT_INPUT_TYPE_NUMBER_PASSWORD_HIDDEN;    
+        SDL_TEXT_INPUT_TYPE_NUMBER_PASSWORD_VISIBLE;  
+    } 
+
+    sdl_capitalization :: enum c_int
+    {
+        SDL_CAPITALIZE_NONE;      
+        SDL_CAPITALIZE_SENTENCES; 
+        SDL_CAPITALIZE_WORDS;     
+        SDL_CAPITALIZE_LETTERS;
+    }
+
+    SDL_PROP_TEXT_INPUT_TYPE_NUMBER                 :: define string = "SDL.textinput.type\0";
+    SDL_PROP_TEXT_INPUT_CAPITALIZATION_NUMBER       :: define string = "SDL.textinput.capitalization\0";
+    SDL_PROP_TEXT_INPUT_AUTOCORRECT_BOOLEAN         :: define string = "SDL.textinput.autocorrect\0";
+    SDL_PROP_TEXT_INPUT_MULTILINE_BOOLEAN           :: define string = "SDL.textinput.multiline\0";
+    SDL_PROP_TEXT_INPUT_ANDROID_INPUTTYPE_NUMBER    :: define string = "SDL.textinput.android.inputtype\0";
+}
+
+import
+{
+    "sdl3/sdl_video";
+    "sdl3/sdl_scancode";
+    "sdl3/sdl_keycode";
+    "sdl3/sdl_properties";
+    "sdl3/sdl_rect";
+}

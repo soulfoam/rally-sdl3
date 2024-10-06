@@ -1,0 +1,28 @@
+export_library
+{
+    sdl_pen_id :: type_alias = u32;
+
+    sdl_pen_input_flags      :: type_alias = u32;
+    SDL_PEN_INPUT_DOWN       :: define sdl_pen_input_flags = (1 << 0);
+    SDL_PEN_INPUT_BUTTON_1   :: define sdl_pen_input_flags = (1 << 1);
+    SDL_PEN_INPUT_BUTTON_2   :: define sdl_pen_input_flags = (1 << 2); 
+    SDL_PEN_INPUT_BUTTON_3   :: define sdl_pen_input_flags = (1 << 3); 
+    SDL_PEN_INPUT_BUTTON_4   :: define sdl_pen_input_flags = (1 << 4); 
+    SDL_PEN_INPUT_BUTTON_5   :: define sdl_pen_input_flags = (1 << 5); 
+    SDL_PEN_INPUT_ERASER_TIP :: define sdl_pen_input_flags = (1 << 30);
+
+    sdl_pen_axis :: enum c_int
+    {
+        SDL_PEN_AXIS_PRESSURE;
+        SDL_PEN_AXIS_XTILT;    
+                                
+        SDL_PEN_AXIS_YTILT;    
+                                 
+        SDL_PEN_AXIS_DISTANCE; 
+        SDL_PEN_AXIS_ROTATION;  
+        SDL_PEN_AXIS_SLIDER;    
+        SDL_PEN_AXIS_TANGENTIAL_PRESSURE;  
+        SDL_PEN_AXIS_COUNT;
+    } 
+
+}

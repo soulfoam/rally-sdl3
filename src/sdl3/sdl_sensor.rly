@@ -1,0 +1,39 @@
+export_library
+{
+    sdl_get_sensors                         :: fn (count: c_int&) -> sdl_sensor_id&                            = extern "SDL_GetSensors";
+    sdl_get_sensor_name_for_id              :: fn (instance_id: sdl_sensor_id) -> c_char&                      = extern "SDL_GetSensorNameForID";
+    sdl_get_sensor_type_for_id              :: fn (instance_id: sdl_sensor_id) -> sdl_sensor_type              = extern "SDL_GetSensorTypeForID";
+    sdl_get_sensor_non_portable_type_for_id :: fn (instance_id: sdl_sensor_id) -> c_int                        = extern "SDL_GetSensorNonPortableTypeForID";
+    sdl_open_sensor                         :: fn (instance_id: sdl_sensor_id) -> sdl_sensor&                  = extern "SDL_OpenSensor";
+    sdl_get_sensor_from_id                  :: fn (instance_id: sdl_sensor_id) -> sdl_sensor&                  = extern "SDL_GetSensorFromID";
+    sdl_get_sensor_properties               :: fn (sensor: sdl_sensor&) -> sdl_properties_id                   = extern "SDL_GetSensorProperties";
+    sdl_get_sensor_name                     :: fn (sensor: sdl_sensor&) -> c_char&                             = extern "SDL_GetSensorName";
+    sdl_get_sensor_type                     :: fn (sensor: sdl_sensor&) -> sdl_sensor_type                     = extern "SDL_GetSensorType";
+    sdl_get_sensor_non_portable_type        :: fn (sensor: sdl_sensor&) -> c_int                               = extern "SDL_GetSensorNonPortableType";
+    sdl_get_sensor_id                       :: fn (sensor: sdl_sensor&) -> sdl_sensor_id                       = extern "SDL_GetSensorID";
+    sdl_get_sensor_data                     :: fn (sensor: sdl_sensor&, data: f32&, num_values: c_int) -> bool = extern "SDL_GetSensorData";
+    sdl_close_sensor                        :: fn (sensor: sdl_sensor&)                                        = extern "SDL_CloseSensor";
+    sdl_update_sensors                      :: fn ()                                                           = extern "SDL_UpdateSensors";
+
+    sdl_sensor :: type_opaque;
+    sdl_sensor_id :: type_alias = u32;
+
+    SDL_STANDARD_GRAVITY :: define f32 = 9.80665f;
+
+    sdl_sensor_type :: enum c_int
+    {
+        SDL_SENSOR_INVALID = -1;   
+        SDL_SENSOR_UNKNOWN;       
+        SDL_SENSOR_ACCEL;        
+        SDL_SENSOR_GYRO;        
+        SDL_SENSOR_ACCEL_L;   
+        SDL_SENSOR_GYRO_L;   
+        SDL_SENSOR_ACCEL_R;  
+        SDL_SENSOR_GYRO_R; 
+    }
+}
+
+import
+{
+    "sdl3/sdl_properties";
+}

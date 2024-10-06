@@ -1,0 +1,34 @@
+export_library
+{
+    sdl_get_touch_devices     :: fn (count: c_int&) -> sdl_touch_id&                       = extern "SDL_GetTouchDevices";
+    sdl_get_touch_device_name :: fn (touchID: sdl_touch_id) -> c_char&                     = extern "SDL_GetTouchDeviceName";
+    sdl_get_touch_device_type :: fn (touchID: sdl_touch_id) -> sdl_touch_device_type       = extern "SDL_GetTouchDeviceType";
+    sdl_get_touch_fingers     :: fn (touchID: sdl_touch_id, count: c_int&) -> sdl_finger&& = extern "SDL_GetTouchFingers";
+
+    sdl_touch_id  :: type_alias = u64;
+    sdl_finger_id :: type_alias = u64;
+
+    sdl_touch_device_type :: enum c_int
+    {
+        SDL_TOUCH_DEVICE_INVALID = -1;
+        SDL_TOUCH_DEVICE_DIRECT;           
+        SDL_TOUCH_DEVICE_INDIRECT_ABSOLUTE;
+        SDL_TOUCH_DEVICE_INDIRECT_RELATIVE;
+    } 
+
+    sdl_finger :: struct
+    {
+        id       : sdl_finger_id;
+        x        : f32;
+        y        : f32;
+        pressure : f32;
+    }
+
+    SDL_TOUCH_MOUSE_ID :: define sdl_mouse_id = -1;
+    SDL_MOUSE_TOUCH_ID :: define sdl_touch_id = -1;
+}
+
+import
+{
+    "sdl3/sdl_mouse";
+}

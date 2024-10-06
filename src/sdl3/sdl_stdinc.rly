@@ -1,0 +1,8 @@
+export_library
+{
+    SDL_FLT_EPSILON :: define f32 = 0.0000001192; 
+
+    sdl_function_pointer :: type_alias = fn ();
+    sdl_fabsf :: fn (x: f32) -> f32 = extern "SDL_fabsf";
+
+}

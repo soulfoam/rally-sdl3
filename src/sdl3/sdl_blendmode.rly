@@ -1,0 +1,47 @@
+export_library
+{
+    sdl_compose_custom_blend_mode :: fn (srcColorFactor: sdl_blend_factor,
+                                         dstColorFactor: sdl_blend_factor,
+                                         colorOperation: sdl_blend_operation,
+                                         srcAlphaFactor: sdl_blend_factor,
+                                         dstAlphaFactor: sdl_blend_factor,
+                                         alphaOperation: sdl_blend_operation) -> sdl_blend_mode 
+                                         = extern "SDL_ComposeCustomBlendMode";
+
+
+    sdl_blend_mode :: type_alias = u32;
+
+    SDL_BLEND_MODE_NONE                  :: define u32 = 0x00000000;
+    SDL_BLEND_MODE_BLEND                 :: define u32 = 0x00000001;
+    SDL_BLEND_MODE_BLEND_PREMULTIPLIED   :: define u32 = 0x00000010;
+    SDL_BLEND_MODE_ADD                   :: define u32 = 0x00000002;
+    SDL_BLEND_MODE_ADD_PREMULTIPLIED     :: define u32 = 0x00000020;
+    SDL_BLEND_MODE_MOD                   :: define u32 = 0x00000004;
+    SDL_BLEND_MODE_MUL                   :: define u32 = 0x00000008;
+    SDL_BLEND_MODE_INVALID               :: define u32 = 0x7FFFFFFF;
+
+
+    sdl_blend_operation :: enum c_int
+    {
+        SDL_BLEND_OPERATION_ADD          = 0x1;
+        SDL_BLEND_OPERATION_SUBTRACT     = 0x2;
+        SDL_BLEND_OPERATION_REV_SUBTRACT = 0x3;
+        SDL_BLEND_OPERATION_MINIMUM      = 0x4;
+        SDL_BLEND_OPERATION_MAXIMUM      = 0x5;
+    } 
+
+    sdl_blend_factor :: enum c_int
+    {
+        SDL_BLEND_FACTOR_ZERO                = 0x1;
+        SDL_BLEND_FACTOR_ONE                 = 0x2;
+        SDL_BLEND_FACTOR_SRC_COLOR           = 0x3;
+        SDL_BLEND_FACTOR_ONE_MINUS_SRC_COLOR = 0x4;
+        SDL_BLEND_FACTOR_SRC_ALPHA           = 0x5;
+        SDL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA = 0x6;
+        SDL_BLEND_FACTOR_DST_COLOR           = 0x7;
+        SDL_BLEND_FACTOR_ONE_MINUS_DST_COLOR = 0x8;
+        SDL_BLEND_FACTOR_DST_ALPHA           = 0x9;
+        SDL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA = 0xA;
+    }
+
+}

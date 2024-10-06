@@ -1,0 +1,47 @@
+export_library
+{
+    sdl_get_num_camera_drivers       :: fn () -> c_int                                                         = extern "SDL_GetNumCameraDrivers";
+    sdl_get_camera_driver            :: fn (index: c_int) -> c_char&                                           = extern "SDL_GetCameraDriver";
+    sdl_get_current_camera_driver    :: fn () -> c_char&                                                       = extern "SDL_GetCurrentCameraDriver";
+    sdl_get_cameras                  :: fn (count: c_int&) -> sdl_camera_id&                                   = extern "SDL_GetCameras";
+    sdl_get_camera_supported_formats :: fn (devid: sdl_camera_id, count: c_int&) -> sdl_camera_spec&&          = extern "SDL_GetCameraSupportedFormats";
+    sdl_get_camera_name              :: fn (instance_id: sdl_camera_id) -> c_char&                             = extern "SDL_GetCameraName";
+    sdl_get_camera_position          :: fn (instance_id: sdl_camera_id) -> sdl_camera_position                 = extern "SDL_GetCameraPosition";
+    sdl_open_camera                  :: fn (instance_id: sdl_camera_id, spec: sdl_camera_spec&) -> sdl_camera& = extern "SDL_OpenCamera";
+    sdl_get_camera_permission_state  :: fn (camera: sdl_camera&) -> c_int                                      = extern "SDL_GetCameraPermissionState";
+    sdl_get_camera_id                :: fn (camera: sdl_camera&) -> sdl_camera_id                              = extern "SDL_GetCameraID";
+    sdl_get_camera_properties        :: fn (camera: sdl_camera&) -> sdl_properties_id                          = extern "SDL_GetCameraProperties";
+    sdl_get_camera_format            :: fn (camera: sdl_camera&, spec: sdl_camera_spec&) -> bool               = extern "SDL_GetCameraFormat";
+    sdl_acquire_camera_frame         :: fn (camera: sdl_camera&, timestampNS: u64&) -> sdl_surface&            = extern "SDL_AcquireCameraFrame";
+    sdl_release_camera_frame         :: fn (camera: sdl_camera&, frame: sdl_surface&)                          = extern "SDL_ReleaseCameraFrame";
+    sdl_close_camera                 :: fn (camera: sdl_camera&)                                               = extern "SDL_CloseCamera";
+
+    sdl_camera_id :: type_alias = u32;
+
+    sdl_camera :: type_opaque;
+
+    sdl_camera_spec :: struct
+    {
+        format                : sdl_pixel_format;
+        colorspace            : sdl_colorspace;
+        width                 : c_int;
+        height                : c_int;
+        framerate_numerator   : c_int;
+        framerate_denominator : c_int;
+    }
+
+    sdl_camera_position :: enum c_int
+    {
+        SDL_CAMERA_POSITION_UNKNOWN;
+        SDL_CAMERA_POSITION_FRONT_FACING;
+        SDL_CAMERA_POSITION_BACK_FACING;
+    }
+
+}
+
+import
+{
+    "sdl3/sdl_properties";
+    "sdl3/sdl_surface";
+    "sdl3/sdl_pixels";
+}

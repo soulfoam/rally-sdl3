@@ -1,0 +1,47 @@
+export_library
+{
+    sdl_init                      :: fn (flags: sdl_init_flags) -> bool = extern "SDL_Init";
+    sdl_init_subsystem            :: fn (flags: sdl_init_flags) -> bool = extern "SDL_InitSubSystem";
+    sdl_quit_subsystem            :: fn (flags: sdl_init_flags) = extern "SDL_QuitSubSystem";
+    sdl_was_init                  :: fn (flags: sdl_init_flags) -> sdl_init_flags = extern "SDL_WasInit";
+    sdl_quit                      :: fn () = extern "SDL_Quit";
+    sdl_set_app_metadata          :: fn (appname: c_char&, appversion: c_char&, appidentifier: c_char&) -> bool = extern "SDL_SetAppMetadata";
+    sdl_set_app_metadata_property :: fn (name: c_char&, value: c_char&) -> bool = extern "SDL_SetAppMetadataProperty";
+    sdl_get_app_metadata_property :: fn (name: c_char&) -> c_char& = extern "SDL_GetAppMetadataProperty";
+
+    sdl_init_flags    :: type_alias = u32;
+    SDL_INIT_AUDIO    :: define u32 = 0x00000010;
+    SDL_INIT_VIDEO    :: define u32 = 0x00000020;
+    SDL_INIT_JOYSTICK :: define u32 = 0x00000200;
+    SDL_INIT_HAPTIC   :: define u32 = 0x00001000;
+    SDL_INIT_GAMEPAD  :: define u32 = 0x00002000;
+    SDL_INIT_EVENTS   :: define u32 = 0x00004000;
+    SDL_INIT_SENSOR   :: define u32 = 0x00008000;
+    SDL_INIT_CAMERA   :: define u32 = 0x00010000;
+
+    sdl_app_result :: enum c_int
+    {
+        SDL_APP_CONTINUE;
+        SDL_APP_SUCCESS;
+        SDL_APP_FAILURE;
+    } 
+
+    sdl_app_init_fn    :: type_alias = fn (appstate: void&&, argc: c_int, argv: c_char&&) -> sdl_app_result;
+    sdl_app_iterate_fn :: type_alias = fn (appstate: void&) -> sdl_app_result;
+    sdl_app_event_fn   :: type_alias = fn (appstate: void&, event: sdl_event&) -> sdl_app_result;
+    sdl_app_quit_fn    :: type_alias = fn (appstate: void&);
+
+    SDL_PROP_APP_METADATA_NAME_STRING         :: define string = "SDL.app.metadata.name\0";
+    SDL_PROP_APP_METADATA_VERSION_STRING      :: define string = "SDL.app.metadata.version\0";
+    SDL_PROP_APP_METADATA_IDENTIFIER_STRING   :: define string = "SDL.app.metadata.identifier\0";
+    SDL_PROP_APP_METADATA_CREATOR_STRING      :: define string = "SDL.app.metadata.creator\0";
+    SDL_PROP_APP_METADATA_COPYRIGHT_STRING    :: define string = "SDL.app.metadata.copyright\0";
+    SDL_PROP_APP_METADATA_URL_STRING          :: define string = "SDL.app.metadata.url\0";
+    SDL_PROP_APP_METADATA_TYPE_STRING         :: define string = "SDL.app.metadata.type\0";
+
+}
+
+import
+{
+    "sdl3/sdl_events";
+}

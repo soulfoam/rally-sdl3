@@ -1,0 +1,113 @@
+export_library
+{
+    sdl_create_surface                  :: fn (width: c_int, height: c_int, format: sdl_pixel_format) -> sdl_surface& = extern "SDL_CreateSurface";
+    sdl_create_surface_from             :: fn (width: c_int, height: c_int, format: sdl_pixel_format, pixels: void&, pitch: c_int) -> sdl_surface& = extern "SDL_CreateSurfaceFrom";
+
+    sdl_destroy_surface                 :: fn (surface: sdl_surface&) = extern "SDL_DestroySurface";
+    sdl_get_surface_properties          :: fn (surface: sdl_surface&) -> sdl_properties_id = extern "SDL_GetSurfaceProperties";
+
+    sdl_set_surface_colorspace          :: fn (surface: sdl_surface&, colorspace: sdl_colorspace) -> bool = extern "SDL_SetSurfaceColorspace";
+    sdl_get_surface_colorspace          :: fn (surface: sdl_surface&) -> sdl_colorspace = extern "SDL_GetSurfaceColorspace";
+    sdl_create_surface_palette          :: fn (surface: sdl_surface&) -> sdl_palette& = extern "SDL_CreateSurfacePalette";
+    sdl_set_surface_palette             :: fn (surface: sdl_surface&, palette: sdl_palette&) -> bool = extern "SDL_SetSurfacePalette";
+    sdl_get_surface_palette             :: fn (surface: sdl_surface&) -> sdl_palette& = extern "SDL_GetSurfacePalette";
+    sdl_add_surface_alternate_image     :: fn (surface: sdl_surface&, image: sdl_surface&) -> bool = extern "SDL_AddSurfaceAlternateImage";
+    sdl_surface_has_alternate_images    :: fn (surface: sdl_surface&) -> bool = extern "SDL_SurfaceHasAlternateImages";
+    sdl_get_surface_images              :: fn (surface: sdl_surface&, count: c_int&) -> sdl_surface&& = extern "SDL_GetSurfaceImages";
+    sdl_remove_surface_alternate_images :: fn (surface: sdl_surface&) = extern "SDL_RemoveSurfaceAlternateImages";
+    sdl_lock_surface                    :: fn (surface: sdl_surface&) -> bool = extern "SDL_LockSurface";
+    sdl_unlock_surface                  :: fn (surface: sdl_surface&) = extern "SDL_UnlockSurface";
+    sdl_load_bmp_io                     :: fn (src: sdl_io_stream&, closeio: bool) -> sdl_surface& = extern "SDL_LoadBMP_IO";
+    sdl_load_bmp                        :: fn (file: c_char&) -> sdl_surface& = extern "SDL_LoadBMP";
+    sdl_save_bmp_io                     :: fn (surface: sdl_surface&, dst: sdl_io_stream&, closeio: bool) -> bool = extern "SDL_SaveBMP_IO";
+    sdl_save_bmp                        :: fn (surface: sdl_surface&, file: c_char&) -> bool = extern "SDL_SaveBMP";
+    sdl_set_surface_rle                 :: fn (surface: sdl_surface&, enabled: bool) -> bool = extern "SDL_SetSurfaceRLE";
+    sdl_surface_has_rle                 :: fn (surface: sdl_surface&) -> bool = extern "SDL_SurfaceHasRLE";
+    sdl_set_surface_color_key           :: fn (surface: sdl_surface&, enabled: bool, key: u32) -> bool = extern "SDL_SetSurfaceColorKey";
+    sdl_surface_has_color_key           :: fn (surface: sdl_surface&) -> bool = extern "SDL_SurfaceHasColorKey";
+    sdl_get_surface_color_key           :: fn (surface: sdl_surface&, key: u32&) -> bool = extern "SDL_GetSurfaceColorKey";
+    sdl_set_surface_color_mod           :: fn (surface: sdl_surface&, r: u8, g: u8, b: u8) -> bool = extern "SDL_SetSurfaceColorMod";
+    sdl_get_surface_color_mod           :: fn (surface: sdl_surface&, r: u8&, g: u8&, b: u8&) -> bool = extern "SDL_GetSurfaceColorMod";
+    sdl_set_surface_alpha_mod           :: fn (surface: sdl_surface&, alpha: u8) -> bool = extern "SDL_SetSurfaceAlphaMod";
+    sdl_get_surface_alpha_mod           :: fn (surface: sdl_surface&, alpha: u8&) -> bool = extern "SDL_GetSurfaceAlphaMod";
+    sdl_set_surface_blend_mode          :: fn (surface: sdl_surface&, blendMode: sdl_blend_mode) -> bool = extern "SDL_SetSurfaceBlendMode";
+    sdl_get_surface_blend_mode          :: fn (surface: sdl_surface&, blendMode: sdl_blend_mode&) -> bool = extern "SDL_GetSurfaceBlendMode";
+    sdl_set_surface_clip_rect           :: fn (surface: sdl_surface&, rect: sdl_rect&) -> bool = extern "SDL_SetSurfaceClipRect";
+    sdl_get_surface_clip_rect           :: fn (surface: sdl_surface&, rect: sdl_rect&) -> bool = extern "SDL_GetSurfaceClipRect";
+    sdl_flip_surface                    :: fn (surface: sdl_surface&, flip: sdl_flip_mode) -> bool = extern "SDL_FlipSurface";
+    sdl_duplicate_surface               :: fn (surface: sdl_surface&) -> sdl_surface& = extern "SDL_DuplicateSurface";
+    sdl_scale_surface                   :: fn (surface: sdl_surface&, width: c_int, height: c_int, scaleMode: sdl_scale_mode) -> sdl_surface& = extern "SDL_ScaleSurface";
+    sdl_convert_surface                 :: fn (surface: sdl_surface&, format: sdl_pixel_format) -> sdl_surface& = extern "SDL_ConvertSurface";
+    sdl_convert_surface_and_colorspace  :: fn (surface: sdl_surface&, format: sdl_pixel_format, palette: sdl_palette&, colorspace: sdl_colorspace, props: sdl_properties_id) -> sdl_surface& = extern "SDL_ConvertSurfaceAndColorspace";
+    sdl_convert_pixels                  :: fn (width: c_int, height: c_int, src_format: sdl_pixel_format, src: void&, src_pitch: c_int, dst_format: sdl_pixel_format, dst: void&, dst_pitch: c_int) -> bool = extern "SDL_ConvertPixels";
+    sdl_convert_pixels_and_colorspace   :: fn (width: c_int, height: c_int, src_format: sdl_pixel_format, src_colorspace: sdl_colorspace, src_properties: sdl_properties_id, src: void&, src_pitch: c_int, dst_format: sdl_pixel_format, dst_colorspace: sdl_colorspace, dst_properties: sdl_properties_id, dst: void&, dst_pitch: c_int) -> bool = extern "SDL_ConvertPixelsAndColorspace";
+    sdl_premultiply_alpha               :: fn (width: c_int, height: c_int, src_format: sdl_pixel_format, src: void&, src_pitch: c_int, dst_format: sdl_pixel_format, dst: void&, dst_pitch: c_int, linear: bool) -> bool = extern "SDL_PremultiplyAlpha";
+    sdl_premultiply_surface_alpha       :: fn (surface: sdl_surface&, linear: bool) -> bool = extern "SDL_PremultiplySurfaceAlpha";
+    sdl_clear_surface                   :: fn (surface: sdl_surface&, r: f32, g: f32, b: f32, a: f32) -> bool = extern "SDL_ClearSurface";
+    sdl_fill_surface_rect               :: fn (dst: sdl_surface&, rect: sdl_rect&, color: u32) -> bool = extern "SDL_FillSurfaceRect";
+    sdl_fill_surface_rects              :: fn (dst: sdl_surface&, rect: sdl_rect&, count: c_int, color: u32) -> bool = extern "SDL_FillSurfaceRects";
+    sdl_blit_surface                    :: fn (src: sdl_surface&, srcrect: sdl_rect&, dst: sdl_surface&, dstrect: sdl_rect&) -> bool = extern "SDL_BlitSurface";
+    sdl_blit_surface_unchecked          :: fn (src: sdl_surface&, srcrect: sdl_rect&, dst: sdl_surface&, dstrect: sdl_rect&) -> bool = extern "SDL_BlitSurfaceUnchecked";
+    sdl_blit_surface_scaled             :: fn (src: sdl_surface&, srcrect: sdl_rect&, dst: sdl_surface&, dstrect: sdl_rect&, scaleMode: sdl_scale_mode) -> bool = extern "SDL_BlitSurfaceScaled";
+    sdl_blit_surface_unchecked_scaled   :: fn (src: sdl_surface&, srcrect: sdl_rect&, dst: sdl_surface&, dstrect: sdl_rect&, scaleMode: sdl_scale_mode) -> bool = extern "SDL_BlitSurfaceUncheckedScaled";
+    sdl_blit_surface_tiled              :: fn (src: sdl_surface&, srcrect: sdl_rect&, dst: sdl_surface&, dstrect: sdl_rect&) -> bool = extern "SDL_BlitSurfaceTiled";
+    sdl_blit_surface_tiled_with_scale   :: fn (src: sdl_surface&, srcrect: sdl_rect&, scale: f32, scaleMode: sdl_scale_mode, dst: sdl_surface&, dstrect: sdl_rect&) -> bool = extern "SDL_BlitSurfaceTiledWithScale";
+    sdl_blit_surface_9grid              :: fn (src: sdl_surface&, srcrect: sdl_rect&, left_width: c_int, right_width: c_int, top_height: c_int, bottom_height: c_int, scale: f32, scaleMode: sdl_scale_mode, dst: sdl_surface&, dstrect: sdl_rect&) -> bool = extern "SDL_BlitSurface9Grid";
+    sdl_map_surface_rgb                 :: fn (surface: sdl_surface&, r: u8, g: u8, b: u8) -> u32 = extern "SDL_MapSurfaceRGB";
+    sdl_map_surface_rgba                :: fn (surface: sdl_surface&, r: u8, g: u8, b: u8, a: u8) -> u32 = extern "SDL_MapSurfaceRGBA";
+    sdl_read_surface_pixel              :: fn (surface: sdl_surface&, x: c_int, y: c_int, r: u8&, g: u8&, b: u8&, a: u8&) -> bool = extern "SDL_ReadSurfacePixel";
+    sdl_read_surface_pixel_float        :: fn (surface: sdl_surface&, x: c_int, y: c_int, r: f32&, g: f32&, b: f32&, a: f32&) -> bool = extern "SDL_ReadSurfacePixelFloat";
+    sdl_write_surface_pixel             :: fn (surface: sdl_surface&, x: c_int, y: c_int, r: u8, g: u8, b: u8, a: u8) -> bool = extern "SDL_WriteSurfacePixel";
+    sdl_write_surface_pixel_float       :: fn (surface: sdl_surface&, x: c_int, y: c_int, r: f32, g: f32, b: f32, a: f32) -> bool = extern "SDL_WriteSurfacePixelFloat";
+
+    sdl_surface_flags        :: type_alias = u32;
+    SDL_SURFACE_PREALLOCATED :: define u32 = 0x00000001;
+    SDL_SURFACE_LOCK_NEEDED  :: define u32 = 0x00000002;
+    SDL_SURFACE_LOCKED       :: define u32 = 0x00000004;
+    SDL_SURFACE_SIMD_ALIGNED :: define u32 = 0x00000008;
+
+    //#define SDL_MUSTLOCK(S) ((((S)->flags & SDL_SURFACE_LOCK_NEEDED)) == SDL_SURFACE_LOCK_NEEDED)
+
+    sdl_scale_mode :: enum c_int
+    {
+        SDL_SCALE_MODE_NEAREST;
+        SDL_SCALE_MODE_LINEAR;
+    }
+
+    sdl_flip_mode :: enum c_int
+    {
+        SDL_FLIP_NONE;          
+        SDL_FLIP_HORIZONTAL;
+        SDL_FLIP_VERTICAL;    
+    } 
+
+    sdl_surface_data :: type_opaque;
+
+    sdl_surface :: struct
+    {
+        flags    : sdl_surface_flags;
+        format   : sdl_pixel_format;
+        w        : c_int;
+        h        : c_int;
+        pitch    : c_int;
+        pixels   : void&;
+
+        refcount : c_int;
+
+        internal : sdl_surface_data&;
+
+    }
+
+    SDL_PROP_SURFACE_SDR_WHITE_POINT_FLOAT   :: define string = "SDL.surface.SDR_white_point\0";
+    SDL_PROP_SURFACE_HDR_HEADROOM_FLOAT      :: define string = "SDL.surface.HDR_headroom\0";
+    SDL_PROP_SURFACE_TONEMAP_OPERATOR_STRING :: define string = "SDL.surface.tonemap\0";
+}
+
+import
+{
+    "sdl3/sdl_pixels";
+    "sdl3/sdl_properties";
+    "sdl3/sdl_iostream";
+    "sdl3/sdl_blendmode";
+    "sdl3/sdl_rect";
+}

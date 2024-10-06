@@ -1,0 +1,400 @@
+export_library
+{
+    sdl_get_num_video_drivers               :: fn () -> c_int                                      = extern "SDL_GetNumVideoDrivers";
+    sdl_get_video_driver                    :: fn (index: c_int) -> c_char&                        = extern "SDL_GetVideoDriver";
+    sdl_get_current_video_driver            :: fn () -> c_char&                                    = extern "SDL_GetCurrentVideoDriver";
+    sdl_get_system_theme                    :: fn () -> sdl_system_theme                           = extern "SDL_GetSystemTheme";
+
+    sdl_get_displays                        :: fn (count: c_int&) -> sdl_display_id&               = extern "SDL_GetDisplays";
+    sdl_get_primary_display                 :: fn () -> sdl_display_id                             = extern "SDL_GetPrimaryDisplay";
+    sdl_get_display_properties              :: fn (displayID: sdl_display_id) -> sdl_properties_id = extern "SDL_GetDisplayProperties";
+
+    sdl_get_display_name                    :: fn (displayID: sdl_display_id) -> c_char&                           = extern "SDL_GetDisplayName";
+    sdl_get_display_bounds                  :: fn (displayID: sdl_display_id, rect: sdl_rect&) -> bool             = extern "SDL_GetDisplayBounds";
+    sdl_get_display_usable_bounds           :: fn (displayID: sdl_display_id, rect: sdl_rect&) -> bool             = extern "SDL_GetDisplayUsableBounds";
+    sdl_get_natural_display_orientation     :: fn (displayID: sdl_display_id) -> sdl_display_orientation           = extern "SDL_GetNaturalDisplayOrientation";
+    sdl_get_current_display_orientation     :: fn (displayID: sdl_display_id) -> sdl_display_orientation           = extern "SDL_GetCurrentDisplayOrientation";
+    sdl_get_display_contentscale            :: fn (displayID: sdl_display_id) -> f32                               = extern "SDL_GetDisplayContentScale";
+    sdl_get_fullscreen_display_modes        :: fn (displayID: sdl_display_id, count: c_int&) -> sdl_display_mode&& = extern "SDL_GetFullscreenDisplayModes";
+    sdl_get_closest_fullscreen_display_mode :: fn (displayID: sdl_display_id, w: c_int, h: c_int, refresh_rate: f32, include_high_density_modes: bool, mode: sdl_display_mode&) -> bool = extern "SDL_GetClosestFullscreenDisplayMode";
+
+    sdl_get_desktop_display_mode            :: fn (displayID: sdl_display_id) -> sdl_display_mode&                             = extern "SDL_GetDesktopDisplayMode";
+    sdl_get_current_display_mode            :: fn (displayID: sdl_display_id) -> sdl_display_mode&                             = extern "SDL_GetCurrentDisplayMode";
+    sdl_get_display_for_point               :: fn (point: sdl_point&) -> sdl_display_id                                        = extern "SDL_GetDisplayForPoint";
+    sdl_get_display_for_rect                :: fn (rect: sdl_rect&) -> sdl_display_id                                          = extern "SDL_GetDisplayForRect";
+    sdl_get_display_for_window              :: fn (window: sdl_window&) -> sdl_display_id                                      = extern "SDL_GetDisplayForWindow";
+    sdl_get_window_pixel_density            :: fn (window: sdl_window&) -> f32                                                 = extern "SDL_GetWindowPixelDensity";
+    sdl_get_window_display_scale            :: fn (window: sdl_window&) -> f32                                                 = extern "SDL_GetWindowDisplayScale";
+    sdl_set_window_fullscreen_mode          :: fn (window: sdl_window&, mode: sdl_display_mode&) -> bool                       = extern "SDL_SetWindowFullscreenMode";
+    sdl_get_window_fullscreen_mode          :: fn (window: sdl_window&) -> sdl_display_mode&                                   = extern "SDL_GetWindowFullscreenMode";
+    sdl_get_window_icc_profile              :: fn (window: sdl_window&, size: usize&) -> void&                                 = extern "SDL_GetWindowICCProfile";
+    sdl_get_window_pixel_format             :: fn (window: sdl_window&) -> sdl_pixel_format                                    = extern "SDL_GetWindowPixelFormat";
+    sdl_get_windows                         :: fn (count: c_int&) -> sdl_window&&                                              = extern "SDL_GetWindows";
+    sdl_create_window                       :: fn (title: c_char&, w: c_int, h: c_int, flags: sdl_window_flags) -> sdl_window& = extern "SDL_CreateWindow";
+    sdl_create_window_with_properties       :: fn (props: sdl_properties_id) -> sdl_window&                                    = extern "SDL_CreateWindowWithProperties";
+    sdl_create_popup_window                 :: fn (parent: sdl_window&, offset_x: c_int, offset_y: c_int, w: c_int, h: c_int, flags: sdl_window_flags) -> sdl_window& = extern "SDL_CreatePopupWindow";
+
+    sdl_get_window_id                       :: fn (window: sdl_window&) -> sdl_window_id     = extern "SDL_GetWindowID";
+    sdl_get_window_from_id                  :: fn (id: sdl_window_id)   -> sdl_window&       = extern "SDL_GetWindowFromID";
+    sdl_get_window_parent                   :: fn (window: sdl_window&) -> sdl_window&       = extern "SDL_GetWindowParent";
+    sdl_get_window_properties               :: fn (window: sdl_window&) -> sdl_properties_id = extern "SDL_GetWindowProperties";
+
+    sdl_get_window_flags                    :: fn (window: sdl_window&) -> sdl_window_flags                                               = extern "SDL_GetWindowFlags";
+    sdl_set_window_title                    :: fn (window: sdl_window&, title: c_char&) -> bool                                           = extern "SDL_SetWindowTitle";
+    sdl_get_window_title                    :: fn (window: sdl_window&) -> c_char&                                                        = extern "SDL_GetWindowTitle";
+    sdl_set_window_icon                     :: fn (window: sdl_window&, icon: sdl_surface&) -> bool                                       = extern "SDL_SetWindowIcon";
+    sdl_set_window_position                 :: fn (window: sdl_window&, x: c_int, y: c_int) -> bool                                       = extern "SDL_SetWindowPosition";
+    sdl_get_window_position                 :: fn (window: sdl_window&, x: c_int&, y: c_int&) -> bool                                     = extern "SDL_GetWindowPosition";
+    sdl_set_window_size                     :: fn (window: sdl_window&, w: c_int, h: c_int) -> bool                                       = extern "SDL_SetWindowSize";
+    sdl_get_window_size                     :: fn (window: sdl_window&, w: c_int&, h: c_int&) -> bool                                     = extern "SDL_GetWindowSize";
+    sdl_get_window_safe_area                :: fn (window: sdl_window&, rect: sdl_rect&) -> bool                                          = extern "SDL_GetWindowSafeArea";
+    sdl_set_window_aspect_ratio             :: fn (window: sdl_window&, min_aspect: f32, max_aspect: f32) -> bool                         = extern "SDL_SetWindowAspectRatio";
+    sdl_get_window_aspect_ratio             :: fn (window: sdl_window&, min_aspect: f32&, max_aspect: f32&) -> bool                       = extern "SDL_GetWindowAspectRatio";
+    sdl_get_window_borders_size             :: fn (window: sdl_window&, top: c_int&, left: c_int&, bottom: c_int&, right: c_int&) -> bool = extern "SDL_GetWindowBordersSize";
+    sdl_get_window_size_in_pixels           :: fn (window: sdl_window&, w: c_int&, h: c_int&) -> bool                                     = extern "SDL_GetWindowSizeInPixels";
+    sdl_set_window_minimum_size             :: fn (window: sdl_window&, min_w: c_int, min_h: c_int) -> bool                               = extern "SDL_SetWindowMinimumSize";
+    sdl_get_window_minimum_size             :: fn (window: sdl_window&, w: c_int&, h: c_int&) -> bool                                     = extern "SDL_GetWindowMinimumSize";
+    sdl_set_window_maximum_size             :: fn (window: sdl_window&, max_w: c_int, max_h: c_int) -> bool                               = extern "SDL_SetWindowMaximumSize";
+    sdl_get_window_maximum_size             :: fn (window: sdl_window&, w: c_int&, h: c_int&) -> bool                                     = extern "SDL_GetWindowMaximumSize";
+    sdl_set_window_bordered                 :: fn (window: sdl_window&, bordered: bool) -> bool                                           = extern "SDL_SetWindowBordered";
+    sdl_set_window_resizable                :: fn (window: sdl_window&, resizable: bool) -> bool                                          = extern "SDL_SetWindowResizable";
+    sdl_set_window_always_on_top            :: fn (window: sdl_window&, on_top: bool) -> bool                                             = extern "SDL_SetWindowAlwaysOnTop";
+    sdl_show_window                         :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_ShowWindow";
+    sdl_hide_window                         :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_HideWindow";
+    sdl_raise_window                        :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_RaiseWindow";
+    sdl_maximize_window                     :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_MaximizeWindow";
+    sdl_minimize_window                     :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_MinimizeWindow";
+    sdl_restore_window                      :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_RestoreWindow";
+    sdl_set_window_fullscreen               :: fn (window: sdl_window&, fullscreen: bool) -> bool                                         = extern "SDL_SetWindowFullscreen";
+    sdl_sync_window                         :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_SyncWindow";
+    sdl_window_has_surface                  :: fn (window: sdl_window&) -> bool                                                           = extern "SDL_WindowHasSurface";
+    sdl_get_window_surface                  :: fn (window: sdl_window&) -> sdl_surface&                                                   = extern "SDL_GetWindowSurface";
+    sdl_set_window_surface_vsync            :: fn (window: sdl_window&, vsync: c_int) -> bool                                             = extern "SDL_SetWindowSurfaceVSync";
+
+    sdl_get_window_surface_vsync            :: fn (window: sdl_window&, vsync: c_int&) -> bool                     = extern "SDL_GetWindowSurfaceVSync";
+    sdl_update_window_surface               :: fn (window: sdl_window&) -> bool                                    = extern "SDL_UpdateWindowSurface";
+    sdl_update_window_surface_rects         :: fn (window: sdl_window&, rects: sdl_rect&, numrects: c_int) -> bool = extern "SDL_UpdateWindowSurfaceRects";
+    sdl_destroy_window_surface              :: fn (window: sdl_window&) -> bool                                    = extern "SDL_DestroyWindowSurface";
+    sdl_set_window_keyboard_grab            :: fn (window: sdl_window&, grabbed: bool) -> bool                     = extern "SDL_SetWindowKeyboardGrab";
+    sdl_set_window_mouse_grab               :: fn (window: sdl_window&, grabbed: bool) -> bool                     = extern "SDL_SetWindowMouseGrab";
+    sdl_get_window_keyboard_grab            :: fn (window: sdl_window&) -> bool                                    = extern "SDL_GetWindowKeyboardGrab";
+    sdl_get_window_mouse_grab               :: fn (window: sdl_window&) -> bool                                    = extern "SDL_GetWindowMouseGrab";
+    sdl_get_grabbed_window                  :: fn () -> sdl_window&                                                = extern "SDL_GetGrabbedWindow";
+    sdl_set_window_mouse_rect               :: fn (window: sdl_window&, rect: sdl_rect&) -> bool                   = extern "SDL_SetWindowMouseRect";
+    sdl_get_window_mouse_rect               :: fn (window: sdl_window&) -> sdl_rect&                               = extern "SDL_GetWindowMouseRect";
+    sdl_set_window_opacity                  :: fn (window: sdl_window&, opacity: f32) -> bool                      = extern "SDL_SetWindowOpacity";
+    sdl_get_window_opacity                  :: fn (window: sdl_window&) -> f32                                     = extern "SDL_GetWindowOpacity";
+    sdl_set_window_parent                   :: fn (window: sdl_window&, parent: sdl_window&) -> bool               = extern "SDL_SetWindowParent";
+    sdl_set_window_modal                    :: fn (window: sdl_window&, modal: bool) -> bool                       = extern "SDL_SetWindowModal";
+    sdl_set_window_focusable                :: fn (window: sdl_window&, focusable: bool) -> bool                   = extern "SDL_SetWindowFocusable";
+    sdl_show_window_system_menu             :: fn (window: sdl_window&, x: c_int, y: c_int) -> bool                = extern "SDL_ShowWindowSystemMenu";
+
+    sdl_hit_test_callback                   :: type_alias = fn (win: sdl_window&, area: sdl_point&, data: void&) -> sdl_hit_test_result;
+    sdl_set_window_hit_test                 :: fn (window: sdl_window&, callback: sdl_hit_test_callback, callback_data: void&) -> bool = extern "SDL_SetWindowHitTest";
+    sdl_set_window_shape                    :: fn (window: sdl_window&, shape: sdl_surface&) -> bool                                   = extern "SDL_SetWindowShape";
+    sdl_flash_window                        :: fn (window: sdl_window&, operation: sdl_flash_operation) -> bool                        = extern "SDL_FlashWindow";
+    sdl_destroy_window                      :: fn (window: sdl_window&)                                                                = extern "SDL_DestroyWindow";
+    sdl_screen_saver_enabled                :: fn () -> bool                                                                           = extern "SDL_ScreenSaverEnabled";
+    sdl_enable_screen_saver                 :: fn () -> bool                                                                           = extern "SDL_EnableScreenSaver";
+    sdl_disable_screen_saver                :: fn () -> bool                                                                           = extern "SDL_DisableScreenSaver";
+    sdl_gl_load_library                     :: fn (path: c_char&) -> bool                                                              = extern "SDL_GL_LoadLibrary";
+    sdl_gl_get_proc_address                 :: fn (proc: c_char&) -> sdl_function_pointer                                              = extern "SDL_GL_GetProcAddress";
+    sdl_egl_get_proc_address                :: fn (proc: c_char&) -> sdl_function_pointer                                              = extern "SDL_EGL_GetProcAddress";
+    sdl_gl_unload_library                   :: fn ()                                                                                   = extern "SDL_GL_UnloadLibrary";
+    sdl_gl_extension_supported              :: fn (extension: c_char&) -> bool                                                         = extern "SDL_GL_ExtensionSupported";
+    sdl_gl_reset_attributes                 :: fn ()                                                                                   = extern "SDL_GL_ResetAttributes";
+    sdl_gl_set_attribute                    :: fn (attr: sdl_gl_attr, value: c_int) -> bool                                            = extern "SDL_GL_SetAttribute";
+    sdl_gl_get_attribute                    :: fn (attr: sdl_gl_attr, value: c_int&) -> bool                                           = extern "SDL_GL_GetAttribute";
+    sdl_gl_create_context                   :: fn (window: sdl_window&) -> sdl_gl_context&                                             = extern "SDL_GL_CreateContext";
+    sdl_gl_make_current                     :: fn (window: sdl_window&, context: sdl_gl_context&) -> bool                              = extern "SDL_GL_MakeCurrent";
+    sdl_gl_get_current_window               :: fn () -> sdl_window&                                                                    = extern "SDL_GL_GetCurrentWindow";
+    sdl_gl_get_current_context              :: fn () -> sdl_gl_context&                                                                = extern "SDL_GL_GetCurrentContext";
+    sdl_egl_get_current_display             :: fn () -> sdl_egl_display&                                                               = extern "SDL_EGL_GetCurrentDisplay";
+    sdl_egl_get_current_config              :: fn () -> sdl_egl_config&                                                                = extern "SDL_EGL_GetCurrentConfig";
+    sdl_egl_get_window_surface              :: fn (window: sdl_window&) -> sdl_egl_surface&                                            = extern "SDL_EGL_GetWindowSurface";
+    sdl_egl_set_attribute_callbacks         :: fn (platform_attrib_callback: sdl_egl_attrib_array_callback, surface_attrib_callback: sdl_egl_int_array_callback, context_attrib_callback: sdl_egl_int_array_callback) = extern "SDL_EGL_SetAttributeCallbacks";
+    sdl_gl_set_swap_interval                :: fn (interval: c_int) -> bool            = extern "SDL_GL_SetSwapInterval";
+    sdl_gl_get_swap_interval                :: fn (interval: c_int&) -> bool           = extern "SDL_GL_GetSwapInterval";
+    sdl_gl_swap_window                      :: fn (window: sdl_window&) -> bool      = extern "SDL_GL_SwapWindow";
+    sdl_gl_destroy_context                  :: fn (context: sdl_gl_context&) -> bool = extern "SDL_GL_DestroyContext";
+
+    sdl_window_pos_undefined_display :: fn (x: u32) -> u32;
+    sdl_window_pos_undefined         :: fn () -> u32;
+    sdl_window_pos_is_undefined      :: fn (x: u32) -> bool;
+    sdl_window_pos_centered_display  :: fn (x: u32) -> u32;
+    sdl_window_pos_centered          :: fn () -> u32;
+    sdl_window_pos_is_centered       :: fn (x: u32) -> bool;
+
+    sdl_display_id :: type_alias = u32;
+    sdl_window_id :: type_alias = u32;
+
+    sdl_system_theme :: enum c_int
+    {
+        SDL_SYSTEM_THEME_UNKNOWN;
+        SDL_SYSTEM_THEME_LIGHT;
+        SDL_SYSTEM_THEME_DARK;   
+    }
+
+    sdl_display_mode_data :: type_opaque;
+
+    sdl_display_mode :: struct
+    {
+        display_id               : sdl_display_id;
+        format                   : sdl_pixel_format;
+        w                        : c_int;
+        h                        : c_int;
+        pixel_density            : f32;
+        refresh_rate             : f32;
+        refresh_rate_numerator   : c_int;
+        refresh_rate_denominator : c_int;
+        internal                 : sdl_display_mode_data&;
+    }
+
+    sdl_display_orientation :: enum c_int
+    {
+        SDL_ORIENTATION_UNKNOWN;          
+        SDL_ORIENTATION_LANDSCAPE;  
+        SDL_ORIENTATION_LANDSCAPE_FLIPPED;
+        SDL_ORIENTATION_PORTRAIT;
+        SDL_ORIENTATION_PORTRAIT_FLIPPED;
+    } 
+
+    sdl_window :: type_opaque;
+
+    sdl_window_flags                :: type_alias = u64;
+    SDL_WINDOW_FULLSCREEN           :: define u64 = 0x0000000000000001;    
+    SDL_WINDOW_OPENGL               :: define u64 = 0x0000000000000002;    
+    SDL_WINDOW_OCCLUDED             :: define u64 = 0x0000000000000004;    
+    SDL_WINDOW_HIDDEN               :: define u64 = 0x0000000000000008;    
+    SDL_WINDOW_BORDERLESS           :: define u64 = 0x0000000000000010;    
+    SDL_WINDOW_RESIZABLE            :: define u64 = 0x0000000000000020;    
+    SDL_WINDOW_MINIMIZED            :: define u64 = 0x0000000000000040;    
+    SDL_WINDOW_MAXIMIZED            :: define u64 = 0x0000000000000080;    
+    SDL_WINDOW_MOUSE_GRABBED        :: define u64 = 0x0000000000000100;    
+    SDL_WINDOW_INPUT_FOCUS          :: define u64 = 0x0000000000000200;    
+    SDL_WINDOW_MOUSE_FOCUS          :: define u64 = 0x0000000000000400;    
+    SDL_WINDOW_EXTERNAL             :: define u64 = 0x0000000000000800;    
+    SDL_WINDOW_MODAL                :: define u64 = 0x0000000000001000;    
+    SDL_WINDOW_HIGH_PIXEL_DENSITY   :: define u64 = 0x0000000000002000;    
+    SDL_WINDOW_MOUSE_CAPTURE        :: define u64 = 0x0000000000004000;    
+    SDL_WINDOW_MOUSE_RELATIVE_MODE  :: define u64 = 0x0000000000008000;    
+    SDL_WINDOW_ALWAYS_ON_TOP        :: define u64 = 0x0000000000010000;    
+    SDL_WINDOW_UTILITY              :: define u64 = 0x0000000000020000;    
+    SDL_WINDOW_TOOLTIP              :: define u64 = 0x0000000000040000;    
+    SDL_WINDOW_POPUP_MENU           :: define u64 = 0x0000000000080000;    
+    SDL_WINDOW_KEYBOARD_GRABBED     :: define u64 = 0x0000000000100000;    
+    SDL_WINDOW_VULKAN               :: define u64 = 0x0000000010000000;    
+    SDL_WINDOW_METAL                :: define u64 = 0x0000000020000000;    
+    SDL_WINDOW_TRANSPARENT          :: define u64 = 0x0000000040000000;    
+    SDL_WINDOW_NOT_FOCUSABLE        :: define u64 = 0x0000000080000000;    
+
+    SDL_WINDOW_POS_UNDEFINED_MASK    :: define u32 = 0x1FFF0000;
+    SDL_WINDOW_POS_CENTERED_MASK     :: define u32 = 0x2FFF0000;
+
+    sdl_flash_operation :: enum c_int
+    {
+        SDL_FLASH_CANCEL;                  
+        SDL_FLASH_BRIEFLY;            
+        SDL_FLASH_UNTIL_FOCUSED;
+    } 
+
+    sdl_egl_display :: type_alias = void;
+    sdl_egl_config  :: type_alias = void;
+    sdl_egl_surface :: type_alias = void;
+
+    sdl_gl_context :: type_opaque;
+
+    sdl_egl_attrib                :: type_alias = sptr;
+    sdl_egl_int                   :: type_alias = c_int;
+    sdl_egl_attrib_array_callback :: type_alias = fn () -> sdl_egl_attrib&;
+    sdl_egl_int_array_callback    :: type_alias = fn () -> sdl_egl_int&;
+
+    sdl_gl_attr :: enum c_int
+    {
+        SDL_GL_RED_SIZE;                    
+        SDL_GL_GREEN_SIZE;                  
+        SDL_GL_BLUE_SIZE;                   
+        SDL_GL_ALPHA_SIZE;                  
+        SDL_GL_BUFFER_SIZE;                 
+        SDL_GL_DOUBLEBUFFER;                
+        SDL_GL_DEPTH_SIZE;                  
+        SDL_GL_STENCIL_SIZE;                
+        SDL_GL_ACCUM_RED_SIZE;              
+        SDL_GL_ACCUM_GREEN_SIZE;            
+        SDL_GL_ACCUM_BLUE_SIZE;             
+        SDL_GL_ACCUM_ALPHA_SIZE;            
+        SDL_GL_STEREO;                      
+        SDL_GL_MULTISAMPLEBUFFERS;          
+        SDL_GL_MULTISAMPLESAMPLES;          
+        SDL_GL_ACCELERATED_VISUAL;          
+        SDL_GL_RETAINED_BACKING;            
+        SDL_GL_CONTEXT_MAJOR_VERSION;       
+        SDL_GL_CONTEXT_MINOR_VERSION;       
+        SDL_GL_CONTEXT_FLAGS;               
+        SDL_GL_CONTEXT_PROFILE_MASK;        
+        SDL_GL_SHARE_WITH_CURRENT_CONTEXT;  
+        SDL_GL_FRAMEBUFFER_SRGB_CAPABLE;    
+        SDL_GL_CONTEXT_RELEASE_BEHAVIOR;    
+        SDL_GL_CONTEXT_RESET_NOTIFICATION;  
+        SDL_GL_CONTEXT_NO_ERROR;
+        SDL_GL_FLOATBUFFERS;
+        SDL_GL_EGL_PLATFORM;
+    } 
+
+    sdl_gl_profile :: enum c_int
+    {
+        SDL_GL_CONTEXT_PROFILE_CORE           = 0x0001;
+        SDL_GL_CONTEXT_PROFILE_COMPATIBILITY  = 0x0002;
+        SDL_GL_CONTEXT_PROFILE_ES             = 0x0004;
+    } 
+
+    sdl_gl_context_flag :: enum c_int
+    {
+        SDL_GL_CONTEXT_DEBUG_FLAG              = 0x0001;
+        SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG = 0x0002;
+        SDL_GL_CONTEXT_ROBUST_ACCESS_FLAG      = 0x0004;
+        SDL_GL_CONTEXT_RESET_ISOLATION_FLAG    = 0x0008;
+    } 
+
+    sdl_gl_context_release_flag :: enum c_int
+    {
+        SDL_GL_CONTEXT_RELEASE_BEHAVIOR_NONE   = 0x0000;
+        SDL_GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH  = 0x0001;
+    }
+
+    sdl_gl_context_reset_notification :: enum c_int
+    {
+        SDL_GL_CONTEXT_RESET_NO_NOTIFICATION = 0x0000;
+        SDL_GL_CONTEXT_RESET_LOSE_CONTEXT    = 0x0001;
+    }
+
+    SDL_WINDOW_SURFACE_VSYNC_DISABLED :: define c_int = 0;
+    SDL_WINDOW_SURFACE_VSYNC_ADAPTIVE :: define c_int = -1;
+
+    sdl_hit_test_result :: enum c_int
+    {
+        SDL_HIT_TEST_NORMAL;             
+        SDL_HIT_TEST_DRAGGABLE;          
+        SDL_HIT_TEST_RESIZE_TOP_LEFT;     
+        SDL_HIT_TEST_RESIZE_TOP;         
+        SDL_HIT_TEST_RESIZE_TOP_RIGHT;    
+        SDL_HIT_TEST_RESIZE_RIGHT;       
+        SDL_HIT_TEST_RESIZE_BOTTOM_RIGHT; 
+        SDL_HIT_TEST_RESIZE_BOTTOM;      
+        SDL_HIT_TEST_RESIZE_BOTTOM_LEFT;  
+        SDL_HIT_TEST_RESIZE_LEFT;
+    }
+
+    SDL_PROP_DISPLAY_HDR_ENABLED_BOOLEAN             :: define string = "SDL.display.HDR_enabled\0";
+    SDL_PROP_DISPLAY_KMSDRM_PANEL_ORIENTATION_NUMBER :: define string = "SDL.display.KMSDRM.panel_orientation\0";
+
+    SDL_PROP_WINDOW_CREATE_ALWAYS_ON_TOP_BOOLEAN               :: define string = "SDL.window.create.always_on_top\0";
+    SDL_PROP_WINDOW_CREATE_BORDERLESS_BOOLEAN                  :: define string = "SDL.window.create.borderless\0";
+    SDL_PROP_WINDOW_CREATE_FOCUSABLE_BOOLEAN                   :: define string = "SDL.window.create.focusable\0";
+    SDL_PROP_WINDOW_CREATE_EXTERNAL_GRAPHICS_CONTEXT_BOOLEAN   :: define string = "SDL.window.create.external_graphics_context\0";
+    SDL_PROP_WINDOW_CREATE_FLAGS_NUMBER                        :: define string = "SDL.window.create.flags\0";
+    SDL_PROP_WINDOW_CREATE_FULLSCREEN_BOOLEAN                  :: define string = "SDL.window.create.fullscreen\0";
+    SDL_PROP_WINDOW_CREATE_HEIGHT_NUMBER                       :: define string = "SDL.window.create.height\0";
+    SDL_PROP_WINDOW_CREATE_HIDDEN_BOOLEAN                      :: define string = "SDL.window.create.hidden\0";
+    SDL_PROP_WINDOW_CREATE_HIGH_PIXEL_DENSITY_BOOLEAN          :: define string = "SDL.window.create.high_pixel_density\0";
+    SDL_PROP_WINDOW_CREATE_MAXIMIZED_BOOLEAN                   :: define string = "SDL.window.create.maximized\0";
+    SDL_PROP_WINDOW_CREATE_MENU_BOOLEAN                        :: define string = "SDL.window.create.menu\0";
+    SDL_PROP_WINDOW_CREATE_METAL_BOOLEAN                       :: define string = "SDL.window.create.metal\0";
+    SDL_PROP_WINDOW_CREATE_MINIMIZED_BOOLEAN                   :: define string = "SDL.window.create.minimized\0";
+    SDL_PROP_WINDOW_CREATE_MODAL_BOOLEAN                       :: define string = "SDL.window.create.modal\0";
+    SDL_PROP_WINDOW_CREATE_MOUSE_GRABBED_BOOLEAN               :: define string = "SDL.window.create.mouse_grabbed\0";
+    SDL_PROP_WINDOW_CREATE_OPENGL_BOOLEAN                      :: define string = "SDL.window.create.opengl\0";
+    SDL_PROP_WINDOW_CREATE_PARENT_POINTER                      :: define string = "SDL.window.create.parent\0";
+    SDL_PROP_WINDOW_CREATE_RESIZABLE_BOOLEAN                   :: define string = "SDL.window.create.resizable\0";
+    SDL_PROP_WINDOW_CREATE_TITLE_STRING                        :: define string = "SDL.window.create.title\0";
+    SDL_PROP_WINDOW_CREATE_TRANSPARENT_BOOLEAN                 :: define string = "SDL.window.create.transparent\0";
+    SDL_PROP_WINDOW_CREATE_TOOLTIP_BOOLEAN                     :: define string = "SDL.window.create.tooltip\0";
+    SDL_PROP_WINDOW_CREATE_UTILITY_BOOLEAN                     :: define string = "SDL.window.create.utility\0";
+    SDL_PROP_WINDOW_CREATE_VULKAN_BOOLEAN                      :: define string = "SDL.window.create.vulkan\0";
+    SDL_PROP_WINDOW_CREATE_WIDTH_NUMBER                        :: define string = "SDL.window.create.width\0";
+    SDL_PROP_WINDOW_CREATE_X_NUMBER                            :: define string = "SDL.window.create.x\0";
+    SDL_PROP_WINDOW_CREATE_Y_NUMBER                            :: define string = "SDL.window.create.y\0";
+    SDL_PROP_WINDOW_CREATE_COCOA_WINDOW_POINTER                :: define string = "SDL.window.create.cocoa.window\0";
+    SDL_PROP_WINDOW_CREATE_COCOA_VIEW_POINTER                  :: define string = "SDL.window.create.cocoa.view\0";
+    SDL_PROP_WINDOW_CREATE_WAYLAND_SURFACE_ROLE_CUSTOM_BOOLEAN :: define string = "SDL.window.create.wayland.surface_role_custom\0";
+    SDL_PROP_WINDOW_CREATE_WAYLAND_CREATE_EGL_WINDOW_BOOLEAN   :: define string = "SDL.window.create.wayland.create_egl_window\0";
+    SDL_PROP_WINDOW_CREATE_WAYLAND_WL_SURFACE_POINTER          :: define string = "SDL.window.create.wayland.wl_surface\0";
+    SDL_PROP_WINDOW_CREATE_WIN32_HWND_POINTER                  :: define string = "SDL.window.create.win32.hwnd\0";
+    SDL_PROP_WINDOW_CREATE_WIN32_PIXEL_FORMAT_HWND_POINTER     :: define string = "SDL.window.create.win32.pixel_format_hwnd\0";
+    SDL_PROP_WINDOW_CREATE_X11_WINDOW_NUMBER                   :: define string = "SDL.window.create.x11.window\0";
+
+    SDL_PROP_WINDOW_SHAPE_POINTER                               :: define string = "SDL.window.shape\0";
+    SDL_PROP_WINDOW_HDR_ENABLED_BOOLEAN                         :: define string = "SDL.window.HDR_enabled\0";
+    SDL_PROP_WINDOW_SDR_WHITE_LEVEL_FLOAT                       :: define string = "SDL.window.SDR_white_level\0";
+    SDL_PROP_WINDOW_HDR_HEADROOM_FLOAT                          :: define string = "SDL.window.HDR_headroom\0";
+    SDL_PROP_WINDOW_ANDROID_WINDOW_POINTER                      :: define string = "SDL.window.android.window\0";
+    SDL_PROP_WINDOW_ANDROID_SURFACE_POINTER                     :: define string = "SDL.window.android.surface\0";
+    SDL_PROP_WINDOW_UIKIT_WINDOW_POINTER                        :: define string = "SDL.window.uikit.window\0";
+    SDL_PROP_WINDOW_UIKIT_METAL_VIEW_TAG_NUMBER                 :: define string = "SDL.window.uikit.metal_view_tag\0";
+    SDL_PROP_WINDOW_UIKIT_OPENGL_FRAMEBUFFER_NUMBER             :: define string = "SDL.window.uikit.opengl.framebuffer\0";
+    SDL_PROP_WINDOW_UIKIT_OPENGL_RENDERBUFFER_NUMBER            :: define string = "SDL.window.uikit.opengl.renderbuffer\0";
+    SDL_PROP_WINDOW_UIKIT_OPENGL_RESOLVE_FRAMEBUFFER_NUMBER     :: define string = "SDL.window.uikit.opengl.resolve_framebuffer\0";
+    SDL_PROP_WINDOW_KMSDRM_DEVICE_INDEX_NUMBER                  :: define string = "SDL.window.kmsdrm.dev_index\0";
+    SDL_PROP_WINDOW_KMSDRM_DRM_FD_NUMBER                        :: define string = "SDL.window.kmsdrm.drm_fd\0";
+    SDL_PROP_WINDOW_KMSDRM_GBM_DEVICE_POINTER                   :: define string = "SDL.window.kmsdrm.gbm_dev\0";
+    SDL_PROP_WINDOW_COCOA_WINDOW_POINTER                        :: define string = "SDL.window.cocoa.window\0";
+    SDL_PROP_WINDOW_COCOA_METAL_VIEW_TAG_NUMBER                 :: define string = "SDL.window.cocoa.metal_view_tag\0";
+    SDL_PROP_WINDOW_VIVANTE_DISPLAY_POINTER                     :: define string = "SDL.window.vivante.display\0";
+    SDL_PROP_WINDOW_VIVANTE_WINDOW_POINTER                      :: define string = "SDL.window.vivante.window\0";
+    SDL_PROP_WINDOW_VIVANTE_SURFACE_POINTER                     :: define string = "SDL.window.vivante.surface\0";
+    SDL_PROP_WINDOW_WIN32_HWND_POINTER                          :: define string = "SDL.window.win32.hwnd\0";
+    SDL_PROP_WINDOW_WIN32_HDC_POINTER                           :: define string = "SDL.window.win32.hdc\0";
+    SDL_PROP_WINDOW_WIN32_INSTANCE_POINTER                      :: define string = "SDL.window.win32.instance\0";
+    SDL_PROP_WINDOW_WAYLAND_DISPLAY_POINTER                     :: define string = "SDL.window.wayland.display\0";
+    SDL_PROP_WINDOW_WAYLAND_SURFACE_POINTER                     :: define string = "SDL.window.wayland.surface\0";
+    SDL_PROP_WINDOW_WAYLAND_EGL_WINDOW_POINTER                  :: define string = "SDL.window.wayland.egl_window\0";
+    SDL_PROP_WINDOW_WAYLAND_XDG_SURFACE_POINTER                 :: define string = "SDL.window.wayland.xdg_surface\0";
+    SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_POINTER                :: define string = "SDL.window.wayland.xdg_toplevel\0";
+    SDL_PROP_WINDOW_WAYLAND_XDG_TOPLEVEL_EXPORT_HANDLE_STRING   :: define string = "SDL.window.wayland.xdg_toplevel_export_handle\0";
+    SDL_PROP_WINDOW_WAYLAND_XDG_POPUP_POINTER                   :: define string = "SDL.window.wayland.xdg_popup\0";
+    SDL_PROP_WINDOW_WAYLAND_XDG_POSITIONER_POINTER              :: define string = "SDL.window.wayland.xdg_positioner\0";
+    SDL_PROP_WINDOW_X11_DISPLAY_POINTER                         :: define string = "SDL.window.x11.display\0";
+    SDL_PROP_WINDOW_X11_SCREEN_NUMBER                           :: define string = "SDL.window.x11.screen\0";
+    SDL_PROP_WINDOW_X11_WINDOW_NUMBER                           :: define string = "SDL.window.x11.window\0";
+
+    SDL_PROP_GLOBAL_VIDEO_WAYLAND_WL_DISPLAY_POINTER :: define string = "SDL.video.wayland.wl_display\0";
+}
+
+import
+{
+    "sdl3/sdl_rect";
+    "sdl3/sdl_properties";
+    "sdl3/sdl_pixels";
+    "sdl3/sdl_surface";
+    "sdl3/sdl_stdinc";
+}
+
+sdl_window_pos_undefined_display :: fn (x: u32) -> u32
+{
+    return (SDL_WINDOW_POS_UNDEFINED_MASK | x);
+}
+
+sdl_window_pos_undefined :: fn () -> u32
+{
+    return sdl_window_pos_undefined_display(0);
+}
+
+sdl_window_pos_is_undefined :: fn (x: u32) -> bool
+{
+    return ((x & 0xFFFF0000) == SDL_WINDOW_POS_UNDEFINED_MASK);
+}
+
+sdl_window_pos_centered_display :: fn (x: u32) -> u32
+{
+    return (SDL_WINDOW_POS_CENTERED_MASK | x);
+}
+
+sdl_window_pos_centered :: fn () -> u32
+{
+    return sdl_window_pos_centered_display(0);
+} 
+
+sdl_window_pos_is_centered :: fn (x: u32) -> bool
+{
+    return ((x & 0xFFFF0000) == SDL_WINDOW_POS_CENTERED_MASK);
+}

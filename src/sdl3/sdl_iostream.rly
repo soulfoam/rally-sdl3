@@ -1,0 +1,99 @@
+export_library
+{
+    sdl_io_from_file        :: fn (file: c_char&, mode: c_char&) -> sdl_io_stream&                        = extern "SDL_IOFromFile";
+    sdl_io_from_mem         :: fn (mem: void&, size: usize) -> sdl_io_stream&                             = extern "SDL_IOFromMem";
+    sdl_io_from_const_mem   :: fn (mem: void&, size: usize) -> sdl_io_stream&                             = extern "SDL_IOFromConstMem";
+    sdl_io_from_dynamic_mem :: fn () -> sdl_io_stream&                                                    = extern "SDL_IOFromDynamicMem";
+    sdl_open_io             :: fn (iface: sdl_io_stream_interface&, userdata: void&) -> sdl_io_stream&    = extern "SDL_OpenIO";
+    sdl_close_io            :: fn (context: sdl_io_stream&) -> bool                                       = extern "SDL_CloseIO";
+    sdl_get_io_properties   :: fn (context: sdl_io_stream&) -> sdl_properties_id                          = extern "SDL_GetIOProperties";
+    sdl_get_io_status       :: fn (context: sdl_io_stream&) -> sdl_io_status                              = extern "SDL_GetIOStatus";
+    sdl_get_io_size         :: fn (context: sdl_io_stream&) -> s64                                        = extern "SDL_GetIOSize";
+    sdl_seek_io             :: fn (context: sdl_io_stream&, offset: s64, whence: sdl_io_whence) -> s64    = extern "SDL_SeekIO";
+    sdl_tell_io             :: fn (context: sdl_io_stream&) -> s64                                        = extern "SDL_TellIO";
+    sdl_read_io             :: fn (context: sdl_io_stream&, ptr: void&, size: usize) -> usize             = extern "SDL_ReadIO";
+    sdl_write_io            :: fn (context: sdl_io_stream&, ptr: void&, size: usize) -> usize             = extern "SDL_WriteIO";
+    sdl_io_printf           :: fn (context: sdl_io_stream&, fmt: c_char&, v: c_variadic) -> usize         = extern "SDL_IOprintf";
+    sdl_flush_io            :: fn (context: sdl_io_stream&) -> bool                                       = extern "SDL_FlushIO";
+    sdl_load_file_io        :: fn (src: sdl_io_stream&, datasize: usize&, closeio: bool) -> void&          = extern "SDL_LoadFile_IO";
+    sdl_load_file           :: fn (file: c_char&, datasize: usize&) -> void&                              = extern "SDL_LoadFile";
+    sdl_read_u8             :: fn (src: sdl_io_stream&, value: u8&) -> bool                               = extern "SDL_ReadU8";
+    sdl_read_s8             :: fn (src: sdl_io_stream&, value: s8&) -> bool                               = extern "SDL_ReadS8";
+    sdl_read_u16le          :: fn (src: sdl_io_stream&, value: u16&) -> bool                              = extern "SDL_ReadU16LE";
+    sdl_read_s16le          :: fn (src: sdl_io_stream&, value: s16&) -> bool                              = extern "SDL_ReadS16LE";
+    sdl_read_u16be          :: fn (src: sdl_io_stream&, value: u16&) -> bool                              = extern "SDL_ReadU16BE";
+    sdl_read_s16be          :: fn (src: sdl_io_stream&, value: s16&) -> bool                              = extern "SDL_ReadS16BE";
+    sdl_read_u32le          :: fn (src: sdl_io_stream&, value: u32&) -> bool                              = extern "SDL_ReadU32LE";
+    sdl_read_s32le          :: fn (src: sdl_io_stream&, value: s32&) -> bool                              = extern "SDL_ReadS32LE";
+    sdl_read_u32be          :: fn (src: sdl_io_stream&, value: u32&) -> bool                              = extern "SDL_ReadU32BE";
+    sdl_read_s32be          :: fn (src: sdl_io_stream&, value: s32&) -> bool                              = extern "SDL_ReadS32BE";
+    sdl_read_u64le          :: fn (src: sdl_io_stream&, value: u64&) -> bool                              = extern "SDL_ReadU64LE";
+    sdl_read_s64le          :: fn (src: sdl_io_stream&, value: s64&) -> bool                              = extern "SDL_ReadS64LE";
+    sdl_read_u64be          :: fn (src: sdl_io_stream&, value: u64&) -> bool                              = extern "SDL_ReadU64BE";
+    sdl_read_s64be          :: fn (src: sdl_io_stream&, value: s64&) -> bool                              = extern "SDL_ReadS64BE";
+    sdl_write_u8            :: fn (dst: sdl_io_stream&, value: u8) -> bool                                = extern "SDL_WriteU8";
+    sdl_write_s8            :: fn (dst: sdl_io_stream&, value: s8) -> bool                                = extern "SDL_WriteS8";
+    sdl_write_u16le         :: fn (dst: sdl_io_stream&, value: u16) -> bool                               = extern "SDL_WriteU16LE";
+    sdl_write_s16le         :: fn (dst: sdl_io_stream&, value: s16) -> bool                               = extern "SDL_WriteS16LE";
+    sdl_write_u16be         :: fn (dst: sdl_io_stream&, value: u16) -> bool                               = extern "SDL_WriteU16BE";
+    sdl_write_s16be         :: fn (dst: sdl_io_stream&, value: s16) -> bool                               = extern "SDL_WriteS16BE";
+    sdl_write_u32le         :: fn (dst: sdl_io_stream&, value: u32) -> bool                               = extern "SDL_WriteU32LE";
+    sdl_write_s32le         :: fn (dst: sdl_io_stream&, value: s32) -> bool                               = extern "SDL_WriteS32LE";
+    sdl_write_u32be         :: fn (dst: sdl_io_stream&, value: u32) -> bool                               = extern "SDL_WriteU32BE";
+    sdl_write_s32be         :: fn (dst: sdl_io_stream&, value: s32) -> bool                               = extern "SDL_WriteS32BE";
+    sdl_write_u64le         :: fn (dst: sdl_io_stream&, value: u64) -> bool                               = extern "SDL_WriteU64LE";
+    sdl_write_s64le         :: fn (dst: sdl_io_stream&, value: s64) -> bool                               = extern "SDL_WriteS64LE";
+    sdl_write_u64be         :: fn (dst: sdl_io_stream&, value: u64) -> bool                               = extern "SDL_WriteU64BE";
+    sdl_write_s64be         :: fn (dst: sdl_io_stream&, value: s64) -> bool                               = extern "SDL_WriteS64BE";
+
+    sdl_io_stream :: type_opaque;
+
+    sdl_io_status :: enum c_int
+    {
+        SDL_IO_STATUS_READY;    
+        SDL_IO_STATUS_ERROR;    
+        SDL_IO_STATUS_EOF;      
+        SDL_IO_STATUS_NOT_READY;
+        SDL_IO_STATUS_READONLY; 
+        SDL_IO_STATUS_WRITEONLY;
+    } 
+
+    sdl_io_whence :: enum c_int
+    {
+        SDL_IO_SEEK_SET;
+        SDL_IO_SEEK_CUR;
+        SDL_IO_SEEK_END;
+    }
+
+    sdl_io_stream_interface_size_fn  :: type_alias = fn (userdata: void&) -> s64;
+    sdl_io_stream_interface_seek_fn  :: type_alias = fn (userdata: void&, offset: s64, whence: sdl_io_whence) -> s64;
+    sdl_io_stream_interface_read_fn  :: type_alias = fn (userdata: void&, ptr: void&, size: usize, status: sdl_io_status&) -> usize;
+    sdl_io_stream_interface_write_fn :: type_alias = fn (userdata: void&, ptr: void&, size: usize, status: sdl_io_status&) -> usize;
+    sdl_io_stream_interface_flush_fn :: type_alias = fn (userdata: void&, status: sdl_io_status&) -> bool;
+    sdl_io_stream_interface_close_fn :: type_alias = fn (userdata: void&) -> bool;
+
+    sdl_io_stream_interface :: struct
+    {
+        version  : u32;
+
+        size_fn  : sdl_io_stream_interface_size_fn&;
+        seek_fn  : sdl_io_stream_interface_seek_fn&;
+        read_fn  : sdl_io_stream_interface_read_fn&;
+        write_fn : sdl_io_stream_interface_write_fn&;
+        flush_fn : sdl_io_stream_interface_flush_fn&;
+        close_fn : sdl_io_stream_interface_flush_fn&;
+    } 
+
+    SDL_PROP_IO_STREAM_WINDOWS_HANDLE_POINTER    :: define string = "SDL.iostream.windows.handle\0";
+    SDL_PROP_IO_STREAM_STDIO_FILE_POINTER        :: define string = "SDL.iostream.stdio.file\0";
+    SDL_PROP_IO_STREAM_FILE_DESCRIPTOR_NUMBER    :: define string = "SDL.iostream.file_descriptor\0";
+    SDL_PROP_IO_STREAM_ANDROID_AASSET_POINTER    :: define string = "SDL.iostream.android.aasset\0";
+
+    SDL_PROP_IO_STREAM_DYNAMIC_MEMORY_POINTER    :: define string = "SDL.iostream.dynamic.memory\0";
+    SDL_PROP_IO_STREAM_DYNAMIC_CHUNKSIZE_NUMBER  :: define string = "SDL.iostream.dynamic.chunksize\0";
+}
+
+import
+{
+    "sdl3/sdl_properties";
+}

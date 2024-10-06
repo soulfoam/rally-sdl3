@@ -1,0 +1,86 @@
+export_library
+{
+    sdl_has_mouse                      :: fn () -> bool                                                                            = extern "SDL_HasMouse";
+    sdl_get_mice                       :: fn (count: c_int&) -> sdl_mouse_id&                                                      = extern "SDL_GetMice";
+    sdl_get_mouse_name_for_id          :: fn (instance_id: sdl_mouse_id) -> c_char&                                                = extern "SDL_GetMouseNameForID";
+    sdl_get_mouse_focus                :: fn () -> sdl_window&                                                                     = extern "SDL_GetMouseFocus";
+    sdl_get_mouse_state                :: fn (x: f32&, y: f32&) -> sdl_mouse_button_flags                                          = extern "SDL_GetMouseState";
+    sdl_get_global_mouse_state         :: fn (x: f32&, y: f32&) -> sdl_mouse_button_flags                                          = extern "SDL_GetGlobalMouseState";
+    sdl_get_relative_mouse_state       :: fn (x: f32&, y: f32&) -> sdl_mouse_button_flags                                          = extern "SDL_GetRelativeMouseState";
+    sdl_warp_mouse_in_window           :: fn (window: sdl_window&, x: f32, y: f32)                                                 = extern "SDL_WarpMouseInWindow";
+    sdl_warp_mouse_global              :: fn (x: f32, y: f32) -> bool                                                              = extern "SDL_WarpMouseGlobal";
+    sdl_set_window_relative_mouse_mode :: fn (window: sdl_window&, enabled: bool) -> bool                                          = extern "SDL_SetWindowRelativeMouseMode";
+    sdl_get_window_relative_mouse_mode :: fn (window: sdl_window&) -> bool                                                         = extern "SDL_GetWindowRelativeMouseMode";
+    sdl_capture_mouse                  :: fn (enabled: bool) -> bool                                                               = extern "SDL_CaptureMouse";
+    sdl_create_cursor                  :: fn (data: u8&, mask: u8&, w: c_int, h: c_int, hot_x: c_int, hot_y: c_int) -> sdl_cursor& = extern "SDL_CreateCursor";
+    sdl_create_color_cursor            :: fn (surface: sdl_surface&, hot_x: c_int, hot_y: c_int)                                   = extern "SDL_CreateColorCursor";
+    sdl_create_system_cursor           :: fn (id: sdl_system_cursor) -> sdl_cursor&                                                = extern "SDL_CreateSystemCursor";
+    sdl_set_cursor                     :: fn (cursor: sdl_cursor&) -> bool                                                         = extern "SDL_SetCursor";
+    sdl_get_cursor                     :: fn () -> sdl_cursor&                                                                     = extern "SDL_GetCursor";
+    sdl_get_default_cursor             :: fn () -> sdl_cursor&                                                                     = extern "SDL_GetDefaultCursor";
+    sdl_destroy_cursor                 :: fn (cursor: sdl_cursor&)                                                                 = extern "SDL_DestroyCursor";
+    sdl_show_cursor                    :: fn () -> bool                                                                            = extern "SDL_ShowCursor";
+    sdl_hide_cursor                    :: fn () -> bool                                                                            = extern "SDL_HideCursor";
+    sdl_cursor_visible                 :: fn () -> bool                                                                            = extern "SDL_CursorVisible";
+
+    sdl_mouse_id :: type_alias = u32;
+    sdl_cursor :: type_opaque;
+
+    sdl_system_cursor :: enum c_int
+    {
+        SDL_SYSTEM_CURSOR_DEFAULT;     
+        SDL_SYSTEM_CURSOR_TEXT;        
+        SDL_SYSTEM_CURSOR_WAIT;        
+        SDL_SYSTEM_CURSOR_CROSSHAIR;   
+        SDL_SYSTEM_CURSOR_PROGRESS;    
+        SDL_SYSTEM_CURSOR_NWSE_RESIZE; 
+        SDL_SYSTEM_CURSOR_NESW_RESIZE; 
+        SDL_SYSTEM_CURSOR_EW_RESIZE;   
+        SDL_SYSTEM_CURSOR_NS_RESIZE;   
+        SDL_SYSTEM_CURSOR_MOVE;        
+        SDL_SYSTEM_CURSOR_NOT_ALLOWED; 
+        SDL_SYSTEM_CURSOR_POINTER;     
+        SDL_SYSTEM_CURSOR_NW_RESIZE;   
+        SDL_SYSTEM_CURSOR_N_RESIZE;    
+        SDL_SYSTEM_CURSOR_NE_RESIZE;   
+        SDL_SYSTEM_CURSOR_E_RESIZE;    
+        SDL_SYSTEM_CURSOR_SE_RESIZE;   
+        SDL_SYSTEM_CURSOR_S_RESIZE;    
+        SDL_SYSTEM_CURSOR_SW_RESIZE;   
+        SDL_SYSTEM_CURSOR_W_RESIZE;    
+        SDL_SYSTEM_CURSOR_COUNT;
+    }
+
+    sdl_mouse_wheel_direction :: enum c_int
+    {
+        SDL_MOUSEWHEEL_NORMAL;
+        SDL_MOUSEWHEEL_FLIPPED;
+    } 
+
+    sdl_mouse_button_flags :: type_alias = u32;
+    SDL_BUTTON_LEFT     :: define u32 = 1;
+    SDL_BUTTON_MIDDLE   :: define u32 = 2;
+    SDL_BUTTON_RIGHT    :: define u32 = 3;
+    SDL_BUTTON_X1       :: define u32 = 4;
+    SDL_BUTTON_X2       :: define u32 = 5;
+
+    SDL_BUTTON_LMASK    :: define u32 = 1 << SDL_BUTTON_LEFT-1;
+    SDL_BUTTON_MMASK    :: define u32 = 1 << SDL_BUTTON_MIDDLE-1;
+    SDL_BUTTON_RMASK    :: define u32 = 1 << SDL_BUTTON_RIGHT-1;
+    SDL_BUTTON_X1MASK   :: define u32 = 1 << SDL_BUTTON_X1-1;
+    SDL_BUTTON_X2MASK   :: define u32 = 1 << SDL_BUTTON_X2-1;
+
+    sdl_button :: fn (x: u32) -> u32;
+
+}
+
+import
+{
+    "sdl3/sdl_video";
+    "sdl3/sdl_surface";
+}
+
+sdl_button :: fn (x: u32) -> u32
+{
+    return 1 << (x-1);
+}

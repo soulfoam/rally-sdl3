@@ -1,0 +1,15 @@
+export_library
+{
+    sdl_power_state :: enum c_int
+    {
+        SDL_POWER_STATE_ERROR = -1;  
+        SDL_POWER_STATE_UNKNOWN;     
+        SDL_POWER_STATE_ON_BATTERY;  
+        SDL_POWER_STATE_NO_BATTERY;  
+        SDL_POWER_STATE_CHARGING;    
+        SDL_POWER_STATE_CHARGED;     
+    }
+
+    sdl_get_power_info :: fn (seconds: c_int&, percent: c_int&) -> sdl_power_state = extern "SDL_GetPowerInfo";
+
+}

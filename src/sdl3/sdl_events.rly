@@ -1,0 +1,645 @@
+export_library
+{
+    sdl_pump_events           :: fn () = extern "SDL_PumpEvents";
+    sdl_peep_events           :: fn (event: sdl_event&, numevents: c_int, action: sdl_event_action, minType: u32, maxType: u32) -> c_int = extern "SDL_PeepEvents";
+    sdl_has_event             :: fn (type: u32) -> bool = extern "SDL_HasEvent";
+    sdl_has_events            :: fn (minType: u32, maxType: u32) -> bool = extern "SDL_HasEvents";
+    sdl_flush_event           :: fn (type: u32) = extern "SDL_FlushEvent";
+    sdl_flush_events          :: fn (minType: u32, maxType: u32) = extern "SDL_FlushEvents";
+    sdl_poll_event            :: fn (event: sdl_event&) -> bool = extern "SDL_PollEvent";
+    sdl_wait_event            :: fn (event: sdl_event&) -> bool = extern "SDL_WaitEvent";
+    sdl_wait_eventtimeout     :: fn (event: sdl_event&, timeoutMS: s32) -> bool = extern "SDL_WaitEventTimeout";
+    sdl_push_event            :: fn (event: sdl_event&) -> bool = extern "SDL_PushEvent";
+    sdl_set_event_filter      :: fn (filter: sdl_event_filter_fn&, userdata: void&) = extern "SDL_SetEventFilter";
+    sdl_get_event_filter      :: fn (filter: sdl_event_filter_fn&&, userdata: void&&) -> bool = extern "SDL_GetEventFilter";
+    sdl_add_event_watch       :: fn (filter: sdl_event_filter_fn&, userdata: void&) -> bool = extern "SDL_AddEventWatch";
+    sdl_remove_eventwatch     :: fn (filter: sdl_event_filter_fn&, userdata: void&) = extern "SDL_RemoveEventWatch";
+    sdl_filter_events         :: fn (filter: sdl_event_filter_fn&, userdata: void&) = extern "SDL_FilterEvents";
+    sdl_set_event_enabled     :: fn (type: u32, enabled: bool) = extern "SDL_SetEventEnabled";
+    sdl_event_enabled         :: fn (type: u32) -> bool = extern "SDL_EventEnabled";
+    sdl_register_events       :: fn (numevents: c_int) -> u32 = extern "SDL_RegisterEvents";
+    sdl_get_window_from_event :: fn (event: sdl_event&) -> sdl_window& = extern "SDL_GetWindowFromEvent";
+
+    sdl_event_filter_fn :: type_alias = fn (userdata: void&, event: sdl_event&) -> bool;
+
+    sdl_event_type :: enum u32
+    {
+        SDL_EVENT_FIRST = 0;
+
+        SDL_EVENT_QUIT = 0x100;
+
+        SDL_EVENT_TERMINATING;      
+                                    
+        SDL_EVENT_LOW_MEMORY;       
+                                    
+        SDL_EVENT_WILL_ENTER_BACKGROUND; 
+        SDL_EVENT_DID_ENTER_BACKGROUND;
+        SDL_EVENT_WILL_ENTER_FOREGROUND; 
+        SDL_EVENT_DID_ENTER_FOREGROUND;
+
+        SDL_EVENT_LOCALE_CHANGED;
+
+        SDL_EVENT_SYSTEM_THEME_CHANGED;
+
+        SDL_EVENT_DISPLAY_ORIENTATION = 0x151;  
+        SDL_EVENT_DISPLAY_ADDED;                
+        SDL_EVENT_DISPLAY_REMOVED;             
+        SDL_EVENT_DISPLAY_MOVED;                
+        SDL_EVENT_DISPLAY_DESKTOP_MODE_CHANGED; 
+        SDL_EVENT_DISPLAY_CURRENT_MODE_CHANGED; 
+        SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED;
+        SDL_EVENT_DISPLAY_FIRST = SDL_EVENT_DISPLAY_ORIENTATION;
+        SDL_EVENT_DISPLAY_LAST = SDL_EVENT_DISPLAY_CONTENT_SCALE_CHANGED;
+
+        SDL_EVENT_WINDOW_SHOWN = 0x202;     
+        SDL_EVENT_WINDOW_HIDDEN;            
+        SDL_EVENT_WINDOW_EXPOSED;           
+        SDL_EVENT_WINDOW_MOVED;             
+        SDL_EVENT_WINDOW_RESIZED;           
+        SDL_EVENT_WINDOW_PIXEL_SIZE_CHANGED;
+        SDL_EVENT_WINDOW_METAL_VIEW_RESIZED;
+        SDL_EVENT_WINDOW_MINIMIZED;         
+        SDL_EVENT_WINDOW_MAXIMIZED;         
+        SDL_EVENT_WINDOW_RESTORED;          
+        SDL_EVENT_WINDOW_MOUSE_ENTER;       
+        SDL_EVENT_WINDOW_MOUSE_LEAVE;       
+        SDL_EVENT_WINDOW_FOCUS_GAINED;      
+        SDL_EVENT_WINDOW_FOCUS_LOST;        
+        SDL_EVENT_WINDOW_CLOSE_REQUESTED;   
+        SDL_EVENT_WINDOW_HIT_TEST;          
+        SDL_EVENT_WINDOW_ICCPROF_CHANGED;   
+        SDL_EVENT_WINDOW_DISPLAY_CHANGED;   
+        SDL_EVENT_WINDOW_DISPLAY_SCALE_CHANGED;
+        SDL_EVENT_WINDOW_SAFE_AREA_CHANGED; 
+        SDL_EVENT_WINDOW_OCCLUDED;          
+        SDL_EVENT_WINDOW_ENTER_FULLSCREEN;  
+        SDL_EVENT_WINDOW_LEAVE_FULLSCREEN;  
+        SDL_EVENT_WINDOW_DESTROYED;         
+                                            
+        SDL_EVENT_WINDOW_HDR_STATE_CHANGED; 
+        SDL_EVENT_WINDOW_FIRST = SDL_EVENT_WINDOW_SHOWN;
+        SDL_EVENT_WINDOW_LAST = SDL_EVENT_WINDOW_HDR_STATE_CHANGED;
+
+        SDL_EVENT_KEY_DOWN        = 0x300; 
+        SDL_EVENT_KEY_UP;                  
+        SDL_EVENT_TEXT_EDITING;            
+        SDL_EVENT_TEXT_INPUT;              
+        SDL_EVENT_KEYMAP_CHANGED;          
+                                           
+        SDL_EVENT_KEYBOARD_ADDED;          
+        SDL_EVENT_KEYBOARD_REMOVED;        
+        SDL_EVENT_TEXT_EDITING_CANDIDATES; 
+
+        SDL_EVENT_MOUSE_MOTION    = 0x400; 
+        SDL_EVENT_MOUSE_BUTTON_DOWN;       
+        SDL_EVENT_MOUSE_BUTTON_UP;         
+        SDL_EVENT_MOUSE_WHEEL;             
+        SDL_EVENT_MOUSE_ADDED;             
+        SDL_EVENT_MOUSE_REMOVED;           
+
+        SDL_EVENT_JOYSTICK_AXIS_MOTION  = 0x600; 
+        SDL_EVENT_JOYSTICK_BALL_MOTION;          
+        SDL_EVENT_JOYSTICK_HAT_MOTION;           
+        SDL_EVENT_JOYSTICK_BUTTON_DOWN;          
+        SDL_EVENT_JOYSTICK_BUTTON_UP;            
+        SDL_EVENT_JOYSTICK_ADDED;                
+        SDL_EVENT_JOYSTICK_REMOVED;              
+        SDL_EVENT_JOYSTICK_BATTERY_UPDATED;      
+        SDL_EVENT_JOYSTICK_UPDATE_COMPLETE;      
+
+        SDL_EVENT_GAMEPAD_AXIS_MOTION  = 0x650; 
+        SDL_EVENT_GAMEPAD_BUTTON_DOWN;          
+        SDL_EVENT_GAMEPAD_BUTTON_UP;            
+        SDL_EVENT_GAMEPAD_ADDED;                
+        SDL_EVENT_GAMEPAD_REMOVED;              
+        SDL_EVENT_GAMEPAD_REMAPPED;             
+        SDL_EVENT_GAMEPAD_TOUCHPAD_DOWN;        
+        SDL_EVENT_GAMEPAD_TOUCHPAD_MOTION;      
+        SDL_EVENT_GAMEPAD_TOUCHPAD_UP;          
+        SDL_EVENT_GAMEPAD_SENSOR_UPDATE;        
+        SDL_EVENT_GAMEPAD_UPDATE_COMPLETE;      
+        SDL_EVENT_GAMEPAD_STEAM_HANDLE_UPDATED; 
+
+        SDL_EVENT_FINGER_DOWN = 0x700;
+        SDL_EVENT_FINGER_UP;
+        SDL_EVENT_FINGER_MOTION;
+
+        SDL_EVENT_CLIPBOARD_UPDATE = 0x900; 
+
+        SDL_EVENT_DROP_FILE        = 0x1000;
+        SDL_EVENT_DROP_TEXT;                
+        SDL_EVENT_DROP_BEGIN;               
+        SDL_EVENT_DROP_COMPLETE;            
+        SDL_EVENT_DROP_POSITION;            
+
+        SDL_EVENT_AUDIO_DEVICE_ADDED = 0x1100;  
+        SDL_EVENT_AUDIO_DEVICE_REMOVED;         
+        SDL_EVENT_AUDIO_DEVICE_FORMAT_CHANGED;  
+
+        SDL_EVENT_SENSOR_UPDATE = 0x1200;     
+
+        SDL_EVENT_PEN_PROXIMITY_IN = 0x1300; 
+        SDL_EVENT_PEN_PROXIMITY_OUT;         
+        SDL_EVENT_PEN_DOWN;                  
+        SDL_EVENT_PEN_UP;                    
+        SDL_EVENT_PEN_BUTTON_DOWN;           
+        SDL_EVENT_PEN_BUTTON_UP;             
+        SDL_EVENT_PEN_MOTION;                
+        SDL_EVENT_PEN_AXIS;                  
+
+        SDL_EVENT_CAMERA_DEVICE_ADDED = 0x1400; 
+        SDL_EVENT_CAMERA_DEVICE_REMOVED;        
+        SDL_EVENT_CAMERA_DEVICE_APPROVED;       
+        SDL_EVENT_CAMERA_DEVICE_DENIED;         
+
+        SDL_EVENT_RENDER_TARGETS_RESET = 0x2000;
+        SDL_EVENT_RENDER_DEVICE_RESET;
+
+        SDL_EVENT_POLL_SENTINEL = 0x7F00; 
+
+        SDL_EVENT_USER    = 0x8000;
+
+        SDL_EVENT_LAST    = 0xFFFF;
+
+        SDL_EVENT_ENUM_PADDING = 0x7FFFFFFF;
+
+    } 
+
+    sdl_common_event :: struct
+    {
+        type      : u32;
+        reserved  : u32;
+        timestamp : u64;
+    } 
+
+    sdl_display_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        displayID : sdl_display_id;
+        data1     : s32;
+        data2     : s32;
+    } 
+
+
+    sdl_window_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        data1     : s32;
+        data2     : s32;
+    }
+
+    sdl_keyboard_device_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_keyboard_id;
+    } 
+
+    sdl_keyboard_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_keyboard_id;
+        scancode  : sdl_scancode;
+        key       : sdl_keycode;
+        mod       : sdl_keymod;
+        raw       : u16;
+        down      : bool;
+        repeat    : bool;
+    } 
+
+    sdl_text_editing_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        text      : c_char&;
+        start     : s32;
+        length    : s32;
+    } 
+
+    sdl_text_editing_candidates_event :: struct
+    {
+        type               : sdl_event_type;
+        reserved           : u32;
+        timestamp          : u64;
+        windowID           : sdl_window_id;
+        candidates         : c_char&;
+        num_candidates     : s32;
+        selected_candidate : s32;
+        horizontal         : bool;
+        padding1           : u8;
+        padding2           : u8;
+        padding3           : u8;
+    }
+
+    sdl_text_input_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        text      : c_char&;
+    } 
+
+    sdl_mouse_device_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_mouse_id;
+    }
+
+    sdl_mouse_motion_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowid  : sdl_window_id;
+        which     : sdl_mouse_id;
+        state     : sdl_mouse_button_flags;
+        x         : f32;
+        y         : f32;
+        xrel      : f32;
+        yrel      : f32;
+    }
+
+    sdl_mouse_button_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_mouse_id;
+        button    : u8;
+        down      : bool;
+        clicks    : u8;
+        padding   : u8;
+        x         : f32;
+        y         : f32;
+    }
+
+    sdl_mouse_wheel_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_mouse_id;
+        x         : f32;
+        y         : f32;
+        direction : sdl_mouse_wheel_direction;
+        mouse_x   : f32;
+        mouse_y   : f32;
+    }
+
+    sdl_joy_axis_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        axis      : u8;
+        padding1  : u8;
+        padding2  : u8;
+        padding3  : u8;
+        value     : s16;
+        padding4  : u16;
+    }
+
+    sdl_joy_ball_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        ball      : u8;
+        padding1  : u8;
+        padding2  : u8;
+        padding3  : u8;
+        xrel      : s16;
+        yrel      : s16;
+    }
+
+
+    sdl_joy_hat_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        hat       : u8;
+        value     : u8;
+
+        padding1  : u8;
+        padding2  : u8;
+    }
+
+    sdl_joy_button_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        button    : u8;
+        down      : bool;
+        padding1  : u8;
+        padding2  : u8;
+    } 
+
+    sdl_joy_device_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+    } 
+
+    sdl_joy_battery_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        state     : sdl_power_state;
+        percent   : c_int;        
+    }
+
+    sdl_gamepad_axis_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        axis      : u8;
+        padding1  : u8;
+        padding2  : u8;
+        padding3  : u8;
+        value     : s16;
+        padding4  : u16;
+    }
+
+    sdl_gamepad_button_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        button    : u8;     
+        down      : bool;     
+        padding1  : u8;
+        padding2  : u8;
+    }
+
+    sdl_gamepad_device_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+    } 
+
+    sdl_gamepad_touchpad_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_joystick_id;
+        touchpad  : s32;
+        finger    : s32;
+        x         : f32;
+        y         : f32;
+        pressure  : f32;
+    } 
+
+    sdl_gamepad_sensor_event :: struct
+    {
+        type             : sdl_event_type;
+        reserved         : u32;
+        timestamp        : u64;
+        which            : sdl_joystick_id;
+        sensor           : s32;
+        data             : f32[3];
+        sensor_timestamp : u64;
+    } 
+
+    sdl_audio_device_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_audio_device_id;
+        recording : bool;
+        padding1  : u8;
+        padding2  : u8;
+        padding3  : u8;
+    }
+
+    sdl_camera_device_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_camera_id;
+    }
+
+    sdl_touch_finger_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        touchID   : sdl_touch_id;
+        fingerID  : sdl_finger_id;
+        x         : f32;
+        y         : f32;
+        dx        : f32;
+        dy        : f32;
+        pressure  : f32;
+        windowID  : sdl_window_id;
+    }
+
+    sdl_pen_proximity_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_pen_id;
+    }
+
+    sdl_pen_motion_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_pen_id;
+        pen_state : sdl_pen_input_flags;
+        x         : f32;
+        y         : f32;
+    }
+
+    sdl_pen_touch_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_pen_id;
+        pen_state : sdl_pen_input_flags;
+        x         : f32;
+        y         : f32;
+        eraser    : bool;
+        down      : bool;
+    } 
+
+    sdl_pen_button_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_pen_id;
+        pen_state : sdl_pen_input_flags;
+        x         : f32;
+        y         : f32;
+        button    : u8;
+        down      : bool;
+    }
+
+    sdl_pen_axis_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        which     : sdl_pen_id;
+        pen_state : sdl_pen_input_flags;
+        x         : f32;
+        y         : f32;
+        axis      : sdl_pen_axis;
+        value     : f32;
+    }
+
+    sdl_drop_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        x         : f32;
+        y         : f32;
+        source    : c_char&; 
+        data      : c_char&;
+    }
+
+    sdl_clipboard_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+    }
+
+    sdl_sensor_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        which     : sdl_sensor_id;
+        data      : f32[6];      
+        sensor_timestamp : u64;
+    }
+
+    sdl_quit_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+    } 
+
+    sdl_user_event :: struct
+    {
+        type      : sdl_event_type;
+        reserved  : u32;
+        timestamp : u64;
+        windowID  : sdl_window_id;
+        code      : s32;
+        data1     : void&;
+        data2     : void&;
+    }
+
+    sdl_event :: union
+    {
+        type            : u32;
+        common          : sdl_common_event;
+        display         : sdl_display_event;
+        window          : sdl_window_event;
+        kdevice         : sdl_keyboard_device_event;
+        key             : sdl_keyboard_event;
+        edit            : sdl_text_editing_event;
+        edit_candidates : sdl_text_editing_candidates_event;
+        text            : sdl_text_input_event;
+        mdevice         : sdl_mouse_device_event;
+        motion          : sdl_mouse_motion_event;
+        button          : sdl_mouse_button_event;
+        wheel           : sdl_mouse_wheel_event;
+        jdevice         : sdl_joy_device_event;
+        jaxis           : sdl_joy_axis_event;
+        jball           : sdl_joy_ball_event;
+        jhat            : sdl_joy_hat_event;
+        jbutton         : sdl_joy_button_event;
+        jbattery        : sdl_joy_battery_event;
+        gdevice         : sdl_gamepad_device_event;
+        gaxis           : sdl_gamepad_axis_event;
+        gbutton         : sdl_gamepad_button_event;
+        gtouchpad       : sdl_gamepad_touchpad_event;
+        gsensor         : sdl_gamepad_sensor_event;
+        adevice         : sdl_audio_device_event;
+        cdevice         : sdl_camera_device_event;
+        sensor          : sdl_sensor_event;
+        quit            : sdl_quit_event;
+        user            : sdl_user_event;
+        tfinger         : sdl_touch_finger_event;
+        pproximity      : sdl_pen_proximity_event;
+        ptouch          : sdl_pen_touch_event;
+        pmotion         : sdl_pen_motion_event;
+        pbutton         : sdl_pen_button_event;
+        paxis           : sdl_pen_axis_event;
+        drop            : sdl_drop_event;
+        clipboard       : sdl_clipboard_event;
+
+        padding         : u8[128];
+    }
+
+    sdl_event_action :: enum c_int
+    {
+        SDL_ADDEVENT;  
+        SDL_PEEKEVENT; 
+        SDL_GETEVENT;  
+    } 
+}
+
+import
+{
+    "sdl3/sdl_video";
+    "sdl3/sdl_keyboard";
+    "sdl3/sdl_mouse";
+    "sdl3/sdl_scancode";
+    "sdl3/sdl_keycode";
+    "sdl3/sdl_joystick";
+    "sdl3/sdl_power";
+    "sdl3/sdl_audio";
+    "sdl3/sdl_camera";
+    "sdl3/sdl_touch";
+    "sdl3/sdl_pen";
+    "sdl3/sdl_sensor";
+}

@@ -1,0 +1,7 @@
+// THIS FILE NEEDS DONE
+export_library
+{
+    sdl_joystick_id :: type_alias = u32;
+
+    sdl_joystick :: type_opaque;
+}
