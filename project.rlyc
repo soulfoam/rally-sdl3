@@ -1,5 +1,24 @@
 targets =
 [
-    default = []
+    default = 
+    [
+        links =
+        [
+            x64_linux_gcc =
+            [
+                "SDL3"
+            ],
+
+            x64_windows_msvc =
+            [
+                "SDL3"
+            ],
+
+            x64_windows_mingw =
+            [
+                "SDL3"
+            ]
+        ]
+    ]
 ]
 
