@@ -1,0 +1,11 @@
+export_library
+{
+    sdl_guid_to_string :: fn (guid: sdl_guid, pszGUID: c_char&, cbGUID: c_int) = extern "SDL_GUIDToString";
+    sdl_string_to_guid :: fn (pchGUID: c_char&) -> sdl_guid = extern "SDL_StringToGUID";
+
+    sdl_guid :: struct 
+    {
+        data: u8[16];
+    } 
+}
+ 

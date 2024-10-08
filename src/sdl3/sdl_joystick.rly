@@ -1,7 +1,171 @@
-// THIS FILE NEEDS DONE
 export_library
 {
-    sdl_joystick_id :: type_alias = u32;
+    sdl_lock_joysticks                      :: fn ()                                                  = extern "SDL_LockJoysticks";
+    sdl_unlock_joysticks                    :: fn ()                                                  = extern "SDL_UnlockJoysticks";
+    sdl_has_joystick                        :: fn () -> bool                                          = extern "SDL_HasJoystick";
+    sdl_get_joysticks                       :: fn (count: c_int&) -> sdl_joystick_id&                 = extern "SDL_GetJoysticks";
+    sdl_get_joystick_name_for_id            :: fn (instance_id: sdl_joystick_id) -> c_char&           = extern "SDL_GetJoystickNameForID";
+    sdl_get_joystick_path_for_id            :: fn (instance_id: sdl_joystick_id) -> c_char&           = extern "SDL_GetJoystickPathForID";
+    sdl_get_joystick_player_index_for_id    :: fn (instance_id: sdl_joystick_id) -> c_int             = extern "SDL_GetJoystickPlayerIndexForID";
+    sdl_get_joystick_guid_for_id            :: fn (instance_id: sdl_joystick_id) -> sdl_guid          = extern "SDL_GetJoystickGUIDForID";
+    sdl_get_joystick_vendor_for_id          :: fn (instance_id: sdl_joystick_id) -> u16               = extern "SDL_GetJoystickVendorForID";
+    sdl_get_joystick_product_for_id         :: fn (instance_id: sdl_joystick_id) -> u16               = extern "SDL_GetJoystickProductForID";
+    sdl_get_joystick_product_version_for_id :: fn (instance_id: sdl_joystick_id) -> u16               = extern "SDL_GetJoystickProductVersionForID";
+    sdl_get_joystick_type_for_id            :: fn (instance_id: sdl_joystick_id) -> sdl_joystick_type = extern "SDL_GetJoystickTypeForID";
+    sdl_open_joystick                       :: fn (instance_id: sdl_joystick_id) -> sdl_joystick&     = extern "SDL_OpenJoystick";
+    sdl_get_joystick_from_id                :: fn (instance_id: sdl_joystick_id) -> sdl_joystick&     = extern "SDL_GetJoystickFromID";
+    sdl_get_joystick_from_player_index      :: fn (player_index: c_int) -> sdl_joystick&              = extern "SDL_GetJoystickFromPlayerIndex";
 
+    sdl_attach_virtual_joystick           :: fn (desc: sdl_virtual_joystick_desc&) -> sdl_joystick_id                                                          = extern "SDL_AttachVirtualJoystick";
+    sdl_detach_virtual_joystick           :: fn (instance_id: sdl_joystick_id) -> bool                                                                         = extern "SDL_DetachVirtualJoystick";
+    sdl_is_joystick_virtual               :: fn (instance_id: sdl_joystick_id) -> bool                                                                         = extern "SDL_IsJoystickVirtual";
+    sdl_set_joystick_virtual_axis         :: fn (joystick: sdl_joystick&, axis: c_int, value: s16) -> bool                                                     = extern "SDL_SetJoystickVirtualAxis";
+    sdl_set_joystick_virtual_ball         :: fn (joystick: sdl_joystick&, ball: c_int, xrel: s16, yrel: s16) -> bool                                           = extern "SDL_SetJoystickVirtualBall";
+    sdl_set_joystick_virtual_button       :: fn (joystick: sdl_joystick&, button: c_int, down: bool) -> bool                                                   = extern "SDL_SetJoystickVirtualButton";
+    sdl_set_joystick_virtual_hat          :: fn (joystick: sdl_joystick&, hat: c_int, value: u8) -> bool                                                       = extern "SDL_SetJoystickVirtualHat";
+    sdl_set_joystick_virtual_touchpad     :: fn (joystick: sdl_joystick&, touchpad: c_int, finger: c_int, down: bool, x: f32, y: f32, pressure: f32) -> bool   = extern "SDL_SetJoystickVirtualTouchpad";
+    sdl_send_joystick_virtual_sensor_data :: fn (joystick: sdl_joystick&, type: sdl_sensor_type, sensor_timestamp: u64, data: f32&, num_values: c_int) -> bool = extern "SDL_SendJoystickVirtualSensorData";
+    sdl_get_joystick_properties           :: fn (joystick: sdl_joystick&) -> sdl_properties_id                                                                 = extern "SDL_GetJoystickProperties";
+    sdl_get_joystick_name                 :: fn (joystick: sdl_joystick&) -> c_char&                                                                           = extern "SDL_GetJoystickName";
+    sdl_get_joystick_path                 :: fn (joystick: sdl_joystick&) -> c_char&                                                                           = extern "SDL_GetJoystickPath";
+    sdl_get_joystick_player_index         :: fn (joystick: sdl_joystick&) -> c_int                                                                             = extern "SDL_GetJoystickPlayerIndex";
+    sdl_set_joystick_player_index         :: fn (joystick: sdl_joystick&, player_index: c_int) -> bool                                                         = extern "SDL_SetJoystickPlayerIndex";
+    sdl_get_joystick_guid                 :: fn (joystick: sdl_joystick&) -> sdl_guid                                                                          = extern "SDL_GetJoystickGUID";
+    sdl_get_joystick_vendor               :: fn (joystick: sdl_joystick&) -> u16                                                                               = extern "SDL_GetJoystickVendor";
+    sdl_get_joystick_product              :: fn (joystick: sdl_joystick&) -> u16                                                                               = extern "SDL_GetJoystickProduct";
+    sdl_get_joystick_product_version      :: fn (joystick: sdl_joystick&) -> u16                                                                               = extern "SDL_GetJoystickProductVersion";
+    sdl_get_joystick_firmware_version     :: fn (joystick: sdl_joystick&) -> u16                                                                               = extern "SDL_GetJoystickFirmwareVersion";
+    sdl_get_joystick_serial               :: fn (joystick: sdl_joystick&) -> c_char&                                                                           = extern "SDL_GetJoystickSerial";
+    sdl_get_joystick_type                 :: fn (joystick: sdl_joystick&) -> sdl_joystick_type                                                                 = extern "SDL_GetJoystickType";
+    sdl_get_joystick_guid_info            :: fn (guid: sdl_guid, vendor: u16&, product: u16&, version: u16&, crc16: u16&)                                      = extern "SDL_GetJoystickGUIDInfo";
+    sdl_joystick_connected                :: fn (joystick: sdl_joystick&) -> bool                                                                              = extern "SDL_JoystickConnected";
+    sdl_get_joystick_id                   :: fn (joystick: sdl_joystick&) -> sdl_joystick_id                                                                   = extern "SDL_GetJoystickID";
+    sdl_get_num_joystick_axes             :: fn (joystick: sdl_joystick&) -> c_int                                                                             = extern "SDL_GetNumJoystickAxes";
+    sdl_get_num_joystick_balls            :: fn (joystick: sdl_joystick&) -> c_int                                                                             = extern "SDL_GetNumJoystickBalls";
+    sdl_get_num_joystick_hats             :: fn (joystick: sdl_joystick&) -> c_int                                                                             = extern "SDL_GetNumJoystickHats";
+    sdl_get_num_joystick_buttons          :: fn (joystick: sdl_joystick&) -> c_int                                                                             = extern "SDL_GetNumJoystickButtons";
+    sdl_set_joystick_events_enabled       :: fn (enabled: bool)                                                                                                = extern "SDL_SetJoystickEventsEnabled";
+    sdl_joystick_events_enabled           :: fn () -> bool                                                                                                     = extern "SDL_JoystickEventsEnabled";
+    sdl_update_joysticks                  :: fn ()                                                                                                             = extern "SDL_UpdateJoysticks";
+    sdl_get_joystick_axis                 :: fn (joystick: sdl_joystick&, axis: c_int) -> s16                                                                  = extern "SDL_GetJoystickAxis";
+    sdl_get_joystick_axis_initial_state   :: fn (joystick: sdl_joystick&, axis: c_int, state: s16&) -> bool                                                    = extern "SDL_GetJoystickAxisInitialState";
+    sdl_get_joystick_ball                 :: fn (joystick: sdl_joystick&, ball: c_int, dx: c_int&, dy: c_int&) -> bool                                         = extern "SDL_GetJoystickBall";
+    sdl_get_joystick_hat                  :: fn (joystick: sdl_joystick&, hat: c_int) -> u8                                                                    = extern "SDL_GetJoystickHat";
+    sdl_get_joystick_button               :: fn (joystick: sdl_joystick&, button: c_int) -> bool                                                               = extern "SDL_GetJoystickButton";
+    sdl_rumble_joystick                   :: fn (joystick: sdl_joystick&, low_frequency_rumble: u16, high_frequency_rumble: u16, duration_ms: u32) -> bool     = extern "SDL_RumbleJoystick";
+    sdl_rumble_joystick_triggers          :: fn (joystick: sdl_joystick&, left_rumble: u16, right_rumble: u16, duration_ms: u32) -> bool                       = extern "SDL_RumbleJoystickTriggers";
+    sdl_set_joystick_led                  :: fn (joystick: sdl_joystick&, red: u8, green: u8, blue: u8) -> bool                                                = extern "SDL_SetJoystickLED";
+    sdl_send_joystick_effect              :: fn (joystick: sdl_joystick&, data: void&, size: c_int) -> bool                                                    = extern "SDL_SendJoystickEffect";
+    sdl_close_joystick                    :: fn (joystick: sdl_joystick&)                                                                                      = extern "SDL_CloseJoystick";
+    sdl_get_joystick_connection_state     :: fn (joystick: sdl_joystick&) -> sdl_joystick_connection_state                                                     = extern "SDL_GetJoystickConnectionState";
+    sdl_get_joystick_power_info           :: fn (joystick: sdl_joystick&, percent: c_int&) -> sdl_power_state                                                  = extern "SDL_GetJoystickPowerInfo";
+
+    sdl_joystick_id :: type_alias = u32;
     sdl_joystick :: type_opaque;
+
+    SDL_JOYSTICK_LOCK: sdl_mutex& = extern "SDL_joystick_lock";
+
+    sdl_joystick_type :: enum c_int
+    {
+        SDL_JOYSTICK_TYPE_UNKNOWN;
+        SDL_JOYSTICK_TYPE_GAMEPAD;
+        SDL_JOYSTICK_TYPE_WHEEL;
+        SDL_JOYSTICK_TYPE_ARCADE_STICK;
+        SDL_JOYSTICK_TYPE_FLIGHT_STICK;
+        SDL_JOYSTICK_TYPE_DANCE_PAD;
+        SDL_JOYSTICK_TYPE_GUITAR;
+        SDL_JOYSTICK_TYPE_DRUM_KIT;
+        SDL_JOYSTICK_TYPE_ARCADE_PAD;
+        SDL_JOYSTICK_TYPE_THROTTLE;
+
+        SDL_JOYSTICK_TYPE_COUNT;
+    }
+
+    sdl_joystick_connection_state :: enum c_int
+    {
+        SDL_JOYSTICK_CONNECTION_INVALID = -1;
+        SDL_JOYSTICK_CONNECTION_UNKNOWN;
+        SDL_JOYSTICK_CONNECTION_WIRED;
+        SDL_JOYSTICK_CONNECTION_WIRELESS;
+    }
+
+    SDL_JOYSTICK_AXIS_MAX :: define s16 = 32767;
+    SDL_JOYSTICK_AXIS_MIN :: define s16 = -32768;
+    SDL_IPHONE_MAX_GFORCE :: define f32 = 5.0;
+
+    sdl_virtual_joystick_touchpad_desc :: struct
+    {
+        nfingers : u16;
+        padding  : u16[3];
+    }
+
+    sdl_virtual_joystick_sensor_desc :: struct
+    {
+        type: sdl_sensor_type;    
+        rate: f32;             
+    } 
+
+    sdl_virtual_joystick_desc :: struct
+    {
+        version             : u32;
+        type                : u16;
+        padding             : u16;
+        vendor_id           : u16;
+        product_id          : u16;
+        naxes               : u16;
+        nbuttons            : u16;
+        nballs              : u16;
+        nhats               : u16;
+        ntouchpads          : u16;
+        nsensors            : u16;
+        padding2            : u16[2];
+        button_mask         : u32;
+        axis_mask           : u32;
+        name                : c_char&;
+        touchpads           : sdl_virtual_joystick_touchpad_desc&;
+        sensors             : sdl_virtual_joystick_sensor_desc&;
+        userdata            : void&;
+        update              : sdl_virtual_joystick_desc_update_fn&;
+        set_player_index    : sdl_virtual_joystick_desc_set_player_index_fn&;
+        rumble              : sdl_virtual_joystick_desc_rumble_fn&;
+        rumble_triggers     : sdl_virtual_joystick_desc_rumble_triggers_fn&;
+        set_led             : sdl_virtual_joystick_desc_rumble_set_led_fn&;
+        send_effect         : sdl_virtual_joystick_desc_rumble_send_effect_fn&;
+        set_sensor_senabled : sdl_virtual_joystick_desc_set_sensors_enabled_fn&;
+        cleanup             : sdl_virtual_joystick_desc_cleanup_fn&;
+    }
+
+    sdl_virtual_joystick_desc_update_fn              :: type_alias = fn (userdata: void&);
+    sdl_virtual_joystick_desc_set_player_index_fn    :: type_alias = fn (userdata: void&, player_index: c_int);
+    sdl_virtual_joystick_desc_rumble_fn              :: type_alias = fn (userdata: void&, low_frequency_rumble: u16, high_frequency_rumble: u16) -> bool;
+    sdl_virtual_joystick_desc_rumble_triggers_fn     :: type_alias = fn (userdata: void&, left_rumble: u16, right_rumble: u16) -> bool;
+    sdl_virtual_joystick_desc_rumble_set_led_fn      :: type_alias = fn (userdata: void&, red: u8, green: u8, blue: u8) -> bool;
+    sdl_virtual_joystick_desc_rumble_send_effect_fn  :: type_alias = fn (userdata: void&, data: void&, size: c_int) -> bool;
+    sdl_virtual_joystick_desc_set_sensors_enabled_fn :: type_alias = fn (userdata: void&, enabled: bool) -> bool;
+    sdl_virtual_joystick_desc_cleanup_fn             :: type_alias = fn (userdata: void&);
+
+    SDL_HAT_CENTERED   :: define c_int = 0x00;
+    SDL_HAT_UP         :: define c_int = 0x01;
+    SDL_HAT_RIGHT      :: define c_int = 0x02;
+    SDL_HAT_DOWN       :: define c_int = 0x04;
+    SDL_HAT_LEFT       :: define c_int = 0x08;
+    SDL_HAT_RIGHT_UP   :: define c_int = (SDL_HAT_RIGHT|SDL_HAT_UP);
+    SDL_HAT_RIGHT_DOWN :: define c_int = (SDL_HAT_RIGHT|SDL_HAT_DOWN);
+    SDL_HAT_LEFT_UP    :: define c_int = (SDL_HAT_LEFT|SDL_HAT_UP);
+    SDL_HAT_LEFT_DOWN  :: define c_int = (SDL_HAT_LEFT|SDL_HAT_DOWN);
+
+    SDL_PROP_JOYSTICK_CAP_MONO_LED_BOOLEAN       :: define string = "SDL.joystick.cap.mono_led\0";
+    SDL_PROP_JOYSTICK_CAP_RGB_LED_BOOLEAN        :: define string = "SDL.joystick.cap.rgb_led\0";
+    SDL_PROP_JOYSTICK_CAP_PLAYER_LED_BOOLEAN     :: define string = "SDL.joystick.cap.player_led\0";
+    SDL_PROP_JOYSTICK_CAP_RUMBLE_BOOLEAN         :: define string = "SDL.joystick.cap.rumble\0";
+    SDL_PROP_JOYSTICK_CAP_TRIGGER_RUMBLE_BOOLEAN :: define string = "SDL.joystick.cap.trigger_rumble\0";
+}
+
+import
+{
+    "sdl3/sdl_power";
+    "sdl3/sdl_guid";
+    "sdl3/sdl_sensor";
+    "sdl3/sdl_properties";
+    "sdl3/sdl_mutex";
 }

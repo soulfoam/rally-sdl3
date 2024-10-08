@@ -8,12 +8,12 @@ export_library
     sdl_flush_events          :: fn (minType: u32, maxType: u32) = extern "SDL_FlushEvents";
     sdl_poll_event            :: fn (event: sdl_event&) -> bool = extern "SDL_PollEvent";
     sdl_wait_event            :: fn (event: sdl_event&) -> bool = extern "SDL_WaitEvent";
-    sdl_wait_eventtimeout     :: fn (event: sdl_event&, timeoutMS: s32) -> bool = extern "SDL_WaitEventTimeout";
+    sdl_wait_event_timeout    :: fn (event: sdl_event&, timeoutMS: s32) -> bool = extern "SDL_WaitEventTimeout";
     sdl_push_event            :: fn (event: sdl_event&) -> bool = extern "SDL_PushEvent";
     sdl_set_event_filter      :: fn (filter: sdl_event_filter_fn&, userdata: void&) = extern "SDL_SetEventFilter";
     sdl_get_event_filter      :: fn (filter: sdl_event_filter_fn&&, userdata: void&&) -> bool = extern "SDL_GetEventFilter";
     sdl_add_event_watch       :: fn (filter: sdl_event_filter_fn&, userdata: void&) -> bool = extern "SDL_AddEventWatch";
-    sdl_remove_eventwatch     :: fn (filter: sdl_event_filter_fn&, userdata: void&) = extern "SDL_RemoveEventWatch";
+    sdl_remove_event_watch    :: fn (filter: sdl_event_filter_fn&, userdata: void&) = extern "SDL_RemoveEventWatch";
     sdl_filter_events         :: fn (filter: sdl_event_filter_fn&, userdata: void&) = extern "SDL_FilterEvents";
     sdl_set_event_enabled     :: fn (type: u32, enabled: bool) = extern "SDL_SetEventEnabled";
     sdl_event_enabled         :: fn (type: u32) -> bool = extern "SDL_EventEnabled";

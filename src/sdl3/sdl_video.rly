@@ -119,10 +119,8 @@ export_library
     sdl_gl_destroy_context                  :: fn (context: sdl_gl_context&) -> bool = extern "SDL_GL_DestroyContext";
 
     sdl_window_pos_undefined_display :: fn (x: u32) -> u32;
-    sdl_window_pos_undefined         :: fn () -> u32;
     sdl_window_pos_is_undefined      :: fn (x: u32) -> bool;
     sdl_window_pos_centered_display  :: fn (x: u32) -> u32;
-    sdl_window_pos_centered          :: fn () -> u32;
     sdl_window_pos_is_centered       :: fn (x: u32) -> bool;
 
     sdl_display_id :: type_alias = u32;
@@ -188,8 +186,11 @@ export_library
     SDL_WINDOW_TRANSPARENT          :: define u64 = 0x0000000040000000;    
     SDL_WINDOW_NOT_FOCUSABLE        :: define u64 = 0x0000000080000000;    
 
-    SDL_WINDOW_POS_UNDEFINED_MASK    :: define u32 = 0x1FFF0000;
-    SDL_WINDOW_POS_CENTERED_MASK     :: define u32 = 0x2FFF0000;
+    SDL_WINDOW_POS_UNDEFINED_MASK :: define u32 = 0x1FFF0000;
+    SDL_WINDOW_POS_CENTERED_MASK  :: define u32 = 0x2FFF0000;
+
+    SDL_WINDOW_POS_CENTERED       :: define u32 = SDL_WINDOW_POS_CENTERED_MASK | 0;
+    SDL_WINDOW_POS_UNDEFINED      :: define u32 = SDL_WINDOW_POS_UNDEFINED_MASK | 0;
 
     sdl_flash_operation :: enum c_int
     {
@@ -374,11 +375,6 @@ sdl_window_pos_undefined_display :: fn (x: u32) -> u32
     return (SDL_WINDOW_POS_UNDEFINED_MASK | x);
 }
 
-sdl_window_pos_undefined :: fn () -> u32
-{
-    return sdl_window_pos_undefined_display(0);
-}
-
 sdl_window_pos_is_undefined :: fn (x: u32) -> bool
 {
     return ((x & 0xFFFF0000) == SDL_WINDOW_POS_UNDEFINED_MASK);
@@ -388,11 +384,6 @@ sdl_window_pos_centered_display :: fn (x: u32) -> u32
 {
     return (SDL_WINDOW_POS_CENTERED_MASK | x);
 }
-
-sdl_window_pos_centered :: fn () -> u32
-{
-    return sdl_window_pos_centered_display(0);
-} 
 
 sdl_window_pos_is_centered :: fn (x: u32) -> bool
 {

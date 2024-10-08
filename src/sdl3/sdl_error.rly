@@ -1,0 +1,7 @@
+export_library
+{
+    sdl_out_of_memory :: fn () -> bool = extern "SDL_OutOfMemory";
+    sdl_get_error     :: fn () -> c_char& = extern "SDL_GetError";
+    sdl_clear_error   :: fn () -> bool = extern "SDL_ClearError";
+}
+

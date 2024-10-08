@@ -1,0 +1,33 @@
+export_library
+{
+    sdl_create_mutex                :: fn () -> sdl_mutex&                              = extern "SDL_CreateMutex";
+    sdl_lock_mutex                  :: fn (mutex: sdl_mutex&)                           = extern "SDL_LockMutex";
+    sdl_try_lock_mutex              :: fn (mutex: sdl_mutex&) -> bool                   = extern "SDL_TryLockMutex";
+    sdl_unlock_mutex                :: fn (mutex: sdl_mutex&)                           = extern "SDL_UnlockMutex";
+    sdl_destroy_mutex               :: fn (mutex: sdl_mutex&)                           = extern "SDL_DestroyMutex";
+    sdl_create_rwlock               :: fn () -> sdl_rwlock&                             = extern "SDL_CreateRWLock";
+    sdl_lock_rwlock_for_reading     :: fn (rwlock: sdl_rwlock&)                         = extern "SDL_LockRWLockForReading";
+    sdl_lock_rwlock_for_writing     :: fn (rwlock: sdl_rwlock&)                         = extern "SDL_LockRWLockForWriting";
+    sdl_try_lock_rwlock_for_reading :: fn (rwlock: sdl_rwlock&) -> bool                 = extern "SDL_TryLockRWLockForReading";
+    sdl_try_lock_rwlock_for_writing :: fn (rwlock: sdl_rwlock&) -> bool                 = extern "SDL_TryLockRWLockForWriting";
+    sdl_unlock_rwlock               :: fn (rwlock: sdl_rwlock&)                         = extern "SDL_UnlockRWLock";
+    sdl_destroy_rwlock              :: fn (rwlock: sdl_rwlock&)                         = extern "SDL_DestroyRWLock";
+    sdl_create_semaphore            :: fn (initial_value: u32) -> sdl_semaphore&        = extern "SDL_CreateSemaphore";
+    sdl_destroy_semaphore           :: fn (sem: sdl_semaphore&)                         = extern "SDL_DestroySemaphore";
+    sdl_wait_semaphore              :: fn (sem: sdl_semaphore&)                         = extern "SDL_WaitSemaphore";
+    sdl_try_wait_semaphore          :: fn (sem: sdl_semaphore&) -> bool                 = extern "SDL_TryWaitSemaphore";
+    sdl_wait_semaphore_timeout      :: fn (sem: sdl_semaphore&, timeoutMS: s32) -> bool = extern "SDL_WaitSemaphoreTimeout";
+    sdl_signal_semaphore            :: fn (sem: sdl_semaphore&)                         = extern "SDL_SignalSemaphore";
+    sdl_get_semaphore_value         :: fn (sem: sdl_semaphore&) -> u32                  = extern "SDL_GetSemaphoreValue";
+    sdl_create_condition            :: fn () -> sdl_condition&                          = extern "SDL_CreateCondition";
+    sdl_destroy_condition           :: fn (cond: sdl_condition&)                        = extern "SDL_DestroyCondition";
+    sdl_signal_condition            :: fn (cond: sdl_condition&)                        = extern "SDL_SignalCondition";
+    sdl_broadcast_condition         :: fn (cond: sdl_condition&)                        = extern "SDL_BroadcastCondition";
+    sdl_wait_condition              :: fn (cond: sdl_condition&, mutex: sdl_mutex&)     = extern "SDL_WaitCondition";
+    sdl_wait_condition_timeout      :: fn (cond: sdl_condition&, mutex: sdl_mutex&, timeoutMS: s32) -> bool = extern "SDL_WaitConditionTimeout";
+
+    sdl_mutex     :: type_opaque;
+    sdl_rwlock    :: type_opaque;
+    sdl_semaphore :: type_opaque;
+    sdl_condition :: type_opaque;
+}
