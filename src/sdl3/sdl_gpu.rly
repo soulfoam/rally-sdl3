@@ -80,7 +80,7 @@ export_library
     sdl_set_gpu_swapchain_parameters                :: fn (device: sdl_gpu_device&, window: sdl_window&, swapchain_composition: sdl_gpu_swapchain_composition, present_mode: sdl_gpu_present_mode) = extern "SDL_SetGPUSwapchainParameters";
 
     sdl_get_gpu_swapchain_texture_format            :: fn (device: sdl_gpu_device&, window: sdl_window&) -> sdl_gpu_texture_format = extern "SDL_GetGPUSwapchainTextureFormat";
-    sdl_acquire_gpu_swapchain_texture               :: fn (command_buffer: sdl_gpu_command_buffer&, window: sdl_window&, w: u32&, h: u32&) -> sdl_gpu_texture& = extern "SDL_AcquireGPUSwapchainTexture";
+    sdl_acquire_gpu_swapchain_texture               :: fn (command_buffer: sdl_gpu_command_buffer&, window: sdl_window&, swapchain_texture: sdl_gpu_texture&&, w: u32&, h: u32&) -> sdl_gpu_texture& = extern "SDL_AcquireGPUSwapchainTexture";
     sdl_submit_gpu_command_buffer                   :: fn (command_buffer: sdl_gpu_command_buffer&) = extern "SDL_SubmitGPUCommandBuffer";
     sdl_submit_gpu_command_buffer_and_acquire_fence :: fn (command_buffer: sdl_gpu_command_buffer&) -> sdl_gpu_fence& = extern "SDL_SubmitGPUCommandBufferAndAcquireFence";
     sdl_wait_for_gpu_idle                           :: fn (device: sdl_gpu_device&) = extern "SDL_WaitForGPUIdle";
