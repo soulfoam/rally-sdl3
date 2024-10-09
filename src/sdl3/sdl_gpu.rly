@@ -61,7 +61,7 @@ export_library
     sdl_dispatch_gpu_compute                        :: fn (compute_pass: sdl_gpu_compute_pass&, group_count_x: u32, group_count_y: u32, group_count_z: u32) = extern "SDL_DispatchGPUCompute";
     sdl_dispatch_gpu_compute_indirect               :: fn (compute_pass: sdl_gpu_compute_pass&, buffer: sdl_gpu_buffer&, offset: u32) = extern "SDL_DispatchGPUComputeIndirect";
     sdl_end_gpu_compute_pass                        :: fn (compute_pass: sdl_gpu_compute_pass&) = extern "SDL_EndGPUComputePass";
-    sdl_map_gpu_transfer_buffer                     :: fn (device: sdl_gpu_device&, transfer_buffer: sdl_gpu_transfer_buffer&, cycle: bool) = extern "SDL_MapGPUTransferBuffer";
+    sdl_map_gpu_transfer_buffer                     :: fn (device: sdl_gpu_device&, transfer_buffer: sdl_gpu_transfer_buffer&, cycle: bool) -> void& = extern "SDL_MapGPUTransferBuffer";
     sdl_unmap_gpu_transfer_buffer                   :: fn (device: sdl_gpu_device&, transfer_buffer: sdl_gpu_transfer_buffer&) = extern "SDL_UnmapGPUTransferBuffer";
     sdl_begin_gpu_copy_pass                         :: fn (command_buffer: sdl_gpu_command_buffer&) -> sdl_gpu_copy_pass& = extern "SDL_BeginGPUCopyPass";
     sdl_upload_to_gpu_texture                       :: fn (copy_pass: sdl_gpu_copy_pass&, source: sdl_gpu_texture_transfer_info&, destination: sdl_gpu_texture_region&, cycle: bool) = extern "SDL_UploadToGPUTexture";
