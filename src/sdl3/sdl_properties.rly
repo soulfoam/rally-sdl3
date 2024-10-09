@@ -11,27 +11,28 @@ export_library
         SDL_PROPERTY_TYPE_BOOLEAN;
     }
 
-    sdl_get_global_properties :: fn () -> sdl_properties_id = extern "SDL_GetGlobalProperties";
-    sdl_create_properties :: fn () -> sdl_properties_id = extern "SDL_CreateProperties";
-    sdl_copy_properties :: fn (src: sdl_properties_id, dst: sdl_properties_id) -> bool = extern "SDL_CopyProperties";
-    sdl_lock_properties :: fn (props: sdl_properties_id) -> bool = extern "SDL_LockProperties";
-    sdl_unlock_properties :: fn (props: sdl_properties_id) = extern "SDL_UnlockProperties";
-    sdl_cleanup_property_callback :: type_alias = fn (user_data: void&, value: void&);
-    sdl_set_pointer_property_with_cleanup :: fn (props: sdl_properties_id, name: c_char&, value: void&, cleanup: sdl_cleanup_property_callback, user_data: void&) -> bool = extern "SDL_SetPointerPropertyWithCleanup";
-    sdl_set_pointer_property :: fn (props: sdl_properties_id, name: c_char&, value: void&) -> bool = extern "SDL_SetPointerProperty";
-    sdl_set_string_property :: fn (props: sdl_properties_id, name: c_char&, value: c_char&) -> bool = extern "SDL_SetStringProperty";
-    sdl_set_number_property :: fn (props: sdl_properties_id, name: c_char&, value: s32) -> bool = extern "SDL_SetNumberProperty";
-    sdl_set_float_property :: fn (props: sdl_properties_id, name: c_char&, value: f32) -> bool = extern "SDL_SetFloatProperty";
-    sdl_set_boolean_property :: fn (props: sdl_properties_id, name: c_char&, value: bool) -> bool = extern "SDL_SetBooleanProperty";
-    sdl_has_property :: fn (props: sdl_properties_id, name: c_char&) -> bool = extern "SDL_HasProperty";
-    sdl_get_property_type :: fn (props: sdl_properties_id, name: c_char&) -> sdl_property_type = extern "SDL_GetPropertyType";
-    sdl_get_pointer_property :: fn (props: sdl_properties_id, name: c_char&, default_value: void&) -> void& = extern "SDL_GetPointerProperty";
-    sdl_get_string_property :: fn (props: sdl_properties_id, name: c_char&, default_value: c_char&) -> c_char& = extern "SDL_GetStringProperty";
-    sdl_get_number_property :: fn (props: sdl_properties_id, name: c_char&, default_value: s32) -> s32 = extern "SDL_GetNumberProperty";
-    sdl_get_float_property :: fn (props: sdl_properties_id, name: c_char&, default_value: f32) -> f32 = extern "SDL_GetFloatProperty";
-    sdl_get_boolean_property :: fn (props: sdl_properties_id, name: c_char&, default_value: bool) -> bool = extern "SDL_GetBooleanProperty";
-    sdl_clear_property :: fn (props: sdl_properties_id, name: c_char&) -> bool = extern "SDL_ClearProperty";
-    sdl_enumerate_properties_callback :: type_alias = fn (user_data: void&, props: sdl_properties_id, name: c_char&);
-    sdl_enumerate_properties :: fn (props: sdl_properties_id, callback: sdl_enumerate_properties_callback, user_data: void&) -> bool = extern "SDL_EnumerateProperties";
-    sdl_destroy_properties :: fn (props: sdl_properties_id) = extern "SDL_DestroyProperties";
+    sdl_get_global_properties             :: fn () -> sdl_properties_id = extern "SDL_GetGlobalProperties";
+    sdl_create_properties                 :: fn () -> sdl_properties_id = extern "SDL_CreateProperties";
+    sdl_copy_properties                   :: fn (src: sdl_properties_id, dst: sdl_properties_id) -> bool = extern "SDL_CopyProperties";
+    sdl_lock_properties                   :: fn (props: sdl_properties_id) -> bool = extern "SDL_LockProperties";
+    sdl_unlock_properties                 :: fn (props: sdl_properties_id) = extern "SDL_UnlockProperties";
+    sdl_set_pointer_property_with_cleanup :: fn (props: sdl_properties_id, name: c_char&, value: void&, cleanup: sdl_cleanup_property_callback&, user_data: void&) -> bool = extern "SDL_SetPointerPropertyWithCleanup";
+    sdl_set_pointer_property              :: fn (props: sdl_properties_id, name: c_char&, value: void&) -> bool = extern "SDL_SetPointerProperty";
+    sdl_set_string_property               :: fn (props: sdl_properties_id, name: c_char&, value: c_char&) -> bool = extern "SDL_SetStringProperty";
+    sdl_set_number_property               :: fn (props: sdl_properties_id, name: c_char&, value: s32) -> bool = extern "SDL_SetNumberProperty";
+    sdl_set_float_property                :: fn (props: sdl_properties_id, name: c_char&, value: f32) -> bool = extern "SDL_SetFloatProperty";
+    sdl_set_boolean_property              :: fn (props: sdl_properties_id, name: c_char&, value: bool) -> bool = extern "SDL_SetBooleanProperty";
+    sdl_has_property                      :: fn (props: sdl_properties_id, name: c_char&) -> bool = extern "SDL_HasProperty";
+    sdl_get_property_type                 :: fn (props: sdl_properties_id, name: c_char&) -> sdl_property_type = extern "SDL_GetPropertyType";
+    sdl_get_pointer_property              :: fn (props: sdl_properties_id, name: c_char&, default_value: void&) -> void& = extern "SDL_GetPointerProperty";
+    sdl_get_string_property               :: fn (props: sdl_properties_id, name: c_char&, default_value: c_char&) -> c_char& = extern "SDL_GetStringProperty";
+    sdl_get_number_property               :: fn (props: sdl_properties_id, name: c_char&, default_value: s32) -> s32 = extern "SDL_GetNumberProperty";
+    sdl_get_float_property                :: fn (props: sdl_properties_id, name: c_char&, default_value: f32) -> f32 = extern "SDL_GetFloatProperty";
+    sdl_get_boolean_property              :: fn (props: sdl_properties_id, name: c_char&, default_value: bool) -> bool = extern "SDL_GetBooleanProperty";
+    sdl_clear_property                    :: fn (props: sdl_properties_id, name: c_char&) -> bool = extern "SDL_ClearProperty";
+    sdl_enumerate_properties              :: fn (props: sdl_properties_id, callback: sdl_enumerate_properties_callback&, user_data: void&) -> bool = extern "SDL_EnumerateProperties";
+    sdl_destroy_properties                :: fn (props: sdl_properties_id) = extern "SDL_DestroyProperties";
+
+    sdl_cleanup_property_callback         :: type_alias = fn (user_data: void&, value: void&);
+    sdl_enumerate_properties_callback     :: type_alias = fn (user_data: void&, props: sdl_properties_id, name: c_char&);
 }

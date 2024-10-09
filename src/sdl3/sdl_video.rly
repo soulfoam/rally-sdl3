@@ -90,7 +90,7 @@ export_library
     sdl_show_window_system_menu             :: fn (window: sdl_window&, x: c_int, y: c_int) -> bool                = extern "SDL_ShowWindowSystemMenu";
 
     sdl_hit_test_callback                   :: type_alias = fn (win: sdl_window&, area: sdl_point&, data: void&) -> sdl_hit_test_result;
-    sdl_set_window_hit_test                 :: fn (window: sdl_window&, callback: sdl_hit_test_callback, callback_data: void&) -> bool = extern "SDL_SetWindowHitTest";
+    sdl_set_window_hit_test                 :: fn (window: sdl_window&, callback: sdl_hit_test_callback&, callback_data: void&) -> bool = extern "SDL_SetWindowHitTest";
     sdl_set_window_shape                    :: fn (window: sdl_window&, shape: sdl_surface&) -> bool                                   = extern "SDL_SetWindowShape";
     sdl_flash_window                        :: fn (window: sdl_window&, operation: sdl_flash_operation) -> bool                        = extern "SDL_FlashWindow";
     sdl_destroy_window                      :: fn (window: sdl_window&)                                                                = extern "SDL_DestroyWindow";
@@ -98,8 +98,8 @@ export_library
     sdl_enable_screen_saver                 :: fn () -> bool                                                                           = extern "SDL_EnableScreenSaver";
     sdl_disable_screen_saver                :: fn () -> bool                                                                           = extern "SDL_DisableScreenSaver";
     sdl_gl_load_library                     :: fn (path: c_char&) -> bool                                                              = extern "SDL_GL_LoadLibrary";
-    sdl_gl_get_proc_address                 :: fn (proc: c_char&) -> sdl_function_pointer                                              = extern "SDL_GL_GetProcAddress";
-    sdl_egl_get_proc_address                :: fn (proc: c_char&) -> sdl_function_pointer                                              = extern "SDL_EGL_GetProcAddress";
+    sdl_gl_get_proc_address                 :: fn (proc: c_char&) -> sdl_function_pointer&                                             = extern "SDL_GL_GetProcAddress";
+    sdl_egl_get_proc_address                :: fn (proc: c_char&) -> sdl_function_pointer&                                             = extern "SDL_EGL_GetProcAddress";
     sdl_gl_unload_library                   :: fn ()                                                                                   = extern "SDL_GL_UnloadLibrary";
     sdl_gl_extension_supported              :: fn (extension: c_char&) -> bool                                                         = extern "SDL_GL_ExtensionSupported";
     sdl_gl_reset_attributes                 :: fn ()                                                                                   = extern "SDL_GL_ResetAttributes";
@@ -112,7 +112,7 @@ export_library
     sdl_egl_get_current_display             :: fn () -> sdl_egl_display&                                                               = extern "SDL_EGL_GetCurrentDisplay";
     sdl_egl_get_current_config              :: fn () -> sdl_egl_config&                                                                = extern "SDL_EGL_GetCurrentConfig";
     sdl_egl_get_window_surface              :: fn (window: sdl_window&) -> sdl_egl_surface&                                            = extern "SDL_EGL_GetWindowSurface";
-    sdl_egl_set_attribute_callbacks         :: fn (platform_attrib_callback: sdl_egl_attrib_array_callback, surface_attrib_callback: sdl_egl_int_array_callback, context_attrib_callback: sdl_egl_int_array_callback) = extern "SDL_EGL_SetAttributeCallbacks";
+    sdl_egl_set_attribute_callbacks         :: fn (platform_attrib_callback: sdl_egl_attrib_array_callback&, surface_attrib_callback: sdl_egl_int_array_callback&, context_attrib_callback: sdl_egl_int_array_callback&) = extern "SDL_EGL_SetAttributeCallbacks";
     sdl_gl_set_swap_interval                :: fn (interval: c_int) -> bool            = extern "SDL_GL_SetSwapInterval";
     sdl_gl_get_swap_interval                :: fn (interval: c_int&) -> bool           = extern "SDL_GL_GetSwapInterval";
     sdl_gl_swap_window                      :: fn (window: sdl_window&) -> bool      = extern "SDL_GL_SwapWindow";

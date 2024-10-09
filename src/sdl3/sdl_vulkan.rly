@@ -1,0 +1,22 @@
+export_library
+{
+    sdl_vulkan_load_library                  :: fn (path: c_char&) -> bool     = extern "SDL_Vulkan_LoadLibrary";
+    sdl_vulkan_get_vk_get_instance_proc_addr :: fn () -> sdl_function_pointer& = extern "SDL_Vulkan_GetVkGetInstanceProcAddr";
+    sdl_vulkan_unload_library                :: fn ()                          = extern "SDL_Vulkan_UnloadLibrary";
+    sdl_vulkan_get_instance_extensions       :: fn (count: u32&) -> c_char&&   = extern "SDL_Vulkan_GetInstanceExtensions";
+    sdl_vulkan_create_surface                :: fn (window: sdl_window&, instance: vk_instance&, allocator: vk_allocation_callbacks&, surface: vk_surface_khr&) -> bool = extern "SDL_Vulkan_CreateSurface";            
+    sdl_vulkan_destroy_surface               :: fn (instance: vk_instance&, surface: vk_surface_khr&, allocator: vk_allocation_callbacks&)      = extern "SDL_Vulkan_DestroySurface";
+    sdl_vulkan_get_presentation_support      :: fn (instance: vk_instance&, physicalDevice: vk_physical_device&, queueFamilyIndex: u32) -> bool = extern "SDL_Vulkan_GetPresentationSupport";
+
+    vk_instance             :: type_opaque;
+    vk_physical_device      :: type_opaque;
+    vk_surface_khr          :: type_opaque;
+    vk_allocation_callbacks :: type_opaque;
+
+}
+
+import
+{
+    "sdl3/sdl_stdinc";
+    "sdl3/sdl_video";
+}

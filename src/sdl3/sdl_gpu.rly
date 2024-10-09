@@ -1,5 +1,6 @@
 export_library
 {
+    
     sdl_gpu_supports_shader_formats                 :: fn (format_flags: sdl_gpu_shader_format, name: c_char&) -> bool                              = extern "SDL_GPUSupportsShaderFormats";
     sdl_gpu_supports_properties                     :: fn (props: sdl_properties_id) -> bool                                                        = extern "SDL_GPUSupportsProperties";
     sdl_create_gpu_device                           :: fn (format_flags: sdl_gpu_shader_format, debug_mode: bool, name: c_char&) -> sdl_gpu_device& = extern "SDL_CreateGPUDevice";
@@ -9,7 +10,7 @@ export_library
     sdl_get_num_gpu_drivers                         :: fn () -> c_int                                       = extern "SDL_GetNumGPUDrivers";
     sdl_get_gpu_driver                              :: fn (index: c_int) -> c_char&                         = extern "SDL_GetGPUDriver";
     sdl_get_gpu_device_driver                       :: fn (device: sdl_gpu_device&) -> c_char&              = extern "SDL_GetGPUDeviceDriver";
-    sdl_get_gpu_shader_formats                      :: fn (device: sdl_gpu_device) -> sdl_gpu_shader_format = extern "SDL_GetGPUShaderFormats";
+    sdl_get_gpu_shader_formats                      :: fn (device: sdl_gpu_device&) -> sdl_gpu_shader_format = extern "SDL_GetGPUShaderFormats";
     sdl_create_gpu_compute_pipeline                 :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_compute_pipeline_create_info&) -> sdl_gpu_compute_pipeline& = extern "SDL_CreateGPUComputePipeline";
     sdl_create_gpu_graphics_pipeline                :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_graphics_pipeline_create_info&) -> sdl_gpu_graphics_pipeline& = extern "SDL_CreateGPUGraphicsPipeline";
     sdl_create_gpu_sampler                          :: fn (device: sdl_gpu_device&, create_info: sdl_gpu_sampler_create_info&) -> sdl_gpu_sampler& = extern "SDL_CreateGPUSampler";
@@ -644,13 +645,6 @@ export_library
         props                : sdl_properties_id;         // A properties ID for extensions. Should be 0 if no extensions are needed.
     }
 
-    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_R_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.r\0";
-    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_G_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.g\0";
-    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_B_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.b\0";
-    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_A_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.a\0";
-    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_DEPTH_FLOAT   :: define string = "SDL.gpu.createtexture.d3d12.clear.depth\0";
-    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_STENCIL_UINT8 :: define string = "SDL.gpu.createtexture.d3d12.clear.stencil\0";
-
     sdl_gpu_buffer_create_info :: struct
     {
         usage : sdl_gpu_buffer_usage_flags; // How the buffer is intended to be used by the client.
@@ -832,6 +826,14 @@ export_library
         padding2  : u8;
         padding3  : u8;
     }
+
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_R_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.r\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_G_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.g\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_B_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.b\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_A_FLOAT       :: define string = "SDL.gpu.createtexture.d3d12.clear.a\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_DEPTH_FLOAT   :: define string = "SDL.gpu.createtexture.d3d12.clear.depth\0";
+    SDL_PROP_GPU_CREATE_TEXTURE_D3D12_CLEAR_STENCIL_UINT8 :: define string = "SDL.gpu.createtexture.d3d12.clear.stencil\0";
+
 
     SDL_PROP_GPU_DEVICE_CREATE_DEBUG_MODE_BOOL            :: define string = "SDL.gpu.device.create.debugmode\0";
     SDL_PROP_GPU_DEVICE_CREATE_PREFER_LOW_POWER_BOOL      :: define string = "SDL.gpu.device.create.preferlowpower\0";
