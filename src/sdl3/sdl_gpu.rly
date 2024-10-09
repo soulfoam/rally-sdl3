@@ -230,10 +230,10 @@ export_library
 
     sdl_gpu_sample_count :: enum c_int
     {
-        SDL_GPU_SAMPLECOUNT_1;  // No multisampling.
-        SDL_GPU_SAMPLECOUNT_2;  // MSAA 2x
-        SDL_GPU_SAMPLECOUNT_4;  // MSAA 4x 
-        SDL_GPU_SAMPLECOUNT_8;  // MSAA 8x
+        SDL_GPU_SAMPLE_COUNT_1;  // No multisampling.
+        SDL_GPU_SAMPLE_COUNT_2;  // MSAA 2x
+        SDL_GPU_SAMPLE_COUNT_4;  // MSAA 4x 
+        SDL_GPU_SAMPLE_COUNT_8;  // MSAA 8x
     }
 
     sdl_gpu_cube_map_face :: enum c_int
