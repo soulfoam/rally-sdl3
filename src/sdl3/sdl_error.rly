@@ -1,7 +1,20 @@
 export_library
 {
-    sdl_out_of_memory :: fn () -> bool = extern "SDL_OutOfMemory";
-    sdl_get_error     :: fn () -> c_char& = extern "SDL_GetError";
-    sdl_clear_error   :: fn () -> bool = extern "SDL_ClearError";
+    sdl_out_of_memory       :: fn () -> bool = extern "SDL_OutOfMemory";
+    sdl_get_error           :: fn () -> c_char& = extern "SDL_GetError";
+    sdl_get_error_as_string :: fn () -> string;
+    sdl_clear_error         :: fn () -> bool = extern "SDL_ClearError";
 }
 
+sdl_get_error_as_string :: fn () -> string
+{
+    str: u8& = sdl_get_error() as u8&;
+    c: u8& = str;
+    size: usize = 0;
+    while (c@ != '\0')
+    {
+        size += 1;
+        c += 1;
+    }
+    return string {str, size};
+}

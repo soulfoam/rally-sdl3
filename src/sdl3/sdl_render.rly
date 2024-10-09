@@ -86,6 +86,7 @@ export_library
     sdl_get_render_metal_layer           :: fn (renderer: sdl_renderer&) -> void&                                                                      = extern "SDL_GetRenderMetalLayer";
     sdl_get_render_metal_command_encoder :: fn (renderer: sdl_renderer&) -> void&                                                                      = extern "SDL_GetRenderMetalCommandEncoder";
     sdl_add_vulkan_render_semaphores     :: fn (renderer: sdl_renderer&, wait_stage_mask: u32, wait_semaphore: s64, signal_semaphore: s64) -> bool     = extern "SDL_AddVulkanRenderSemaphores";
+    sdl_set_render_vsync                 :: fn (renderer: sdl_renderer&, vsync: c_int) -> bool                                                         = extern "SDL_SetRenderVSync";
     sdl_get_render_vsync                 :: fn (renderer: sdl_renderer&, vsync: c_int&) -> bool                                                        = extern "SDL_GetRenderVSync";
 
     SDL_RENDERER_VSYNC_DISABLED :: define c_int = 0;
