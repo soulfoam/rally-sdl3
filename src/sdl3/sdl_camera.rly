@@ -17,7 +17,6 @@ export_library
     sdl_close_camera                 :: fn (camera: sdl_camera&)                                               = extern "SDL_CloseCamera";
 
     sdl_camera_id :: type_alias = u32;
-
     sdl_camera :: type_opaque;
 
     sdl_camera_spec :: struct
