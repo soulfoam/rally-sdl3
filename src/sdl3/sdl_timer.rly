@@ -6,10 +6,10 @@ export_library
     SDL_NS_PER_MS     :: define u64 = 1000000;
     SDL_NS_PER_US     :: define u64 = 1000;
     
-    sdl_get_ticks                 :: fn () = extern "SDL_GetTicks";
-    sdl_get_ticks_ns              :: fn () = extern "SDL_GetTicksNS";
-    sdl_get_performance_counter   :: fn () = extern "SDL_GetPerformanceCounter";
-    sdl_get_performance_frequency :: fn () = extern "SDL_GetPerformanceFrequency";
+    sdl_get_ticks                 :: fn () -> u64 = extern "SDL_GetTicks";
+    sdl_get_ticks_ns              :: fn () -> u64 = extern "SDL_GetTicksNS";
+    sdl_get_performance_counter   :: fn () -> u64 = extern "SDL_GetPerformanceCounter";
+    sdl_get_performance_frequency :: fn () -> u64 = extern "SDL_GetPerformanceFrequency";
 
     sdl_delay         :: fn (ms: u32) = extern "SDL_Delay";
     sdl_delay_ns      :: fn (ns: u64) = extern "SDL_DelayNS";
