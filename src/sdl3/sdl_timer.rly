@@ -19,8 +19,8 @@ export_library
     sdl_timer_callback    :: type_alias = fn (user_data: void&, timer_id: sdl_timer_id, interval: u32) -> u32;
     sdl_ns_timer_callback :: type_alias = fn (user_data: void&, timer_id: sdl_timer_id, interval: u64) -> u64;
 
-    sdl_add_timer    :: fn (interval: u32, callback: sdl_timer_callback, user_data: void&) -> sdl_timer_id = extern "SDL_AddTimer";
-    sdl_add_timer_ns :: fn (interval: u64, callback: sdl_ns_timer_callback, user_data: void&) -> sdl_timer_id = extern "SDL_AddTimerNS";
+    sdl_add_timer    :: fn (interval: u32, callback: sdl_timer_callback&, user_data: void&) -> sdl_timer_id = extern "SDL_AddTimer";
+    sdl_add_timer_ns :: fn (interval: u64, callback: sdl_ns_timer_callback&, user_data: void&) -> sdl_timer_id = extern "SDL_AddTimerNS";
     sdl_remove_timer :: fn (id: sdl_timer_id ) -> bool = extern "SDL_RemoveTimer";
 
 }
