@@ -1,0 +1,26 @@
+export_library
+{
+    SDL_MS_PER_SECOND :: define u64 = 1000;
+    SDL_US_PER_SECOND :: define u64 = 1000000;
+    SDL_NS_PER_SECOND :: define u64 = 1000000000;
+    SDL_NS_PER_MS     :: define u64 = 1000000;
+    SDL_NS_PER_US     :: define u64 = 1000;
+    
+    sdl_get_ticks                 :: fn () = extern "SDL_GetTicks";
+    sdl_get_ticks_ns              :: fn () = extern "SDL_GetTicksNS";
+    sdl_get_performance_counter   :: fn () = extern "SDL_GetPerformanceCounter";
+    sdl_get_performance_frequency :: fn () = extern "SDL_GetPerformanceFrequency";
+
+    sdl_delay         :: fn (ms: u32) = extern "SDL_Delay";
+    sdl_delay_ns      :: fn (ns: u64) = extern "SDL_DelayNS";
+    sdl_delay_precise :: fn (ns: u64) = extern "SDL_DelayPrecise";
+
+    sdl_timer_id          :: type_alias = u32;
+    sdl_timer_callback    :: type_alias = fn (user_data: void&, timer_id: sdl_timer_id, interval: u32) -> u32;
+    sdl_ns_timer_callback :: type_alias = fn (user_data: void&, timer_id: sdl_timer_id, interval: u64) -> u64;
+
+    sdl_add_timer    :: fn (interval: u32, callback: sdl_timer_callback, user_data: void&) -> sdl_timer_id = extern "SDL_AddTimer";
+    sdl_add_timer_ns :: fn (interval: u64, callback: sdl_ns_timer_callback, user_data: void&) -> sdl_timer_id = extern "SDL_AddTimerNS";
+    sdl_remove_timer :: fn (id: sdl_timer_id ) -> bool = extern "SDL_RemoveTimer";
+
+}
